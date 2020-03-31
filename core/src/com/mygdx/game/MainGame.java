@@ -2,11 +2,12 @@ package com.mygdx.game;
 
 import com.badlogic.gdx.Game;
 import com.mygdx.game.screens.BaseScreen;
+import com.mygdx.game.screens.GameScreen;
 
-public abstract class MainGame extends Game {
+public class MainGame extends Game {
 
 	@Override
 	public void create() {
-		setScreen(new BaseScreen(this));
+		setScreen(new GameScreen(this));
 	}
 }
