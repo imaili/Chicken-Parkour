@@ -3,6 +3,7 @@ package com.mygdx.game.screens;
 import com.badlogic.ashley.core.Entity;
 import com.badlogic.ashley.core.PooledEngine;
 import com.badlogic.gdx.Gdx;
+import com.badlogic.gdx.InputProcessor;
 import com.badlogic.gdx.graphics.Color;
 import com.badlogic.gdx.graphics.GL20;
 import com.badlogic.gdx.graphics.OrthographicCamera;
@@ -25,6 +26,7 @@ import com.mygdx.game.systems.ChickenSystem;
 import com.mygdx.game.systems.PhysicsDebugSystem;
 import com.mygdx.game.systems.PhysicsSystem;
 import com.mygdx.game.systems.RenderingSystem;
+import com.mygdx.game.utils.ChickenContactListener;
 
 public class GameScreen extends BaseScreen {
 
@@ -42,6 +44,7 @@ public class GameScreen extends BaseScreen {
     public void show() {
         super.show();
         world = new World(new Vector2(0, -10f), true);
+        world.setContactListener(new ChickenContactListener());
         spriteBatch = new SpriteBatch();
         RenderingSystem renderingSystem = new RenderingSystem(spriteBatch);
         camera = renderingSystem.getCamera();
@@ -148,4 +151,6 @@ public class GameScreen extends BaseScreen {
 
         engine.addEntity(entity);
     }
+
+
 }

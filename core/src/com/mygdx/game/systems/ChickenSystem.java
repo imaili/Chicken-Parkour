@@ -23,7 +23,7 @@ public class ChickenSystem extends IteratingSystem {
 
     @Override
     protected void processEntity(Entity entity, float deltaTime) {
-        ChickenComponent playerComponent = Mappers.PLAYER.get(entity);
+        ChickenComponent playerComponent = Mappers.CHICKEN.get(entity);
         BodyComponent bodyComponent = Mappers.BODY.get(entity);
         StateComponent stateComponent = Mappers.STATE.get(entity);
 
