@@ -35,16 +35,16 @@ public class ChickenContactListener implements ContactListener {
         }
     }
 
-    private void entityCollision(Entity ent, Fixture fb) {
-
+    private void entityCollision(Entity entity, Fixture fb) {
         if(fb.getBody().getUserData() instanceof Entity){
 
             Entity colEnt = (Entity) fb.getBody().getUserData();
-            CollisionComponent col = ent.getComponent(CollisionComponent.class);
+            CollisionComponent col = Mappers.COLLISION.get(entity);
 
             // set the CollisionEntity of the component
             if(col != null){
                 col.collisionEntity = colEnt;
+
             }
         }
     }
