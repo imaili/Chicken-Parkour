@@ -5,6 +5,7 @@ import com.badlogic.gdx.Gdx;
 import com.badlogic.gdx.audio.Music;
 
 public class AssetsManager {
+    //Music Playback
     private Music music_menu = Gdx.audio.newMusic(Gdx.files.internal("sounds/bensound-sunny.mp3"));
     private Music music_game = Gdx.audio.newMusic(Gdx.files.internal("sounds/bensound-scifi.mp3"));
     private float volume_menu = 0.75f;
