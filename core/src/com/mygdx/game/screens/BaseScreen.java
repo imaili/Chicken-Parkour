@@ -1,15 +1,19 @@
 package com.mygdx.game.screens;
 
-import com.badlogic.gdx.Screen;
 import com.mygdx.game.MainGame;
 
-public abstract class BaseScreen implements Screen {
+public abstract class BaseScreen implements Menu {
 
     private MainGame game;
 
     public BaseScreen(MainGame game){
         this.game = game;
     }
+
+    public BaseScreen() {
+        this(null);
+    }
+
     @Override
     public void show() {
 
@@ -48,4 +52,5 @@ public abstract class BaseScreen implements Screen {
     public MainGame getGame() {
         return game;
     }
+    
 }

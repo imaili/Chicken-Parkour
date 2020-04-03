@@ -193,5 +193,16 @@ public class GameScreen extends BaseScreen {
 
     }
 
+    // Menu function
+
+    @Override
+    public void goTo(Class<? extends Menu> menu){
+        // TODO
+    }
+
+    @Override
+    public void goBack(){
+        // TODO
+    }
 
 }
