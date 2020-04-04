@@ -56,7 +56,7 @@ public class AssetsManager {
     }
 
 
-    public static void loadAssets() {
+    //public static void loadAssets() {
 
         // Background
         //texturesMap.put(Constants.BACKGROUND_ASSETS_ID,
@@ -68,7 +68,7 @@ public class AssetsManager {
 
         //textureAtlas = new TextureAtlas(Constants.SPRITES_ATLAS_PATH);
 
-        // Chicken walk
+    public static Animation getwalkanimation(){
         TextureRegion walk1 = new TextureRegion(new Texture("Walk (1).png"));
         TextureRegion walk2 = new TextureRegion(new Texture("Walk (2).png"));
         TextureRegion walk3 = new TextureRegion(new Texture("Walk (3).png"));
@@ -80,9 +80,11 @@ public class AssetsManager {
         TextureRegion walk9 = new TextureRegion(new Texture("Walk (9).png"));
         TextureRegion walk10 = new TextureRegion(new Texture("Walk (10).png"));
         Animation walkanimation = new Animation(0.1f, walk1, walk2, walk3, walk4, walk5, walk6, walk7, walk8, walk9, walk10);
-        walkanimation.setPlayMode(Animation.PlayMode.LOOP);
+        return walkanimation;
+        //walkanimation.setPlayMode(Animation.PlayMode.LOOP);
+    }
 
-        //Chicken run
+        public static Animation getRunanimation(){
         TextureRegion run1 = new TextureRegion(new Texture("Run (1).png"));
         TextureRegion run2 = new TextureRegion(new Texture("Run (2).png"));
         TextureRegion run3 = new TextureRegion(new Texture("Run (3).png"));
@@ -92,9 +94,11 @@ public class AssetsManager {
         TextureRegion run7 = new TextureRegion(new Texture("Run (7).png"));
         TextureRegion run8 = new TextureRegion(new Texture("Run (8).png"));
         Animation runanimation = new Animation(0.1f, run1, run2, run3, run4, run5, run6, run7, run8);
-        runanimation.setPlayMode(Animation.PlayMode.LOOP);
+        //runanimation.setPlayMode(Animation.PlayMode.LOOP);
+        return runanimation;
+    }
 
-        //Chicken jump
+    public static Animation getJumpanimation(){
         TextureRegion jump1 = new TextureRegion(new Texture("Jump (1).png"));
         TextureRegion jump2 = new TextureRegion(new Texture("Jump (2).png"));
         TextureRegion jump3 = new TextureRegion(new Texture("Jump (3).png"));
@@ -108,9 +112,12 @@ public class AssetsManager {
         TextureRegion jump11 = new TextureRegion(new Texture("Jump (11).png"));
         TextureRegion jump12 = new TextureRegion(new Texture("Jump (12).png"));
         Animation jumpanimation = new Animation(0.1f, jump1, jump2, jump3, jump4, jump5, jump6, jump7, jump8, jump9, jump10, jump11, jump12);
-        jumpanimation.setPlayMode(Animation.PlayMode.LOOP);
+        //jumpanimation.setPlayMode(Animation.PlayMode.LOOP);
+        return jumpanimation;
+    }
 
-        //Chicken idle
+
+    public static Animation getIdleanimation(){
         TextureRegion idle1 = new TextureRegion(new Texture("Idle (1).png"));
         TextureRegion idle2 = new TextureRegion(new Texture("Idle (2).png"));
         TextureRegion idle3 = new TextureRegion(new Texture("Idle (3).png"));
@@ -122,9 +129,11 @@ public class AssetsManager {
         TextureRegion idle9 = new TextureRegion(new Texture("Idle (9).png"));
         TextureRegion idle10 = new TextureRegion(new Texture("Idle (10).png"));
         Animation idleanimation = new Animation(0.1f, idle1, idle2, idle3, idle4, idle5, idle6, idle7, idle8, idle9, idle10);
-        idleanimation.setPlayMode(Animation.PlayMode.LOOP);
+        //idleanimation.setPlayMode(Animation.PlayMode.LOOP);
+        return idleanimation;
+    }
 
-        //Chicken slide
+    public static Animation getSlideanimation(){
         TextureRegion slide1 = new TextureRegion(new Texture("Sliding (1).png"));
         TextureRegion slide2 = new TextureRegion(new Texture("Sliding (2).png"));
         TextureRegion slide3 = new TextureRegion(new Texture("Sliding (3).png"));
@@ -139,8 +148,10 @@ public class AssetsManager {
         TextureRegion slide12 = new TextureRegion(new Texture("Sliding (12).png"));
         TextureRegion slide13 = new TextureRegion(new Texture("Sliding (13).png"));
         Animation slideanimation = new Animation(0.1f, slide1, slide2, slide3, slide4, slide5, slide6, slide7, slide8, slide9, slide10, slide11, slide12, slide13);
-        slideanimation.setPlayMode(Animation.PlayMode.LOOP);
+        //slideanimation.setPlayMode(Animation.PlayMode.LOOP);
+        return slideanimation;
     }
+    //}
 }
 
 
