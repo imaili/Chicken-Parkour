@@ -19,6 +19,7 @@ public class PhysicsDebugSystem extends IteratingSystem {
         debugRenderer = new Box2DDebugRenderer();
         this.world = world;
         this.camera = camera;
+
     }
 
     @Override

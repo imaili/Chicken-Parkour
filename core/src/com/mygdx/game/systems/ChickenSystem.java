@@ -35,22 +35,23 @@ public class ChickenSystem extends IteratingSystem {
 
         BodyComponent bodyComponent = Mappers.BODY.get(entity);
         StateComponent stateComponent = Mappers.STATE.get(entity);
-        CollisionComponent collisionComponent = Mappers.COLLISION.get(entity);
 
-        bodyComponent.body.setLinearVelocity(5,bodyComponent.body.getLinearVelocity().y);
-        //TODO implement here logic of player movement
-
-       if(Gdx.input.isTouched() && stateComponent.get() == StateComponent.STATE_NORMAL){
+        if(Gdx.input.isTouched() && stateComponent.get() == StateComponent.STATE_NORMAL){
            Body body = bodyComponent.body;
            stateComponent.set(StateComponent.STATE_JUMPING);
            body.applyLinearImpulse(0,60, body.getPosition().x, body.getPosition().y, true);
-       }
-       if(bodyComponent.body.getLinearVelocity().y == 0 && stateComponent.get() != StateComponent.STATE_HIT){
-           stateComponent.set(StateComponent.STATE_NORMAL);
-       }
-       if(stateComponent.get() == StateComponent.STATE_HIT) {
-            System.out.println("hit");
-       }
+        }
+        if(bodyComponent.body.getLinearVelocity().y < 0) {
+            stateComponent.set(StateComponent.STATE_FALLING);
+        }
+
+        System.out.println(stateComponent.get());
+
+
+
+
+
+
 
     }
 }

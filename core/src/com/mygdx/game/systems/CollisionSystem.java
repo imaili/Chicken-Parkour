@@ -4,15 +4,19 @@ import com.badlogic.ashley.core.ComponentMapper;
 import com.badlogic.ashley.core.Entity;
 import com.badlogic.ashley.core.Family;
 import com.badlogic.ashley.systems.IteratingSystem;
+import com.badlogic.gdx.physics.box2d.Body;
+import com.mygdx.game.components.BodyComponent;
 import com.mygdx.game.components.ChickenComponent;
 import com.mygdx.game.components.CoinComponent;
 import com.mygdx.game.components.CollisionComponent;
 import com.mygdx.game.components.ObstacleComponent;
 import com.mygdx.game.components.PowerUpComponent;
 import com.mygdx.game.components.StateComponent;
+import com.mygdx.game.components.TextureComponent;
+import com.mygdx.game.components.TransformComponent;
 import com.mygdx.game.utils.Mappers;
 
-import javax.swing.plaf.nimbus.State;
+import java.util.Map;
 
 
 public class CollisionSystem  extends IteratingSystem {
@@ -31,36 +35,51 @@ public class CollisionSystem  extends IteratingSystem {
     protected void processEntity(Entity entity, float deltaTime) {
         // get player collision component
         CollisionComponent collisionCom = collisionMapper.get(entity);
-
         Entity collidedEntity = collisionCom.collisionEntity;
-        if(collidedEntity != null){
+        if (collidedEntity != null) {
+            BodyComponent body = Mappers.BODY.get(entity);
             ObstacleComponent obstacle = Mappers.OBSTACLE.get(collidedEntity);
-            CoinComponent coin = Mappers.COIN.get(entity);
-            PowerUpComponent powerup = Mappers.POWERUP.get(entity);
+            CoinComponent coin = Mappers.COIN.get(collidedEntity);
+            PowerUpComponent powerup = Mappers.POWERUP.get(collidedEntity);
 
-            if(obstacle != null){
+            if (obstacle != null) {
 
-                switch(obstacle.type){
+                switch (obstacle.type) {
                     case ObstacleComponent.BOX:
-                        //TODO check if chicken is jumping on box, or colliding with it
+                        //check if chicken is jumping on box, or crashing into it
+                        collisionWithBox(entity);
+
                         break;
                     case ObstacleComponent.SPIKES:
                         //set chicken state to hit
                         StateComponent state = Mappers.STATE.get(entity);
-                        if(state != null) {
+                        if (state != null) {
                             state.set(StateComponent.STATE_HIT);
                         }
                         break;
                     default:
                 }
 
-            } else if(coin != null) {
+            } else if (coin != null) {
                 //TODO increment coin counter and delete coin entity
 
-            }else if(powerup != null) {
+            } else if (powerup != null) {
                 //TODO add powerup to chicken
+            } else {
+                StateComponent stateComponent = Mappers.STATE.get(entity);
+                stateComponent.set(StateComponent.STATE_NORMAL);
             }
+
+
         }
+        collisionCom.collisionEntity = null;
+
+    }
+
+    private void collisionWithBox(Entity chickenEntity) {
+        StateComponent state = Mappers.STATE.get(chickenEntity);
+        state.set(StateComponent.STATE_NORMAL);
+
 
     }
 

@@ -11,6 +11,7 @@ import com.badlogic.gdx.graphics.OrthographicCamera;
 import com.badlogic.gdx.graphics.g2d.SpriteBatch;
 import com.badlogic.gdx.math.MathUtils;
 import com.badlogic.gdx.utils.Array;
+import com.mygdx.game.components.ChickenComponent;
 import com.mygdx.game.components.TextureComponent;
 import com.mygdx.game.components.TransformComponent;
 import com.mygdx.game.utils.Mappers;
@@ -88,6 +89,7 @@ public class RenderingSystem extends IteratingSystem {
 
         batch.end();
         renderQueue.clear();
+
     }
 
     @Override
