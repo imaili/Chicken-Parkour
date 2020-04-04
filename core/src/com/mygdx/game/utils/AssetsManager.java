@@ -8,6 +8,7 @@ import com.badlogic.gdx.graphics.g2d.Animation;
 import com.badlogic.gdx.graphics.g2d.TextureAtlas;
 import com.badlogic.gdx.graphics.g2d.TextureRegion;
 
+import java.util.ArrayList;
 import java.util.HashMap;
 
 
@@ -59,109 +60,124 @@ public class AssetsManager {
     }
 
     //Animation
-    private static HashMap<String, TextureRegion> texturesMap = new HashMap<String, TextureRegion>();
-    private static HashMap<String, Animation> animationsMap = new HashMap<String, Animation>();
+    private static HashMap<String, TextureRegion> texturesMap = new HashMap<>();
+    private static HashMap<String, Animation> animationsMap = new HashMap<>();
     private static TextureAtlas textureAtlas;
 
     public static void loadAssets() {
 
-    //create animation
-    //texture atlas
+        texturesMap.put(Constants.BACKGROUND_MENU_ID, new TextureRegion(new Texture(Gdx.files.internal(Constants.BACKGROUND_MENU_PATH))));
+        texturesMap.put(Constants.EXIT_MENU_ID, new TextureRegion(new Texture(Gdx.files.internal(Constants.EXIT_MENU_PATH))));
+        texturesMap.put(Constants.MULTIPLAYER_BUTTON_ID, new TextureRegion(new Texture(Gdx.files.internal(Constants.MULTIPLAYER_BUTTON_PATH))));
+        texturesMap.put(Constants.SINGLEPLAYER_BUTTON_ID, new TextureRegion(new Texture(Gdx.files.internal(Constants.SINGLEPLAYER_BUTTON_PATH))));
 
-        // Background
-        //texturesMap.put(Constants.BACKGROUND_ASSETS_ID,
-        //        new TextureRegion(new Texture(Gdx.files.internal(Constants.BACKGROUND_IMAGE_PATH))));
+        ArrayList <TextureRegion> walk_frames = new ArrayList<>();
+        walk_frames.add(new TextureRegion(new Texture(Gdx.files.internal(Constants.WALK_1_PATH))));
+        walk_frames.add(new TextureRegion(new Texture(Gdx.files.internal(Constants.WALK_2_PATH))));
+        walk_frames.add(new TextureRegion(new Texture(Gdx.files.internal(Constants.WALK_3_PATH))));
+        walk_frames.add(new TextureRegion(new Texture(Gdx.files.internal(Constants.WALK_4_PATH))));
+        walk_frames.add(new TextureRegion(new Texture(Gdx.files.internal(Constants.WALK_5_PATH))));
+        walk_frames.add(new TextureRegion(new Texture(Gdx.files.internal(Constants.WALK_6_PATH))));
+        walk_frames.add(new TextureRegion(new Texture(Gdx.files.internal(Constants.WALK_7_PATH))));
+        walk_frames.add(new TextureRegion(new Texture(Gdx.files.internal(Constants.WALK_8_PATH))));
+        walk_frames.add(new TextureRegion(new Texture(Gdx.files.internal(Constants.WALK_9_PATH))));
+        walk_frames.add(new TextureRegion(new Texture(Gdx.files.internal(Constants.WALK_10_PATH))));
 
-        // Ground
-        //texturesMap.put(Constants.GROUND_ASSETS_ID,
-        //        new TextureRegion(new Texture(Gdx.files.internal(Constants.GROUND_IMAGE_PATH))));
+        animationsMap.put(Constants.WALK_ANIMATION_ID, new Animation<>(0.1f, walk_frames));
 
-        //textureAtlas = new TextureAtlas(Constants.SPRITES_ATLAS_PATH);
+        ArrayList <TextureRegion> sliding_frames = new ArrayList<>();
+        sliding_frames.add(new TextureRegion(new Texture(Gdx.files.internal(Constants.SLIDING_1_PATH))));
+        sliding_frames.add(new TextureRegion(new Texture(Gdx.files.internal(Constants.SLIDING_2_PATH))));
+        sliding_frames.add(new TextureRegion(new Texture(Gdx.files.internal(Constants.SLIDING_3_PATH))));
+        sliding_frames.add(new TextureRegion(new Texture(Gdx.files.internal(Constants.SLIDING_4_PATH))));
+        sliding_frames.add(new TextureRegion(new Texture(Gdx.files.internal(Constants.SLIDING_5_PATH))));
+        sliding_frames.add(new TextureRegion(new Texture(Gdx.files.internal(Constants.SLIDING_6_PATH))));
+        sliding_frames.add(new TextureRegion(new Texture(Gdx.files.internal(Constants.SLIDING_7_PATH))));
+        sliding_frames.add(new TextureRegion(new Texture(Gdx.files.internal(Constants.SLIDING_8_PATH))));
+        sliding_frames.add(new TextureRegion(new Texture(Gdx.files.internal(Constants.SLIDING_9_PATH))));
+        sliding_frames.add(new TextureRegion(new Texture(Gdx.files.internal(Constants.SLIDING_10_PATH))));
+        sliding_frames.add(new TextureRegion(new Texture(Gdx.files.internal(Constants.SLIDING_11_PATH))));
+        sliding_frames.add(new TextureRegion(new Texture(Gdx.files.internal(Constants.SLIDING_12_PATH))));
+        sliding_frames.add(new TextureRegion(new Texture(Gdx.files.internal(Constants.SLIDING_13_PATH))));
 
-    //public static Animation getwalkanimation()
-        TextureRegion walk1 = new TextureRegion(new Texture("Walk (1).png"));
-        TextureRegion walk2 = new TextureRegion(new Texture("Walk (2).png"));
-        TextureRegion walk3 = new TextureRegion(new Texture("Walk (3).png"));
-        TextureRegion walk4 = new TextureRegion(new Texture("Walk (4).png"));
-        TextureRegion walk5 = new TextureRegion(new Texture("Walk (5).png"));
-        TextureRegion walk6 = new TextureRegion(new Texture("Walk (6).png"));
-        TextureRegion walk7 = new TextureRegion(new Texture("Walk (7).png"));
-        TextureRegion walk8 = new TextureRegion(new Texture("Walk (8).png"));
-        TextureRegion walk9 = new TextureRegion(new Texture("Walk (9).png"));
-        TextureRegion walk10 = new TextureRegion(new Texture("Walk (10).png"));
-        Animation walkanimation = new Animation(0.1f, walk1, walk2, walk3, walk4, walk5, walk6, walk7, walk8, walk9, walk10);
-        //return walkanimation;
-        //walkanimation.setPlayMode(Animation.PlayMode.LOOP);
-    //}
+        animationsMap.put(Constants.SLIDING_ANIMATION_ID, new Animation<>(0.1f, sliding_frames));
 
-        //public static Animation getRunanimation(){
-        TextureRegion run1 = new TextureRegion(new Texture("Run (1).png"));
-        TextureRegion run2 = new TextureRegion(new Texture("Run (2).png"));
-        TextureRegion run3 = new TextureRegion(new Texture("Run (3).png"));
-        TextureRegion run4 = new TextureRegion(new Texture("Run (4).png"));
-        TextureRegion run5 = new TextureRegion(new Texture("Run (5).png"));
-        TextureRegion run6 = new TextureRegion(new Texture("Run (6).png"));
-        TextureRegion run7 = new TextureRegion(new Texture("Run (7).png"));
-        TextureRegion run8 = new TextureRegion(new Texture("Run (8).png"));
-        Animation runanimation = new Animation(0.1f, run1, run2, run3, run4, run5, run6, run7, run8);
-        //runanimation.setPlayMode(Animation.PlayMode.LOOP);
-        //return runanimation;
-    //}
+        ArrayList<TextureRegion> dead_frames = new ArrayList<>();
+        dead_frames.add(new TextureRegion(new Texture(Gdx.files.internal(Constants.DEAD_1_PATH))));
+        dead_frames.add(new TextureRegion(new Texture(Gdx.files.internal(Constants.DEAD_2_PATH))));
+        dead_frames.add(new TextureRegion(new Texture(Gdx.files.internal(Constants.DEAD_3_PATH))));
+        dead_frames.add(new TextureRegion(new Texture(Gdx.files.internal(Constants.DEAD_4_PATH))));
+        dead_frames.add(new TextureRegion(new Texture(Gdx.files.internal(Constants.DEAD_5_PATH))));
+        dead_frames.add(new TextureRegion(new Texture(Gdx.files.internal(Constants.DEAD_6_PATH))));
+        dead_frames.add(new TextureRegion(new Texture(Gdx.files.internal(Constants.DEAD_7_PATH))));
+        dead_frames.add(new TextureRegion(new Texture(Gdx.files.internal(Constants.DEAD_8_PATH))));
+        animationsMap.put(Constants.DEAD_ANIMATION_ID, new Animation<>(0.1f, dead_frames));
 
-    //public static Animation getJumpanimation(){
-        TextureRegion jump1 = new TextureRegion(new Texture("Jump (1).png"));
-        TextureRegion jump2 = new TextureRegion(new Texture("Jump (2).png"));
-        TextureRegion jump3 = new TextureRegion(new Texture("Jump (3).png"));
-        TextureRegion jump4 = new TextureRegion(new Texture("Jump (4).png"));
-        TextureRegion jump5 = new TextureRegion(new Texture("Jump (5).png"));
-        TextureRegion jump6 = new TextureRegion(new Texture("Jump (6).png"));
-        TextureRegion jump7 = new TextureRegion(new Texture("Jump (7).png"));
-        TextureRegion jump8 = new TextureRegion(new Texture("Jump (8).png"));
-        TextureRegion jump9 = new TextureRegion(new Texture("Jump (9).png"));
-        TextureRegion jump10 = new TextureRegion(new Texture("Jump (10).png"));
-        TextureRegion jump11 = new TextureRegion(new Texture("Jump (11).png"));
-        TextureRegion jump12 = new TextureRegion(new Texture("Jump (12).png"));
-        Animation jumpanimation = new Animation(0.1f, jump1, jump2, jump3, jump4, jump5, jump6, jump7, jump8, jump9, jump10, jump11, jump12);
-        //jumpanimation.setPlayMode(Animation.PlayMode.LOOP);
-        //return jumpanimation;
-    //}
+        ArrayList<TextureRegion> idle_frames = new ArrayList<>();
+        idle_frames.add(new TextureRegion(new Texture(Gdx.files.internal(Constants.IDLE_1_PATH))));
+        idle_frames.add(new TextureRegion(new Texture(Gdx.files.internal(Constants.IDLE_2_PATH))));
+        idle_frames.add(new TextureRegion(new Texture(Gdx.files.internal(Constants.IDLE_3_PATH))));
+        idle_frames.add(new TextureRegion(new Texture(Gdx.files.internal(Constants.IDLE_4_PATH))));
+        idle_frames.add(new TextureRegion(new Texture(Gdx.files.internal(Constants.IDLE_5_PATH))));
+        idle_frames.add(new TextureRegion(new Texture(Gdx.files.internal(Constants.IDLE_6_PATH))));
+        idle_frames.add(new TextureRegion(new Texture(Gdx.files.internal(Constants.IDLE_7_PATH))));
+        idle_frames.add(new TextureRegion(new Texture(Gdx.files.internal(Constants.IDLE_8_PATH))));
+        idle_frames.add(new TextureRegion(new Texture(Gdx.files.internal(Constants.IDLE_9_PATH))));
+        idle_frames.add(new TextureRegion(new Texture(Gdx.files.internal(Constants.IDLE_10_PATH))));
+        animationsMap.put(Constants.IDLE_ANIMATION_ID, new Animation<>(0.1f, idle_frames));
 
+        ArrayList<TextureRegion> jump_frames = new ArrayList<>();
+        jump_frames.add(new TextureRegion(new Texture(Gdx.files.internal(Constants.JUMP_1_PATH))));
+        jump_frames.add(new TextureRegion(new Texture(Gdx.files.internal(Constants.JUMP_2_PATH))));
+        jump_frames.add(new TextureRegion(new Texture(Gdx.files.internal(Constants.JUMP_3_PATH))));
+        jump_frames.add(new TextureRegion(new Texture(Gdx.files.internal(Constants.JUMP_4_PATH))));
+        jump_frames.add(new TextureRegion(new Texture(Gdx.files.internal(Constants.JUMP_5_PATH))));
+        jump_frames.add(new TextureRegion(new Texture(Gdx.files.internal(Constants.JUMP_6_PATH))));
+        jump_frames.add(new TextureRegion(new Texture(Gdx.files.internal(Constants.JUMP_7_PATH))));
+        jump_frames.add(new TextureRegion(new Texture(Gdx.files.internal(Constants.JUMP_8_PATH))));
+        jump_frames.add(new TextureRegion(new Texture(Gdx.files.internal(Constants.JUMP_9_PATH))));
+        jump_frames.add(new TextureRegion(new Texture(Gdx.files.internal(Constants.JUMP_10_PATH))));
+        jump_frames.add(new TextureRegion(new Texture(Gdx.files.internal(Constants.JUMP_11_PATH))));
+        jump_frames.add(new TextureRegion(new Texture(Gdx.files.internal(Constants.JUMP_12_PATH))));
+        animationsMap.put(Constants.JUMP_ANIMATION_ID, new Animation<>(0.1f, jump_frames));
 
-    //public static Animation getIdleanimation(){
-        TextureRegion idle1 = new TextureRegion(new Texture("Idle (1).png"));
-        TextureRegion idle2 = new TextureRegion(new Texture("Idle (2).png"));
-        TextureRegion idle3 = new TextureRegion(new Texture("Idle (3).png"));
-        TextureRegion idle4 = new TextureRegion(new Texture("Idle (4).png"));
-        TextureRegion idle5 = new TextureRegion(new Texture("Idle (5).png"));
-        TextureRegion idle6 = new TextureRegion(new Texture("Idle (6).png"));
-        TextureRegion idle7 = new TextureRegion(new Texture("Idle (7).png"));
-        TextureRegion idle8 = new TextureRegion(new Texture("Idle (8).png"));
-        TextureRegion idle9 = new TextureRegion(new Texture("Idle (9).png"));
-        TextureRegion idle10 = new TextureRegion(new Texture("Idle (10).png"));
-        Animation idleanimation = new Animation(0.1f, idle1, idle2, idle3, idle4, idle5, idle6, idle7, idle8, idle9, idle10);
-        //idleanimation.setPlayMode(Animation.PlayMode.LOOP);
-        //return idleanimation;
-    //}
+        ArrayList<TextureRegion> run_frames = new ArrayList<>();
+        run_frames.add(new TextureRegion(new Texture(Gdx.files.internal(Constants.RUN_1_PATH))));
+        run_frames.add(new TextureRegion(new Texture(Gdx.files.internal(Constants.RUN_2_PATH))));
+        run_frames.add(new TextureRegion(new Texture(Gdx.files.internal(Constants.RUN_3_PATH))));
+        run_frames.add(new TextureRegion(new Texture(Gdx.files.internal(Constants.RUN_4_PATH))));
+        run_frames.add(new TextureRegion(new Texture(Gdx.files.internal(Constants.RUN_5_PATH))));
+        run_frames.add(new TextureRegion(new Texture(Gdx.files.internal(Constants.RUN_6_PATH))));
+        run_frames.add(new TextureRegion(new Texture(Gdx.files.internal(Constants.RUN_7_PATH))));
+        run_frames.add(new TextureRegion(new Texture(Gdx.files.internal(Constants.RUN_8_PATH))));
+        animationsMap.put(Constants.RUN_ANIMATION_ID, new Animation<>(0.1f, run_frames));
 
-    //public static Animation getSlideanimation(){
-        TextureRegion slide1 = new TextureRegion(new Texture("Sliding (1).png"));
-        TextureRegion slide2 = new TextureRegion(new Texture("Sliding (2).png"));
-        TextureRegion slide3 = new TextureRegion(new Texture("Sliding (3).png"));
-        TextureRegion slide4 = new TextureRegion(new Texture("Sliding (4).png"));
-        TextureRegion slide5 = new TextureRegion(new Texture("Sliding (5).png"));
-        TextureRegion slide6 = new TextureRegion(new Texture("Sliding (6).png"));
-        TextureRegion slide7 = new TextureRegion(new Texture("Sliding (7).png"));
-        TextureRegion slide8 = new TextureRegion(new Texture("Sliding (8).png"));
-        TextureRegion slide9 = new TextureRegion(new Texture("Sliding (9).png"));
-        TextureRegion slide10 = new TextureRegion(new Texture("Sliding (10).png"));
-        TextureRegion slide11 = new TextureRegion(new Texture("Sliding (11).png"));
-        TextureRegion slide12 = new TextureRegion(new Texture("Sliding (12).png"));
-        TextureRegion slide13 = new TextureRegion(new Texture("Sliding (13).png"));
-        Animation slideanimation = new Animation(0.1f, slide1, slide2, slide3, slide4, slide5, slide6, slide7, slide8, slide9, slide10, slide11, slide12, slide13);
-        //slideanimation.setPlayMode(Animation.PlayMode.LOOP);
-        //return slideanimation;
-    //}
+       /* ArrayList <TextureRegion> game_background_frames = new ArrayList<>();
+        game_background_frames.add(new TextureRegion(new Texture(Gdx.files.internal(Constants.GAME_BACKGROUND_1_PATH))));
+        game_background_frames.add(new TextureRegion(new Texture(Gdx.files.internal(Constants.GAME_BACKGROUND_2_PATH))));
+        game_background_frames.add(new TextureRegion(new Texture(Gdx.files.internal(Constants.GAME_BACKGROUND_3_PATH))));
+        game_background_frames.add(new TextureRegion(new Texture(Gdx.files.internal(Constants.GAME_BACKGROUND_4_PATH))));
+        game_background_frames.add(new TextureRegion(new Texture(Gdx.files.internal(Constants.GAME_BACKGROUND_5_PATH))));
+        animationsMap.put(Constants.GAME_BACKGROUND_ANIMATION_ID, new Animation<>(0.1f, game_background_frames));
+        */
+
     }
+
+    public static TextureRegion getTextureRegion(String key) {
+        return texturesMap.get(key);
+    }
+
+    public static Animation getAnimation(String key) {
+        return animationsMap.get(key);
+    }
+
+    public static void dispose() {
+        textureAtlas.dispose();
+        texturesMap.clear();
+        animationsMap.clear();
+    }
+
+
 }
 
 

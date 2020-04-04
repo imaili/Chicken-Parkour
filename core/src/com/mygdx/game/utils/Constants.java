@@ -4,7 +4,7 @@ import com.badlogic.gdx.math.Vector2;
 
 public class Constants {
 
-    public static final String GAME_NAME = "Martian Run!";
+    public static final String GAME_NAME = "Dinosaur Run!";
 
     public static final int APP_WIDTH = 800;
     public static final int APP_HEIGHT = 480;
@@ -18,23 +18,23 @@ public class Constants {
     public static final float GROUND_HEIGHT = 2f;
     public static final float GROUND_DENSITY = 0f;
 
-    public static final String RUNNING_ANIMATION_ID = "running_animation";
-    public static final String RUNNING_1_ID = "running1";
-    public static final String RUNNING_1_PATH = "Run (1).png";
-    public static final String RUNNING_2_ID = "running2";
-    public static final String RUNNING_2_PATH = "Run (2).png";
-    public static final String RUNNING_3_ID = "running3";
-    public static final String RUNNING_3_PATH = "Run (3).png";
-    public static final String RUNNING_4_ID = "running4";
-    public static final String RUNNING_4_PATH = "Run (4).png";
-    public static final String RUNNING_5_ID = "running5";
-    public static final String RUNNING_5_PATH = "Run (5).png";
-    public static final String RUNNING_6_ID = "running6";
-    public static final String RUNNING_6_PATH = "Run (6).png";
-    public static final String RUNNING_7_ID = "running7";
-    public static final String RUNNING_7_PATH = "Run (7).png";
-    public static final String RUNNING_8_ID = "running8";
-    public static final String RUNNING_8_PATH = "Run (8).png";
+    public static final String RUN_ANIMATION_ID = "running_animation";
+    public static final String RUN_1_ID = "running1";
+    static final String RUN_1_PATH = "Run (1).png";
+    public static final String RUN_2_ID = "running2";
+    public static final String RUN_2_PATH = "Run (2).png";
+    public static final String RUN_3_ID = "running3";
+    public static final String RUN_3_PATH = "Run (3).png";
+    public static final String RUN_4_ID = "running4";
+    public static final String RUN_4_PATH = "Run (4).png";
+    public static final String RUN_5_ID = "running5";
+    public static final String RUN_5_PATH = "Run (5).png";
+    public static final String RUN_6_ID = "running6";
+    public static final String RUN_6_PATH = "Run (6).png";
+    public static final String RUN_7_ID = "running7";
+    public static final String RUN_7_PATH = "Run (7).png";
+    public static final String RUN_8_ID = "running8";
+    public static final String RUN_8_PATH = "Run (8).png";
 
     public static final String DEAD_ANIMATION_ID = "dead_animation";
     public static final String DEAD_1_ID = "dead1";
@@ -104,31 +104,31 @@ public class Constants {
     public static final String SLIDING_13_ID = "sliding13";
     public static final String SLIDING_13_PATH = "Sliding (13).png";
 
-    public static final String JUMPING_ANIMATION_ID = "jumping_animation";
-    public static final String JUMPING_1_ID = "jumping1";
-    public static final String JUMPING_1_PATH = "Jump (1).png";
-    public static final String JUMPING_2_ID = "jumping2";
-    public static final String JUMPING_2_PATH = "Jump (2).png";
-    public static final String JUMPING_3_ID = "jumping3";
-    public static final String JUMPING_3_PATH = "Jump (3).png";
-    public static final String JUMPING_4_ID = "jumping4";
-    public static final String JUMPING_4_PATH = "Jump (4).png";
-    public static final String JUMPING_5_ID = "jumping5";
-    public static final String JUMPING_5_PATH = "Jump (5).png";
-    public static final String JUMPING_6_ID = "jumping6";
-    public static final String JUMPING_6_PATH = "Jump (6).png";
-    public static final String JUMPING_7_ID = "jumping7";
-    public static final String JUMPING_7_PATH = "Jump (7).png";
-    public static final String JUMPING_8_ID = "jumping8";
-    public static final String JUMPING_8_PATH = "Jump (8).png";
-    public static final String JUMPING_9_ID = "jumping9";
-    public static final String JUMPING_9_PATH = "Jump (9).png";
-    public static final String JUMPING_10_ID = "jumping10";
-    public static final String JUMPING_10_PATH = "Jump (10).png";
-    public static final String JUMPING_11_ID = "jumping11";
-    public static final String JUMPING_11_PATH = "Jump (11).png";
-    public static final String JUMPING_12_ID = "jumping12";
-    public static final String JUMPING_12_PATH = "Jump (12).png";
+    public static final String JUMP_ANIMATION_ID = "jumping_animation";
+    public static final String JUMP_1_ID = "jumping1";
+    public static final String JUMP_1_PATH = "Jump (1).png";
+    public static final String JUMP_2_ID = "jumping2";
+    public static final String JUMP_2_PATH = "Jump (2).png";
+    public static final String JUMP_3_ID = "jumping3";
+    public static final String JUMP_3_PATH = "Jump (3).png";
+    public static final String JUMP_4_ID = "jumping4";
+    public static final String JUMP_4_PATH = "Jump (4).png";
+    public static final String JUMP_5_ID = "jumping5";
+    public static final String JUMP_5_PATH = "Jump (5).png";
+    public static final String JUMP_6_ID = "jumping6";
+    public static final String JUMP_6_PATH = "Jump (6).png";
+    public static final String JUMP_7_ID = "jumping7";
+    public static final String JUMP_7_PATH = "Jump (7).png";
+    public static final String JUMP_8_ID = "jumping8";
+    public static final String JUMP_8_PATH = "Jump (8).png";
+    public static final String JUMP_9_ID = "jumping9";
+    public static final String JUMP_9_PATH = "Jump (9).png";
+    public static final String JUMP_10_ID = "jumping10";
+    public static final String JUMP_10_PATH = "Jump (10).png";
+    public static final String JUMP_11_ID = "jumping11";
+    public static final String JUMP_11_PATH = "Jump (11).png";
+    public static final String JUMP_12_ID = "jumping12";
+    public static final String JUMP_12_PATH = "Jump (12).png";
 
     public static final String WALK_ANIMATION_ID = "walk_animation";
     public static final String WALK_1_ID = "walking1";
@@ -161,6 +161,17 @@ public class Constants {
     public static final String SINGLEPLAYER_BUTTON_ID = "singleplayer_button";
     public static final String SINGLEPLAYER_BUTTON_PATH = "SinglePlayerButton.PNG";
 
+    public static final String GAME_BACKGROUND_ANIMATION_ID = "game_background_animation";
+    public static final String GAME_BACKGROUND_1_ID = "game_background_1";
+    public static final String GAME_BACKGROUND_1_PATH = "backgrounds/plx-1.png";
+    public static final String GAME_BACKGROUND_2_ID = "game_background_2";
+    public static final String GAME_BACKGROUND_2_PATH = "backgrounds/plx-2.png";
+    public static final String GAME_BACKGROUND_3_ID = "game_background_3";
+    public static final String GAME_BACKGROUND_3_PATH = "backgrounds/plx-3.png";
+    public static final String GAME_BACKGROUND_4_ID = "game_background_4";
+    public static final String GAME_BACKGROUND_4_PATH = "backgrounds/plx-4.png";
+    public static final String GAME_BACKGROUND_5_ID = "game_background_5";
+    public static final String GAME_BACKGROUND_5_PATH = "backgrounds/plx-5.png";
 
 
     //public static final String = "key" running (1)
