@@ -5,7 +5,10 @@ import com.badlogic.gdx.Gdx;
 import com.badlogic.gdx.audio.Music;
 import com.badlogic.gdx.graphics.Texture;
 import com.badlogic.gdx.graphics.g2d.Animation;
+import com.badlogic.gdx.graphics.g2d.TextureAtlas;
 import com.badlogic.gdx.graphics.g2d.TextureRegion;
+
+import java.util.HashMap;
 
 
 public class AssetsManager {
@@ -55,8 +58,14 @@ public class AssetsManager {
         music_game.setVolume(volume_game);
     }
 
+    private static HashMap<String, TextureRegion> texturesMap = new HashMap<String, TextureRegion>();
+    private static HashMap<String, Animation> animationsMap = new HashMap<String, Animation>();
+    private static TextureAtlas textureAtlas;
 
-    //public static void loadAssets() {
+    public static void loadAssets() {
+
+    //create animation
+    //texture atlas
 
         // Background
         //texturesMap.put(Constants.BACKGROUND_ASSETS_ID,
@@ -68,7 +77,7 @@ public class AssetsManager {
 
         //textureAtlas = new TextureAtlas(Constants.SPRITES_ATLAS_PATH);
 
-    public static Animation getwalkanimation(){
+    //public static Animation getwalkanimation()
         TextureRegion walk1 = new TextureRegion(new Texture("Walk (1).png"));
         TextureRegion walk2 = new TextureRegion(new Texture("Walk (2).png"));
         TextureRegion walk3 = new TextureRegion(new Texture("Walk (3).png"));
@@ -80,11 +89,11 @@ public class AssetsManager {
         TextureRegion walk9 = new TextureRegion(new Texture("Walk (9).png"));
         TextureRegion walk10 = new TextureRegion(new Texture("Walk (10).png"));
         Animation walkanimation = new Animation(0.1f, walk1, walk2, walk3, walk4, walk5, walk6, walk7, walk8, walk9, walk10);
-        return walkanimation;
+        //return walkanimation;
         //walkanimation.setPlayMode(Animation.PlayMode.LOOP);
-    }
+    //}
 
-        public static Animation getRunanimation(){
+        //public static Animation getRunanimation(){
         TextureRegion run1 = new TextureRegion(new Texture("Run (1).png"));
         TextureRegion run2 = new TextureRegion(new Texture("Run (2).png"));
         TextureRegion run3 = new TextureRegion(new Texture("Run (3).png"));
@@ -95,10 +104,10 @@ public class AssetsManager {
         TextureRegion run8 = new TextureRegion(new Texture("Run (8).png"));
         Animation runanimation = new Animation(0.1f, run1, run2, run3, run4, run5, run6, run7, run8);
         //runanimation.setPlayMode(Animation.PlayMode.LOOP);
-        return runanimation;
-    }
+        //return runanimation;
+    //}
 
-    public static Animation getJumpanimation(){
+    //public static Animation getJumpanimation(){
         TextureRegion jump1 = new TextureRegion(new Texture("Jump (1).png"));
         TextureRegion jump2 = new TextureRegion(new Texture("Jump (2).png"));
         TextureRegion jump3 = new TextureRegion(new Texture("Jump (3).png"));
@@ -113,11 +122,11 @@ public class AssetsManager {
         TextureRegion jump12 = new TextureRegion(new Texture("Jump (12).png"));
         Animation jumpanimation = new Animation(0.1f, jump1, jump2, jump3, jump4, jump5, jump6, jump7, jump8, jump9, jump10, jump11, jump12);
         //jumpanimation.setPlayMode(Animation.PlayMode.LOOP);
-        return jumpanimation;
-    }
+        //return jumpanimation;
+    //}
 
 
-    public static Animation getIdleanimation(){
+    //public static Animation getIdleanimation(){
         TextureRegion idle1 = new TextureRegion(new Texture("Idle (1).png"));
         TextureRegion idle2 = new TextureRegion(new Texture("Idle (2).png"));
         TextureRegion idle3 = new TextureRegion(new Texture("Idle (3).png"));
@@ -130,10 +139,10 @@ public class AssetsManager {
         TextureRegion idle10 = new TextureRegion(new Texture("Idle (10).png"));
         Animation idleanimation = new Animation(0.1f, idle1, idle2, idle3, idle4, idle5, idle6, idle7, idle8, idle9, idle10);
         //idleanimation.setPlayMode(Animation.PlayMode.LOOP);
-        return idleanimation;
-    }
+        //return idleanimation;
+    //}
 
-    public static Animation getSlideanimation(){
+    //public static Animation getSlideanimation(){
         TextureRegion slide1 = new TextureRegion(new Texture("Sliding (1).png"));
         TextureRegion slide2 = new TextureRegion(new Texture("Sliding (2).png"));
         TextureRegion slide3 = new TextureRegion(new Texture("Sliding (3).png"));
@@ -149,9 +158,9 @@ public class AssetsManager {
         TextureRegion slide13 = new TextureRegion(new Texture("Sliding (13).png"));
         Animation slideanimation = new Animation(0.1f, slide1, slide2, slide3, slide4, slide5, slide6, slide7, slide8, slide9, slide10, slide11, slide12, slide13);
         //slideanimation.setPlayMode(Animation.PlayMode.LOOP);
-        return slideanimation;
-    }
+        //return slideanimation;
     //}
+    }
 }
 
 

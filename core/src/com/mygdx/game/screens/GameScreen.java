@@ -94,6 +94,8 @@ public class GameScreen extends BaseScreen {
         StateComponent state = engine.createComponent(StateComponent.class);
         CollisionComponent collision = engine.createComponent(CollisionComponent.class);
         AnimationComponent animation = engine.createComponent(AnimationComponent.class);
+        //animation.animation = assertmanager.getanimation;
+        //animation = AnimationComponent.;
         texture.region = this.createTexture(Color.RED, false,32,32);
 
         // set the components data

@@ -17,4 +17,6 @@ public class Constants {
     public static final float GROUND_WIDTH = 25f;
     public static final float GROUND_HEIGHT = 2f;
     public static final float GROUND_DENSITY = 0f;
+
+    //public static final String = "key" running (1)
 }
