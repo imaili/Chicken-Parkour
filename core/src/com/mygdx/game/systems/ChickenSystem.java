@@ -45,7 +45,6 @@ public class ChickenSystem extends IteratingSystem {
             stateComponent.set(StateComponent.STATE_FALLING);
         }
 
-        System.out.println(stateComponent.get());
 
 
 

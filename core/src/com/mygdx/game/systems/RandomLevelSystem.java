@@ -16,6 +16,7 @@ import com.badlogic.gdx.physics.box2d.FixtureDef;
 import com.badlogic.gdx.physics.box2d.PolygonShape;
 import com.badlogic.gdx.physics.box2d.World;
 import com.mygdx.game.components.BodyComponent;
+import com.mygdx.game.components.CleanUpComponent;
 import com.mygdx.game.components.CollisionComponent;
 import com.mygdx.game.components.ObstacleComponent;
 import com.mygdx.game.components.TextureComponent;
@@ -38,7 +39,9 @@ public class RandomLevelSystem extends IteratingSystem {
         if(accumulatedTime>2){
             accumulatedTime = 0;
 
-            obstaclesFactory.createSpikes(20, 2);
+            obstaclesFactory.createPlatform(20, 1, 1);
+            obstaclesFactory.createPlatform(23,    1, 2);
+            obstaclesFactory.createSpikes(25, 1);
         }
     }
 
@@ -138,6 +141,7 @@ public class RandomLevelSystem extends IteratingSystem {
                 TextureComponent texture = engine.createComponent(TextureComponent.class);
                 ObstacleComponent obstacle = engine.createComponent(ObstacleComponent.class);
                 TransformComponent transform = engine.createComponent(TransformComponent.class);
+                CleanUpComponent cleanUp = engine.createComponent(CleanUpComponent.class);
 
                 body.body = createTriangle(x + i);
                 body.body.setUserData(entity);
@@ -150,7 +154,9 @@ public class RandomLevelSystem extends IteratingSystem {
                 //entity.add(texture);
                 entity.add(obstacle);
                 entity.add(transform);
+                entity.add(cleanUp);
                 engine.addEntity(entity);
+
             }
 
         }

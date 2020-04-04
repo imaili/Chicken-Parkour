@@ -25,6 +25,7 @@ import com.mygdx.game.components.StateComponent;
 import com.mygdx.game.components.TextureComponent;
 import com.mygdx.game.components.TransformComponent;
 import com.mygdx.game.systems.ChickenSystem;
+import com.mygdx.game.systems.CleanUpSystem;
 import com.mygdx.game.systems.CollisionSystem;
 import com.mygdx.game.systems.RandomLevelSystem;
 import com.mygdx.game.systems.PhysicsDebugSystem;
@@ -62,6 +63,7 @@ public class GameScreen extends BaseScreen {
         engine.addSystem(new ChickenSystem());
         engine.addSystem(new CollisionSystem());
         engine.addSystem(new RandomLevelSystem(world));
+        engine.addSystem(new CleanUpSystem());
         engine.addSystem(renderingSystem);
         createPlayer();
         createFloor();
@@ -125,6 +127,7 @@ public class GameScreen extends BaseScreen {
         player.add(collision);
 
         engine.addEntity(player);
+
 
 
 
