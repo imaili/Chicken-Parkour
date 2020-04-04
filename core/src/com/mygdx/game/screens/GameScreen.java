@@ -17,6 +17,7 @@ import com.badlogic.gdx.physics.box2d.FixtureDef;
 import com.badlogic.gdx.physics.box2d.PolygonShape;
 import com.badlogic.gdx.physics.box2d.World;
 import com.mygdx.game.MainGame;
+import com.mygdx.game.components.AnimationComponent;
 import com.mygdx.game.components.BodyComponent;
 import com.mygdx.game.components.ChickenComponent;
 import com.mygdx.game.components.CollisionComponent;
@@ -100,6 +101,7 @@ public class GameScreen extends BaseScreen {
         TextureComponent texture = engine.createComponent(TextureComponent.class);
         StateComponent state = engine.createComponent(StateComponent.class);
         CollisionComponent collision = engine.createComponent(CollisionComponent.class);
+        AnimationComponent animation = engine.createComponent(AnimationComponent.class);
 
         // set the components data
         Pixmap pmap = new Pixmap(32,32, Pixmap.Format.RGBA8888);
@@ -123,6 +125,7 @@ public class GameScreen extends BaseScreen {
         player.add(collision);
 
         engine.addEntity(player);
+
 
 
     }
