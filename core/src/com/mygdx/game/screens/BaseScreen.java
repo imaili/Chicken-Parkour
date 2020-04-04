@@ -1,8 +1,9 @@
 package com.mygdx.game.screens;
 
+import com.badlogic.gdx.Screen;
 import com.mygdx.game.MainGame;
 
-public abstract class BaseScreen implements Menu {
+public abstract class BaseScreen implements Screen {
 
     private MainGame game;
 
