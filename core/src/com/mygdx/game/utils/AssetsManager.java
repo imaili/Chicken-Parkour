@@ -58,6 +58,7 @@ public class AssetsManager {
         music_game.setVolume(volume_game);
     }
 
+    //Animation
     private static HashMap<String, TextureRegion> texturesMap = new HashMap<String, TextureRegion>();
     private static HashMap<String, Animation> animationsMap = new HashMap<String, Animation>();
     private static TextureAtlas textureAtlas;
