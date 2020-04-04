@@ -9,32 +9,10 @@ import com.mygdx.game.utils.AssetsManager;
 
 public class AnimationComponent implements Component, Pool.Poolable {
 
+    public Animation animation;
+    //Strings as key for assertmanager
+
     @Override
     public void reset() {}
-
-    public void jump(){
-        AssetsManager.getJumpanimation();
-    }
-
-    public void walk(){
-        AssetsManager.getwalkanimation();
-    }
-
-
-    //only used with SpeedPowerUp
-    public void run(){
-        AssetsManager.getRunanimation();
-    }
-
-    public void slide(){
-        AssetsManager.getSlideanimation();
-    }
-
-    public void idle(){
-        AssetsManager.getIdleanimation();
-    }
-
-    public void die(){};
-
 
 }
