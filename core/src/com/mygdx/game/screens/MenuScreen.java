@@ -33,6 +33,10 @@ public abstract class MenuScreen extends BaseScreen implements Menu {
         }
     }
 
+    protected Stage getStage() {
+        return stage;
+    }
+
     protected abstract List<MenuButton> createButtons();
 
     protected MenuScreen() {
@@ -66,7 +70,7 @@ public abstract class MenuScreen extends BaseScreen implements Menu {
         multiplexer.removeProcessor(stage);
     }
 
-    protected static Skin createBasicSkin() {
+    public static Skin createBasicSkin() {
         // Create a font
         BitmapFont font = new BitmapFont();
         Skin skin = new Skin();
