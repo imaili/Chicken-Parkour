@@ -8,15 +8,20 @@ import com.mygdx.game.screens.menu.MainMenu;
 import com.mygdx.game.screens.Menu;
 
 public class MainGame extends Game {
+	private static MainGame singleton;
 
+	public static MainGame getSingleton() {
+		return singleton;
+	}
 
 	private Menu menu;
 
 	@Override
 	public void create() {
+		singleton = this;
 		//setMenu(new GameScreen(this));
 		MainMenu menu = new MainMenu();
-		setScreen(new GameScreen(this));
+		setMenu(menu);
 		Gdx.input.setInputProcessor(new InputMultiplexer());
 		menu.setInputProcessor();
 	}

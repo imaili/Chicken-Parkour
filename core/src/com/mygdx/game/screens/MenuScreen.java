@@ -39,7 +39,7 @@ public abstract class MenuScreen extends BaseScreen implements Menu {
 
     protected void goTo(Menu menu) {
         if (menu != null) {
-           // MainGame.getSingleton().setMenu(menu);
+            MainGame.getSingleton().setMenu(menu);
             removeInputProcessor();
             if (menu instanceof MenuScreen)
                 ((MenuScreen) menu).setInputProcessor();

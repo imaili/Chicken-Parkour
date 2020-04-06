@@ -34,7 +34,7 @@ import com.mygdx.game.systems.RenderingSystem;
 import com.mygdx.game.utils.ChickenContactListener;
 import com.mygdx.game.utils.Mappers;
 
-public class GameScreen extends BaseScreen {
+public class GameScreen extends BaseScreen implements Menu {
 
     private World world;
     private SpriteBatch spriteBatch;
@@ -178,9 +178,13 @@ public class GameScreen extends BaseScreen {
     }
 
 
+    @Override
+    public void goTo(Class<? extends Menu> menu) {
 
+    }
 
+    @Override
+    public void goBack() {
 
-
-
+    }
 }
