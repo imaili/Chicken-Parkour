@@ -2,6 +2,7 @@ package com.mygdx.game.utils;
 
 
 import com.badlogic.gdx.Gdx;
+import com.badlogic.gdx.assets.AssetManager;
 import com.badlogic.gdx.audio.Music;
 import com.badlogic.gdx.graphics.Texture;
 import com.badlogic.gdx.graphics.g2d.Animation;
@@ -64,14 +65,18 @@ public class AssetsManager {
     private static HashMap<String, Animation> animationsMap = new HashMap<>();
     private static TextureAtlas textureAtlas;
 
+    public static final AssetManager manager = new AssetManager();
+
     public static void loadAssets() {
 
+        manager.load(Constants.GAME_BACKGROUND_5_PATH, Texture.class);
+        //manager.finishLoading();
         texturesMap.put(Constants.BACKGROUND_MENU_ID, new TextureRegion(new Texture(Gdx.files.internal(Constants.BACKGROUND_MENU_PATH))));
         texturesMap.put(Constants.EXIT_MENU_ID, new TextureRegion(new Texture(Gdx.files.internal(Constants.EXIT_MENU_PATH))));
         texturesMap.put(Constants.MULTIPLAYER_BUTTON_ID, new TextureRegion(new Texture(Gdx.files.internal(Constants.MULTIPLAYER_BUTTON_PATH))));
         texturesMap.put(Constants.SINGLEPLAYER_BUTTON_ID, new TextureRegion(new Texture(Gdx.files.internal(Constants.SINGLEPLAYER_BUTTON_PATH))));
 
-        ArrayList <TextureRegion> walk_frames = new ArrayList<>();
+        /*ArrayList <TextureRegion> walk_frames = new ArrayList<>();
         walk_frames.add(new TextureRegion(new Texture(Gdx.files.internal(Constants.WALK_1_PATH))));
         walk_frames.add(new TextureRegion(new Texture(Gdx.files.internal(Constants.WALK_2_PATH))));
         walk_frames.add(new TextureRegion(new Texture(Gdx.files.internal(Constants.WALK_3_PATH))));
@@ -83,24 +88,35 @@ public class AssetsManager {
         walk_frames.add(new TextureRegion(new Texture(Gdx.files.internal(Constants.WALK_9_PATH))));
         walk_frames.add(new TextureRegion(new Texture(Gdx.files.internal(Constants.WALK_10_PATH))));
 
+
+        //manager.load(new Animation<>(0.1f, walk_frames), Animation.class);
         animationsMap.put(Constants.WALK_ANIMATION_ID, new Animation<>(0.1f, walk_frames));
+        */
+        manager.load(Constants.WALK_ATLAS_PATH, TextureAtlas.class);
+        manager.load(Constants.WALK_1_PATH,Texture.class);
+        manager.finishLoading();
+        textureAtlas = manager.get(Constants.WALK_ATLAS_PATH);
+
+        Animation animation = new Animation<>(0.1f, textureAtlas.getRegions(), Animation.PlayMode.LOOP);
+        animationsMap.put(Constants.WALK_ANIMATION_ID, animation);
+
 
         ArrayList <TextureRegion> sliding_frames = new ArrayList<>();
-        sliding_frames.add(new TextureRegion(new Texture(Gdx.files.internal(Constants.SLIDING_1_PATH))));
-        sliding_frames.add(new TextureRegion(new Texture(Gdx.files.internal(Constants.SLIDING_2_PATH))));
-        sliding_frames.add(new TextureRegion(new Texture(Gdx.files.internal(Constants.SLIDING_3_PATH))));
-        sliding_frames.add(new TextureRegion(new Texture(Gdx.files.internal(Constants.SLIDING_4_PATH))));
-        sliding_frames.add(new TextureRegion(new Texture(Gdx.files.internal(Constants.SLIDING_5_PATH))));
-        sliding_frames.add(new TextureRegion(new Texture(Gdx.files.internal(Constants.SLIDING_6_PATH))));
-        sliding_frames.add(new TextureRegion(new Texture(Gdx.files.internal(Constants.SLIDING_7_PATH))));
-        sliding_frames.add(new TextureRegion(new Texture(Gdx.files.internal(Constants.SLIDING_8_PATH))));
-        sliding_frames.add(new TextureRegion(new Texture(Gdx.files.internal(Constants.SLIDING_9_PATH))));
-        sliding_frames.add(new TextureRegion(new Texture(Gdx.files.internal(Constants.SLIDING_10_PATH))));
-        sliding_frames.add(new TextureRegion(new Texture(Gdx.files.internal(Constants.SLIDING_11_PATH))));
-        sliding_frames.add(new TextureRegion(new Texture(Gdx.files.internal(Constants.SLIDING_12_PATH))));
-        sliding_frames.add(new TextureRegion(new Texture(Gdx.files.internal(Constants.SLIDING_13_PATH))));
+        sliding_frames.add(new TextureRegion(new Texture(Gdx.files.internal(Constants.SLIDE_1_PATH))));
+        sliding_frames.add(new TextureRegion(new Texture(Gdx.files.internal(Constants.SLIDE_2_PATH))));
+        sliding_frames.add(new TextureRegion(new Texture(Gdx.files.internal(Constants.SLIDE_3_PATH))));
+        sliding_frames.add(new TextureRegion(new Texture(Gdx.files.internal(Constants.SLIDE_4_PATH))));
+        sliding_frames.add(new TextureRegion(new Texture(Gdx.files.internal(Constants.SLIDE_5_PATH))));
+        sliding_frames.add(new TextureRegion(new Texture(Gdx.files.internal(Constants.SLIDE_6_PATH))));
+        sliding_frames.add(new TextureRegion(new Texture(Gdx.files.internal(Constants.SLIDE_7_PATH))));
+        sliding_frames.add(new TextureRegion(new Texture(Gdx.files.internal(Constants.SLIDE_8_PATH))));
+        sliding_frames.add(new TextureRegion(new Texture(Gdx.files.internal(Constants.SLIDE_9_PATH))));
+        sliding_frames.add(new TextureRegion(new Texture(Gdx.files.internal(Constants.SLIDE_10_PATH))));
+        sliding_frames.add(new TextureRegion(new Texture(Gdx.files.internal(Constants.SLIDE_11_PATH))));
+        sliding_frames.add(new TextureRegion(new Texture(Gdx.files.internal(Constants.SLIDE_12_PATH))));
+        sliding_frames.add(new TextureRegion(new Texture(Gdx.files.internal(Constants.SLIDE_13_PATH))));
 
-        animationsMap.put(Constants.SLIDING_ANIMATION_ID, new Animation<>(0.1f, sliding_frames));
+        animationsMap.put(Constants.SLIDE_ANIMATION_ID, new Animation<>(0.1f, sliding_frames));
 
         ArrayList<TextureRegion> dead_frames = new ArrayList<>();
         dead_frames.add(new TextureRegion(new Texture(Gdx.files.internal(Constants.DEAD_1_PATH))));
@@ -175,8 +191,12 @@ public class AssetsManager {
         textureAtlas.dispose();
         texturesMap.clear();
         animationsMap.clear();
+        manager.dispose();
     }
 
+    public static boolean update() {
+        return manager.update();
+    }
 
 }
 

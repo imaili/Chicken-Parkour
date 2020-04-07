@@ -1,0 +1,89 @@
+Jump.png
+size: 2040, 1888
+format: RGBA8888
+filter: Linear,Linear
+repeat: none
+Jump (1)
+  rotate: false
+  xy: 0, 0
+  size: 680, 472
+  orig: 680, 472
+  offset: 0, 0
+  index: -1
+Jump (2)
+  rotate: false
+  xy: 680, 0
+  size: 680, 472
+  orig: 680, 472
+  offset: 0, 0
+  index: -1
+Jump (3)
+  rotate: false
+  xy: 1360, 0
+  size: 680, 472
+  orig: 680, 472
+  offset: 0, 0
+  index: -1
+Jump (4)
+  rotate: false
+  xy: 0, 472
+  size: 680, 472
+  orig: 680, 472
+  offset: 0, 0
+  index: -1
+Jump (5)
+  rotate: false
+  xy: 680, 472
+  size: 680, 472
+  orig: 680, 472
+  offset: 0, 0
+  index: -1
+Jump (6)
+  rotate: false
+  xy: 1360, 472
+  size: 680, 472
+  orig: 680, 472
+  offset: 0, 0
+  index: -1
+Jump (7)
+  rotate: false
+  xy: 0, 944
+  size: 680, 472
+  orig: 680, 472
+  offset: 0, 0
+  index: -1
+Jump (8)
+  rotate: false
+  xy: 680, 944
+  size: 680, 472
+  orig: 680, 472
+  offset: 0, 0
+  index: -1
+Jump (9)
+  rotate: false
+  xy: 1360, 944
+  size: 680, 472
+  orig: 680, 472
+  offset: 0, 0
+  index: -1
+Jump (10)
+  rotate: false
+  xy: 0, 1416
+  size: 680, 472
+  orig: 680, 472
+  offset: 0, 0
+  index: -1
+Jump (11)
+  rotate: false
+  xy: 680, 1416
+  size: 680, 472
+  orig: 680, 472
+  offset: 0, 0
+  index: -1
+Jump (12)
+  rotate: false
+  xy: 1360, 1416
+  size: 680, 472
+  orig: 680, 472
+  offset: 0, 0
+  index: -1
