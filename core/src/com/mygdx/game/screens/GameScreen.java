@@ -3,6 +3,7 @@ package com.mygdx.game.screens;
 import com.badlogic.ashley.core.Entity;
 import com.badlogic.ashley.core.PooledEngine;
 import com.badlogic.gdx.Gdx;
+import com.badlogic.gdx.assets.AssetManager;
 import com.badlogic.gdx.graphics.Color;
 import com.badlogic.gdx.graphics.GL20;
 import com.badlogic.gdx.graphics.OrthographicCamera;
@@ -36,7 +37,7 @@ import com.mygdx.game.utils.ChickenContactListener;
 import com.mygdx.game.utils.Constants;
 import com.mygdx.game.utils.Mappers;
 
-public class GameScreen extends BaseScreen {
+public class GameScreen extends BaseScreen implements Menu {
 
     private World world;
     private SpriteBatch spriteBatch;
@@ -53,6 +54,8 @@ public class GameScreen extends BaseScreen {
     @Override
     public void show() {
         super.show();
+        AssetsManager.loadAssets();
+        AssetsManager.manager.finishLoading();
         world = new World(new Vector2(0, -13f), true);
         world.setContactListener(new ChickenContactListener());
         spriteBatch = new SpriteBatch();
@@ -70,7 +73,9 @@ public class GameScreen extends BaseScreen {
         createPlayer();
         createFloor();
 
-
+        //spriteBatch.begin();
+        //spriteBatch.draw((Texture) AssetsManager.manager.get(Constants.GAME_BACKGROUND_5_PATH),0,0, (float) Gdx.graphics.getWidth(), (float)Gdx.graphics.getHeight());
+        //spriteBatch.end();
 
     }
 
@@ -82,6 +87,8 @@ public class GameScreen extends BaseScreen {
         if(Mappers.BODY.get(player).body.getPosition().x < 0.5 || Mappers.STATE.get(player).get() == StateComponent.STATE_HIT) {
             game.setScreen(new GameOverScreen(game));
         }
+
+        AssetsManager.manager.update();
     }
 
     @Override
@@ -109,13 +116,21 @@ public class GameScreen extends BaseScreen {
 
         // set the components data
 
-        texture.region = new TextureRegion(new Texture(Gdx.files.internal(Constants.WALK_1_PATH)));
-        texture.region.setRegion(100,100, 9, 7);
-        System.out.println(texture.region.getRegionWidth() + " " + texture.region.getRegionHeight());
-        body.body = createBox(1,1,1,1, true);
+        Pixmap pmap = new Pixmap(32,32, Pixmap.Format.RGBA8888);
+        pmap.setColor(Color.RED);
+        pmap.fill();
+        //texture.region = new TextureRegion(new Texture(pmap));
+        pmap.dispose();
+
+        texture.region = new TextureRegion((Texture) AssetsManager.manager.get(Constants.WALK_1_PATH));
+
+        animation.animation = AssetsManager.getAnimation(Constants.WALK_ANIMATION_ID);
+
+
+        body.body = createBox(10,10,1,1, true);
 
         // set object position (x,y,z) z used to define draw order 0 first drawn
-        position.position.set(1,1,0);
+        position.position.set(10,10,0);
 
         body.body.setUserData(player);
         // add components to entity
@@ -123,6 +138,7 @@ public class GameScreen extends BaseScreen {
         player.add(position);
         player.add(chicken);
         player.add(texture);
+        player.add(animation);
         player.add(state);
         player.add(collision);
 
@@ -178,9 +194,13 @@ public class GameScreen extends BaseScreen {
     }
 
 
+    @Override
+    public void goTo(Class<? extends Menu> menu) {
 
+    }
 
+    @Override
+    public void goBack() {
 
-
-
+    }
 }

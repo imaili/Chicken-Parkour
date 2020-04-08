@@ -1,0 +1,89 @@
+Slide.png
+size: 2040, 1888
+format: RGBA8888
+filter: Linear,Linear
+repeat: none
+Sliding (1)
+  rotate: false
+  xy: 0, 0
+  size: 680, 472
+  orig: 680, 472
+  offset: 0, 0
+  index: -1
+Sliding (2)
+  rotate: false
+  xy: 680, 0
+  size: 680, 472
+  orig: 680, 472
+  offset: 0, 0
+  index: -1
+Sliding (3)
+  rotate: false
+  xy: 1360, 0
+  size: 680, 472
+  orig: 680, 472
+  offset: 0, 0
+  index: -1
+Sliding (4)
+  rotate: false
+  xy: 0, 472
+  size: 680, 472
+  orig: 680, 472
+  offset: 0, 0
+  index: -1
+Sliding (5)
+  rotate: false
+  xy: 680, 472
+  size: 680, 472
+  orig: 680, 472
+  offset: 0, 0
+  index: -1
+Sliding (6)
+  rotate: false
+  xy: 1360, 472
+  size: 680, 472
+  orig: 680, 472
+  offset: 0, 0
+  index: -1
+Sliding (8)
+  rotate: false
+  xy: 0, 944
+  size: 680, 472
+  orig: 680, 472
+  offset: 0, 0
+  index: -1
+Sliding (9)
+  rotate: false
+  xy: 680, 944
+  size: 680, 472
+  orig: 680, 472
+  offset: 0, 0
+  index: -1
+Sliding (10)
+  rotate: false
+  xy: 1360, 944
+  size: 680, 472
+  orig: 680, 472
+  offset: 0, 0
+  index: -1
+Sliding (11)
+  rotate: false
+  xy: 0, 1416
+  size: 680, 472
+  orig: 680, 472
+  offset: 0, 0
+  index: -1
+Sliding (12)
+  rotate: false
+  xy: 680, 1416
+  size: 680, 472
+  orig: 680, 472
+  offset: 0, 0
+  index: -1
+Sliding (13)
+  rotate: false
+  xy: 1360, 1416
+  size: 680, 472
+  orig: 680, 472
+  offset: 0, 0
+  index: -1
