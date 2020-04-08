@@ -31,7 +31,9 @@ import com.mygdx.game.systems.RandomLevelSystem;
 import com.mygdx.game.systems.PhysicsDebugSystem;
 import com.mygdx.game.systems.PhysicsSystem;
 import com.mygdx.game.systems.RenderingSystem;
+import com.mygdx.game.utils.AssetsManager;
 import com.mygdx.game.utils.ChickenContactListener;
+import com.mygdx.game.utils.Constants;
 import com.mygdx.game.utils.Mappers;
 
 public class GameScreen extends BaseScreen {
@@ -106,12 +108,10 @@ public class GameScreen extends BaseScreen {
         AnimationComponent animation = engine.createComponent(AnimationComponent.class);
 
         // set the components data
-        Pixmap pmap = new Pixmap(32,32, Pixmap.Format.RGBA8888);
-        pmap.setColor(Color.RED);
-        pmap.fill();
-        texture.region = new TextureRegion(new Texture(pmap));
-        pmap.dispose();
 
+        texture.region = new TextureRegion(new Texture(Gdx.files.internal(Constants.WALK_1_PATH)));
+        texture.region.setRegion(100,100, 9, 7);
+        System.out.println(texture.region.getRegionWidth() + " " + texture.region.getRegionHeight());
         body.body = createBox(1,1,1,1, true);
 
         // set object position (x,y,z) z used to define draw order 0 first drawn

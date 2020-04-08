@@ -18,6 +18,9 @@ public class AssetsManager {
     private Music music_game = Gdx.audio.newMusic(Gdx.files.internal("sounds/bensound-scifi.mp3"));
     private float volume_menu = 0.75f;
     private float volume_game = 0.75f;
+    private static HashMap<String, TextureRegion> texturesMap = new HashMap<>();
+    private static HashMap<String, Animation> animationsMap = new HashMap<>();
+    private static TextureAtlas textureAtlas;
 
 
     public void play_music(String music_type)  // "game" or "menu" as music type
@@ -60,9 +63,7 @@ public class AssetsManager {
     }
 
     //Animation
-    private static HashMap<String, TextureRegion> texturesMap = new HashMap<>();
-    private static HashMap<String, Animation> animationsMap = new HashMap<>();
-    private static TextureAtlas textureAtlas;
+
 
     public static void loadAssets() {
 

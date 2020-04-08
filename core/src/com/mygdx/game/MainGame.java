@@ -3,14 +3,18 @@ package com.mygdx.game;
 import com.badlogic.gdx.Game;
 import com.badlogic.gdx.Gdx;
 import com.badlogic.gdx.InputMultiplexer;
+import com.badlogic.gdx.assets.AssetManager;
+import com.badlogic.gdx.audio.Music;
 import com.mygdx.game.screens.GameScreen;
 import com.mygdx.game.screens.menu.MainMenu;
 import com.mygdx.game.screens.Menu;
+import com.mygdx.game.utils.AssetsManager;
 
 public class MainGame extends Game {
 
 
 	private Menu menu;
+
 
 	@Override
 	public void create() {
@@ -19,6 +23,7 @@ public class MainGame extends Game {
 		setScreen(new GameScreen(this));
 		Gdx.input.setInputProcessor(new InputMultiplexer());
 		menu.setInputProcessor();
+
 	}
 
 	@Override
