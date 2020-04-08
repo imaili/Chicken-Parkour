@@ -54,8 +54,7 @@ public class GameScreen extends BaseScreen implements Menu {
     @Override
     public void show() {
         super.show();
-        AssetsManager.loadAssets();
-        AssetsManager.manager.finishLoading();
+
         world = new World(new Vector2(0, -13f), true);
         world.setContactListener(new ChickenContactListener());
         spriteBatch = new SpriteBatch();
@@ -73,9 +72,6 @@ public class GameScreen extends BaseScreen implements Menu {
         createPlayer();
         createFloor();
 
-        //spriteBatch.begin();
-        //spriteBatch.draw((Texture) AssetsManager.manager.get(Constants.GAME_BACKGROUND_5_PATH),0,0, (float) Gdx.graphics.getWidth(), (float)Gdx.graphics.getHeight());
-        //spriteBatch.end();
 
     }
 
@@ -88,7 +84,6 @@ public class GameScreen extends BaseScreen implements Menu {
             game.setScreen(new GameOverScreen(game));
         }
 
-        AssetsManager.manager.update();
     }
 
     @Override
@@ -119,18 +114,16 @@ public class GameScreen extends BaseScreen implements Menu {
         Pixmap pmap = new Pixmap(32,32, Pixmap.Format.RGBA8888);
         pmap.setColor(Color.RED);
         pmap.fill();
-        //texture.region = new TextureRegion(new Texture(pmap));
+        texture.region = new TextureRegion(new Texture(pmap));
         pmap.dispose();
 
-        texture.region = new TextureRegion((Texture) AssetsManager.manager.get(Constants.WALK_1_PATH));
-
-        animation.animation = AssetsManager.getAnimation(Constants.WALK_ANIMATION_ID);
 
 
-        body.body = createBox(10,10,1,1, true);
+
+        body.body = createBox(1,1,1,1, true);
 
         // set object position (x,y,z) z used to define draw order 0 first drawn
-        position.position.set(10,10,0);
+        position.position.set(1,1,0);
 
         body.body.setUserData(player);
         // add components to entity
