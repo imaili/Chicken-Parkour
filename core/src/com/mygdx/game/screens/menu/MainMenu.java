@@ -3,7 +3,6 @@ package com.mygdx.game.screens.menu;
 import com.badlogic.gdx.Gdx;
 import com.badlogic.gdx.math.Vector2;
 import com.mygdx.game.screens.MenuScreen;
-import com.mygdx.game.screens.menu.button.ExitButton;
 import com.mygdx.game.screens.menu.button.GoToButton;
 import com.mygdx.game.screens.menu.button.MenuButton;
 import com.mygdx.game.screens.Menu;
@@ -20,11 +19,10 @@ public class MainMenu extends MenuScreen {
         int buttonHeight = Gdx.graphics.getHeight() / 10;
         int buttonOffset = (Gdx.graphics.getHeight() - buttonHeight * nButtons) / (nButtons + 1);
         List<MenuButton> list = new LinkedList<>();
-        // TODO Remove SinglePlayerMenu
         MenuButton goToSinglePlayerMenu = new GoToButton(skin, new Vector2(buttonX, buttonOffset + 3*(buttonHeight+buttonOffset)), "Single Player", SinglePlayerMenu.class);
-        MenuButton goToMultiPlayerMenu = new GoToButton(skin, new Vector2(buttonX, buttonOffset + 2*(buttonHeight+buttonOffset)), "MultiPlayer", SinglePlayerMenu.class);
+        MenuButton goToMultiPlayerMenu = new GoToButton(skin, new Vector2(buttonX, buttonOffset + 2*(buttonHeight+buttonOffset)), "MultiPlayer", MultiPlayerMenu.class);
         MenuButton goToSettings = new GoToButton(skin, new Vector2(buttonX, buttonOffset + (buttonHeight+buttonOffset)), "Settings", Settings.class);
-        MenuButton exitGame = new ExitButton(skin, new Vector2(buttonX, buttonOffset));
+        MenuButton exitGame = new GoToButton(skin, new Vector2(buttonX, buttonOffset), "Exit", ExitMenu.class);
         Collections.addAll(list, goToSinglePlayerMenu, goToMultiPlayerMenu, goToSettings, exitGame);
         return list;
     }
@@ -40,10 +38,10 @@ public class MainMenu extends MenuScreen {
             goToSettings();
         else if (menu.equals(SinglePlayerMenu.class))
             goToSinglePlayerMenu();
-        /* TODO
         else if (menu.equals(MultiPlayerMenu.class))
             goToMultiPlayerMenu();
-         */
+        else if (menu.equals(ExitMenu.class))
+            goToExitMenu();
     }
 
     public void goToSettings() {
@@ -55,6 +53,10 @@ public class MainMenu extends MenuScreen {
     }
 
     public void goToMultiPlayerMenu() {
-        // TODO
+        goTo(new MultiPlayerMenu(this));
+    }
+
+    public void goToExitMenu() {
+        goTo(new ExitMenu(this));
     }
 }
