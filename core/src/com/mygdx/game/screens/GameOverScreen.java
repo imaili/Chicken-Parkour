@@ -9,8 +9,8 @@ import com.badlogic.gdx.scenes.scene2d.ui.TextArea;
 import com.mygdx.game.MainGame;
 
 
-public class GameOverScreen extends BaseScreen {
-
+public class GameOverScreen extends BaseScreen implements Menu {
+    private static final String MUSIC_TYPE = "menu";
     Label coordinates;
     Label.LabelStyle textStyle;
     BitmapFont font;
@@ -41,5 +41,23 @@ public class GameOverScreen extends BaseScreen {
         coordinates.draw(batch, 1);
         batch.end();
 
+    }
+
+    @Override
+    public void goTo(Class<? extends Menu> menu) {
+
+    }
+
+    @Override
+    public void goBack() {
+
+    }
+
+    public void startMusic() {
+        MainGame.getSingleton().getAssetsManager().play_music(MUSIC_TYPE);
+    }
+
+    public void stopMusic() {
+        MainGame.getSingleton().getAssetsManager().stop_music();
     }
 }

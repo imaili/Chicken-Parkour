@@ -42,7 +42,7 @@ import com.mygdx.game.utils.Constants;
 import com.mygdx.game.utils.Mappers;
 
 public class GameScreen extends BaseScreen implements Menu {
-
+    private static final String MUSIC_TYPE = "game";
     private World world;
     private SpriteBatch spriteBatch;
     private OrthographicCamera camera;
@@ -105,7 +105,8 @@ public class GameScreen extends BaseScreen implements Menu {
             /*stage.draw();
             stage.act();*/
             if (Mappers.BODY.get(player).body.getPosition().x < 0.5 || Mappers.STATE.get(player).get() == StateComponent.STATE_HIT) {
-                game.setScreen(new GameOverScreen(game));
+                //game.setScreen(new GameOverScreen(game));
+                goTo(GameOverScreen.class);
             }
         /*} else {
             pauseMenu.render(delta);
@@ -119,8 +120,13 @@ public class GameScreen extends BaseScreen implements Menu {
 
     }
 
+    public void startMusic() {
+        MainGame.getSingleton().getAssetsManager().play_music(MUSIC_TYPE);
+    }
 
-
+    public void stopMusic() {
+        MainGame.getSingleton().getAssetsManager().stop_music();
+    }
 
 
     private void createPlayer(){
@@ -215,12 +221,20 @@ public class GameScreen extends BaseScreen implements Menu {
 
     @Override
     public void goTo(Class<? extends Menu> menu) {
-
+        if (menu.equals(GameOverScreen.class))
+            goToGameOverScreen();
     }
 
     @Override
     public void goBack() {
 
+    }
+
+    public void goToGameOverScreen() {
+        stopMusic();
+        GameOverScreen gameOverScreen = new GameOverScreen(game);
+        gameOverScreen.startMusic();
+        game.setMenu(gameOverScreen);
     }
     /*
     @Override

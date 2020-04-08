@@ -21,6 +21,7 @@ public abstract class MenuScreen extends BaseScreen implements Menu {
     private final List<MenuButton> buttons;
     protected static Skin skin = createBasicSkin();
     protected static final Texture DEFAULT_BACK_GROUND_TEXTURE = new Texture("background.jpg");
+    protected static final String MUSIC_TYPE = "menu";
     protected Texture backGroundTexture;
 
     protected MenuScreen(Menu previousMenu){
@@ -68,6 +69,14 @@ public abstract class MenuScreen extends BaseScreen implements Menu {
     public  void removeInputProcessor() {
         InputMultiplexer multiplexer = (InputMultiplexer) Gdx.input.getInputProcessor();
         multiplexer.removeProcessor(stage);
+    }
+
+    public void startMusic() {
+        MainGame.getSingleton().getAssetsManager().play_music(MUSIC_TYPE);
+    }
+
+    public void stopMusic() {
+        MainGame.getSingleton().getAssetsManager().stop_music();
     }
 
     public static Skin createBasicSkin() {

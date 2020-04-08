@@ -40,4 +40,13 @@ public class SinglePlayerMenu extends MenuScreen {
     public void goToGameScreen() {
         goTo(new GameScreen(MainGame.getSingleton()));
     }
+
+    @Override
+    public void goTo(Menu menu) {
+        if (menu instanceof  GameScreen) {
+            stopMusic();
+            menu.startMusic();
+        }
+        super.goTo(menu);
+    }
 }

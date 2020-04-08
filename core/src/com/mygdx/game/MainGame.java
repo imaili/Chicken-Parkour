@@ -10,6 +10,7 @@ import com.badlogic.gdx.graphics.g2d.TextureAtlas;
 import com.mygdx.game.screens.GameScreen;
 import com.mygdx.game.screens.menu.MainMenu;
 import com.mygdx.game.screens.Menu;
+import com.mygdx.game.utils.AssetsManager;
 import com.mygdx.game.utils.Constants;
 
 public class MainGame extends Game {
@@ -21,6 +22,7 @@ public class MainGame extends Game {
 	}
 
 	private Menu menu;
+	private AssetsManager assetsManager;
 
 
 	@Override
@@ -33,7 +35,8 @@ public class MainGame extends Game {
 		menu.setInputProcessor();
 		manager = new AssetManager();
 		loadAssetManager();
-
+		assetsManager = new AssetsManager();
+		menu.startMusic();
 	}
 
 	@Override
@@ -79,6 +82,10 @@ public class MainGame extends Game {
 
 		manager.finishLoading();
 
+	}
+
+	public AssetsManager getAssetsManager() {
+		return assetsManager;
 	}
 }
 
