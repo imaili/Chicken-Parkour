@@ -121,11 +121,12 @@ public class GameScreen extends BaseScreen implements Menu {
     }
 
     public void startMusic() {
-        MainGame.getSingleton().getAssetsManager().play_music(MUSIC_TYPE);
+        if (game.getMusic())
+            game.getAssetsManager().play_music(MUSIC_TYPE);
     }
 
     public void stopMusic() {
-        MainGame.getSingleton().getAssetsManager().stop_music();
+        game.getAssetsManager().stop_music();
     }
 
 

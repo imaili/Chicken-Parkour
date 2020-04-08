@@ -72,7 +72,8 @@ public abstract class MenuScreen extends BaseScreen implements Menu {
     }
 
     public void startMusic() {
-        MainGame.getSingleton().getAssetsManager().play_music(MUSIC_TYPE);
+        if (MainGame.getSingleton().getMusic())
+            MainGame.getSingleton().getAssetsManager().play_music(MUSIC_TYPE);
     }
 
     public void stopMusic() {

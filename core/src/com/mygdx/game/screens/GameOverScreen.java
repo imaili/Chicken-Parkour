@@ -54,10 +54,11 @@ public class GameOverScreen extends BaseScreen implements Menu {
     }
 
     public void startMusic() {
-        MainGame.getSingleton().getAssetsManager().play_music(MUSIC_TYPE);
+        if (getGame().getMusic())
+            getGame().getAssetsManager().play_music(MUSIC_TYPE);
     }
 
     public void stopMusic() {
-        MainGame.getSingleton().getAssetsManager().stop_music();
+        getGame().getAssetsManager().stop_music();
     }
 }

@@ -23,6 +23,7 @@ public class MainGame extends Game {
 
 	private Menu menu;
 	private AssetsManager assetsManager;
+	private boolean music;
 
 
 	@Override
@@ -36,6 +37,7 @@ public class MainGame extends Game {
 		manager = new AssetManager();
 		loadAssetManager();
 		assetsManager = new AssetsManager();
+		music = true;
 		menu.startMusic();
 	}
 
@@ -51,6 +53,14 @@ public class MainGame extends Game {
 	public void setMenu(Menu menu) {
 		this.menu = menu;
 		setScreen(menu);
+	}
+
+	public void setMusic(boolean value) {
+		music = value;
+	}
+
+	public boolean getMusic() {
+		return music;
 	}
 
 	@Override
