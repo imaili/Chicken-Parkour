@@ -3,7 +3,7 @@ package com.mygdx.game.screens;
 import com.badlogic.ashley.core.Entity;
 import com.badlogic.ashley.core.PooledEngine;
 import com.badlogic.gdx.Gdx;
-import com.badlogic.gdx.InputMultiplexer;
+import com.badlogic.gdx.assets.AssetManager;
 import com.badlogic.gdx.graphics.Color;
 import com.badlogic.gdx.graphics.GL20;
 import com.badlogic.gdx.graphics.OrthographicCamera;
@@ -36,7 +36,9 @@ import com.mygdx.game.systems.RandomLevelSystem;
 import com.mygdx.game.systems.PhysicsDebugSystem;
 import com.mygdx.game.systems.PhysicsSystem;
 import com.mygdx.game.systems.RenderingSystem;
+import com.mygdx.game.utils.AssetsManager;
 import com.mygdx.game.utils.ChickenContactListener;
+import com.mygdx.game.utils.Constants;
 import com.mygdx.game.utils.Mappers;
 
 public class GameScreen extends BaseScreen implements Menu {
@@ -73,6 +75,7 @@ public class GameScreen extends BaseScreen implements Menu {
     @Override
     public void show() {
         super.show();
+
         world = new World(new Vector2(0, -13f), true);
         world.setContactListener(new ChickenContactListener());
         spriteBatch = new SpriteBatch();
@@ -89,7 +92,6 @@ public class GameScreen extends BaseScreen implements Menu {
         engine.addSystem(renderingSystem);
         createPlayer();
         createFloor();
-
 
 
     }
@@ -134,11 +136,15 @@ public class GameScreen extends BaseScreen implements Menu {
         AnimationComponent animation = engine.createComponent(AnimationComponent.class);
 
         // set the components data
+
         Pixmap pmap = new Pixmap(32,32, Pixmap.Format.RGBA8888);
         pmap.setColor(Color.RED);
         pmap.fill();
         texture.region = new TextureRegion(new Texture(pmap));
         pmap.dispose();
+
+
+
 
         body.body = createBox(1,1,1,1, true);
 
@@ -151,6 +157,7 @@ public class GameScreen extends BaseScreen implements Menu {
         player.add(position);
         player.add(chicken);
         player.add(texture);
+        player.add(animation);
         player.add(state);
         player.add(collision);
 
