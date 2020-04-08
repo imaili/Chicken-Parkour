@@ -23,18 +23,24 @@ public abstract class MenuScreen extends BaseScreen implements Menu {
     protected static final Texture DEFAULT_BACK_GROUND_TEXTURE = new Texture("background.jpg");
     protected Texture backGroundTexture;
 
-    protected MenuScreen(Menu previousMenu, List<MenuButton> buttons){
+    protected MenuScreen(Menu previousMenu){
         this.previousMenu = previousMenu;
         this.stage = new Stage();
-        this.buttons = buttons;
+        this.buttons = createButtons();
         for (MenuButton button : buttons) {
             //button.setMenu(this);
             stage.addActor(button.getButton());
         }
     }
 
-    protected MenuScreen(List<MenuButton> buttons) {
-        this(null, buttons);
+    protected Stage getStage() {
+        return stage;
+    }
+
+    protected abstract List<MenuButton> createButtons();
+
+    protected MenuScreen() {
+        this(null);
     }
 
     protected void goTo(Menu menu) {
@@ -64,7 +70,7 @@ public abstract class MenuScreen extends BaseScreen implements Menu {
         multiplexer.removeProcessor(stage);
     }
 
-    protected static Skin createBasicSkin() {
+    public static Skin createBasicSkin() {
         // Create a font
         BitmapFont font = new BitmapFont();
         Skin skin = new Skin();

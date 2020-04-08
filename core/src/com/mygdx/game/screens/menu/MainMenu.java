@@ -13,9 +13,8 @@ import java.util.LinkedList;
 import java.util.List;
 
 public class MainMenu extends MenuScreen {
-    private static final List<MenuButton> BUTTONS = createButtons();
 
-    private static List<MenuButton> createButtons() {
+    protected List<MenuButton> createButtons() {
         int buttonX = Gdx.graphics.getWidth() / 2 + Gdx.graphics.getWidth() / 8;
         int nButtons = 4;
         int buttonHeight = Gdx.graphics.getHeight() / 10;
@@ -31,7 +30,7 @@ public class MainMenu extends MenuScreen {
     }
 
     public MainMenu() {
-        super(BUTTONS);
+        super();
         backGroundTexture = DEFAULT_BACK_GROUND_TEXTURE;
     }
 

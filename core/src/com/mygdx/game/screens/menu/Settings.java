@@ -11,9 +11,8 @@ import java.util.LinkedList;
 import java.util.List;
 
 public class Settings extends MenuScreen {
-    private static final List<MenuButton> buttons = createButtons();
 
-    private static List<MenuButton> createButtons() {
+    protected List<MenuButton> createButtons() {
         List<MenuButton> list = new LinkedList<>();
         MenuButton goToMainMenu = new GoToButton(skin, new Vector2(200, 200), "Menu", MainMenu.class);
         MenuButton goBack = new GoBackButton();
@@ -23,7 +22,7 @@ public class Settings extends MenuScreen {
     }
 
     public Settings(Menu previousMenu) {
-        super(previousMenu, buttons);
+        super(previousMenu);
     }
 
     @Override
