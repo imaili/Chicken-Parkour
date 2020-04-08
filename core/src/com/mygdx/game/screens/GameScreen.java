@@ -47,28 +47,28 @@ public class GameScreen extends BaseScreen implements Menu {
     private PooledEngine engine;
     private Entity player;
     private MainGame game;
-
+/*
 
     private PauseMenu pauseMenu;
     private Stage stage;
-    private boolean paused;
+    private boolean paused;*/
 
     public GameScreen(MainGame game) {
         super(game);
         this.game = game;
-        this.pauseMenu = new PauseMenu(this);
+        /*this.pauseMenu = new PauseMenu(this);
         this.stage = createPauseButtonStage();
-        this.paused = false;
+        this.paused = false;*/
     }
 
-    private Stage createPauseButtonStage() {
+    /*private Stage createPauseButtonStage() {
         Stage stage = new Stage();
         stage.addActor((new PauseButton(this)).getButton());
         InputMultiplexer multiplexer = (InputMultiplexer) Gdx.input.getInputProcessor();
         if (!multiplexer.getProcessors().contains(stage, true))
             multiplexer.addProcessor(stage);
         return stage;
-    }
+    }*/
 
     @Override
     public void show() {
@@ -96,19 +96,18 @@ public class GameScreen extends BaseScreen implements Menu {
 
     @Override
     public void render(float delta) {
-        if (!paused) {
+        /*if (!paused) {*/
             Gdx.gl.glClearColor(0, 0, 0, 0);
             Gdx.gl.glClear(GL20.GL_COLOR_BUFFER_BIT);
-            stage.act();
             engine.update(delta);
-            stage.draw();
-            stage.act();
+            /*stage.draw();
+            stage.act();*/
             if (Mappers.BODY.get(player).body.getPosition().x < 0.5 || Mappers.STATE.get(player).get() == StateComponent.STATE_HIT) {
                 game.setScreen(new GameOverScreen(game));
             }
-        } else {
+        /*} else {
             pauseMenu.render(delta);
-        }
+        } */
     }
 
     @Override
@@ -216,7 +215,7 @@ public class GameScreen extends BaseScreen implements Menu {
     public void goBack() {
 
     }
-
+    /*
     @Override
     public void pause() {
         paused = true;
@@ -232,5 +231,5 @@ public class GameScreen extends BaseScreen implements Menu {
         if (!multiplexer.getProcessors().contains(stage, true))
             multiplexer.addProcessor(stage);
         pauseMenu.removeInputProcessor();
-    }
+    } */
 }
