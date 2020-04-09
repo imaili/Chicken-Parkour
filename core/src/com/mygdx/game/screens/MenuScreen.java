@@ -15,12 +15,14 @@ import com.mygdx.game.screens.menu.button.MenuButton;
 
 import java.util.List;
 
+import static com.mygdx.game.utils.Constants.BACKGROUND_MENU_PATH;
+
 public abstract class MenuScreen extends BaseScreen implements Menu {
     protected final Menu previousMenu;
     private final Stage stage;
     private final List<MenuButton> buttons;
     protected static Skin skin = createBasicSkin();
-    protected static final Texture DEFAULT_BACK_GROUND_TEXTURE = new Texture("background.jpg");
+    protected static final Texture DEFAULT_BACK_GROUND_TEXTURE = new Texture(BACKGROUND_MENU_PATH);
     protected static final String MUSIC_TYPE = "menu";
     protected Texture backGroundTexture;
 
