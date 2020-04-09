@@ -37,7 +37,7 @@ public class MainGame extends Game {
 		manager = new AssetManager();
 		loadAssetManager();
 		assetsManager = new AssetsManager();
-		music = true;
+		music = false;
 		menu.startMusic();
 	}
 
