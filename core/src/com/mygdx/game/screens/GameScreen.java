@@ -25,6 +25,7 @@ import com.mygdx.game.components.CollisionComponent;
 import com.mygdx.game.components.StateComponent;
 import com.mygdx.game.components.TextureComponent;
 import com.mygdx.game.components.TransformComponent;
+import com.mygdx.game.server.Server;
 import com.mygdx.game.systems.ChickenSystem;
 import com.mygdx.game.systems.CleanUpSystem;
 import com.mygdx.game.systems.CollisionSystem;
@@ -37,6 +38,8 @@ import com.mygdx.game.utils.ChickenContactListener;
 import com.mygdx.game.utils.Constants;
 import com.mygdx.game.utils.Mappers;
 
+import org.json.JSONObject;
+
 public class GameScreen extends BaseScreen implements Menu {
 
     private World world;
@@ -45,10 +48,17 @@ public class GameScreen extends BaseScreen implements Menu {
     private PooledEngine engine;
     private Entity player;
     private MainGame game;
+    private Server server;
+    private String game_id;
+    private String player_id;
 
     public GameScreen(MainGame game) {
         super(game);
         this.game = game;
+        this.server = Server.getInstance();
+        String[] info = this.server.startGame();
+        game_id = info[0];
+        player_id = info[1];
     }
 
     @Override
