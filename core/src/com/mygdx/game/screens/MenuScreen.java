@@ -98,10 +98,10 @@ public abstract class MenuScreen extends BaseScreen implements Menu {
 
         // Create a button style
         TextButton.TextButtonStyle textButtonStyle = new TextButton.TextButtonStyle();
-        textButtonStyle.up = skin.newDrawable("background", Color.GRAY);
-        textButtonStyle.down = skin.newDrawable("background", Color.DARK_GRAY);
-        textButtonStyle.checked = skin.newDrawable("background", Color.GRAY);
-        textButtonStyle.over = skin.newDrawable("background", Color.LIGHT_GRAY);
+        textButtonStyle.up = skin.newDrawable("background", Color.OLIVE);
+        textButtonStyle.down = skin.newDrawable("background", Color.GOLDENROD);
+        textButtonStyle.checked = skin.newDrawable("background", Color.OLIVE);
+        textButtonStyle.over = skin.newDrawable("background", Color.OLIVE);
         textButtonStyle.font = skin.getFont("default");
         skin.add("default", textButtonStyle);
         return skin;
