@@ -31,7 +31,7 @@ public class ExitMenu extends MenuScreen {
         return list;
     }
 
-    public ExitMenu(Menu previousMenu) {
+    public ExitMenu(MainMenu previousMenu) {
         super(previousMenu);
         backGroundTexture = DEFAULT_EXIT_TEXTURE;
     }
@@ -41,7 +41,8 @@ public class ExitMenu extends MenuScreen {
 
     }
 
-    protected void draw() {
+    public void draw() {
+        ((MainMenu) previousMenu).draw();
         getStage().getBatch().begin();
         getStage().getBatch().draw(backGroundTexture, X, Y, WIDTH, HEIGHT);
         getStage().getBatch().end();

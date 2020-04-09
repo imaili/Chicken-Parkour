@@ -52,7 +52,7 @@ public class GameOverMenu extends MenuScreen {
         goTo(new MainMenu());
     }
 
-    protected void draw() {
+    public void draw() {
         getStage().getBatch().begin();
         getStage().getBatch().draw(backGroundTexture, X, Y, WIDTH, HEIGHT);
         getStage().getBatch().end();
