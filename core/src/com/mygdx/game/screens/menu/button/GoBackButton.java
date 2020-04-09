@@ -38,6 +38,10 @@ public class GoBackButton extends MenuButton {
         this(defaultPosition());
     }
 
+    public GoBackButton(Texture texture, Vector2 position, int width, int height) {
+        super(texture, position, width, height);
+    }
+
     @Override
     public void action() {
         getMenu().goBack();

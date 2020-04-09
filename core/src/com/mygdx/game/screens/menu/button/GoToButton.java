@@ -1,5 +1,6 @@
 package com.mygdx.game.screens.menu.button;
 
+import com.badlogic.gdx.graphics.Texture;
 import com.badlogic.gdx.math.Vector2;
 import com.badlogic.gdx.scenes.scene2d.ui.Skin;
 import com.badlogic.gdx.scenes.scene2d.ui.TextButton;
@@ -15,6 +16,10 @@ public class GoToButton extends MenuButton {
 
     public GoToButton(Skin skin, Vector2 position, String menuName) {
         this(skin, position, menuName, null);
+    }
+
+    public GoToButton(Texture texture, Vector2 position, int width, int height) {
+        super(texture, position, width, height);
     }
 
     @Override
