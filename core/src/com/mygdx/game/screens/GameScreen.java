@@ -26,13 +26,10 @@ import com.mygdx.game.components.CollisionComponent;
 import com.mygdx.game.components.StateComponent;
 import com.mygdx.game.components.TextureComponent;
 import com.mygdx.game.components.TransformComponent;
-<<<<<<< core/src/com/mygdx/game/screens/GameScreen.java
 import com.mygdx.game.screens.menu.PauseMenu;
 import com.mygdx.game.screens.menu.button.MenuButton;
 import com.mygdx.game.screens.menu.button.PauseButton;
-=======
 import com.mygdx.game.server.Server;
->>>>>>> core/src/com/mygdx/game/screens/GameScreen.java
 import com.mygdx.game.systems.ChickenSystem;
 import com.mygdx.game.systems.CleanUpSystem;
 import com.mygdx.game.systems.CollisionSystem;
