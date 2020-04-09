@@ -37,7 +37,8 @@ public class GameOverScreen extends BaseScreen  implements Menu {
     public GameOverScreen(MainGame game) {
         super(game);
         this.game = game;
-        this.gameOver = new GameOverMenu();
+        this.gameOver = new GameOverMenu(new GameScreen(game));
+        this.gameOver.setInputProcessor();
         this.stage = new Stage();
     }
 
@@ -84,9 +85,10 @@ public class GameOverScreen extends BaseScreen  implements Menu {
     @Override
     public void render(float delta) {
         // draw
-        draw();
+        //draw();
         // update
     //    stage.act(delta);
+        gameOver.render(delta);
     }
 
     @Override

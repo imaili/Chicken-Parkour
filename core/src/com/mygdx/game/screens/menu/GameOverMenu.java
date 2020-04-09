@@ -20,7 +20,7 @@ public class GameOverMenu extends MenuScreen {
     protected static final int X = Gdx.graphics.getWidth() / 4;
     protected static final int Y = Gdx.graphics.getHeight() / 4;
     protected static final int WIDTH = Gdx.graphics.getWidth() / 2;
-    protected static final int HEIGTH = Gdx.graphics.getHeight()/ 2;
+    protected static final int HEIGHT = Gdx.graphics.getHeight()/ 2;
 
 
 
@@ -37,13 +37,9 @@ public class GameOverMenu extends MenuScreen {
     }
 
     public GameOverMenu(GameScreen gameScreen) {
-    }
-
-    public GameOverMenu() {
-        super();
+        super(gameScreen);
         backGroundTexture = GAME_OVER_BACK_GROUND_TEXTURE;
     }
-
 
 
     @Override
@@ -51,15 +47,23 @@ public class GameOverMenu extends MenuScreen {
         if (menu.equals(MainMenu.class))
            goToMainMenu();
     }
+
     public void goToMainMenu() {
         goTo(new MainMenu());
     }
 
     protected void draw() {
         getStage().getBatch().begin();
-        getStage().getBatch().draw(backGroundTexture, X, Y, WIDTH, HEIGTH);
+        getStage().getBatch().draw(backGroundTexture, X, Y, WIDTH, HEIGHT);
         getStage().getBatch().end();
         getStage().draw();
+    }
+
+    @Override
+    public void goBack() {
+        stopMusic();
+        previousMenu.startMusic();
+        super.goBack();
     }
 
 
