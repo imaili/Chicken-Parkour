@@ -12,6 +12,7 @@ import com.badlogic.gdx.scenes.scene2d.ui.Skin;
 import com.badlogic.gdx.scenes.scene2d.ui.TextButton;
 import com.mygdx.game.MainGame;
 import com.mygdx.game.screens.menu.button.MenuButton;
+import com.mygdx.game.utils.ParallelTexture;
 
 import java.util.List;
 
@@ -25,6 +26,7 @@ public abstract class MenuScreen extends BaseScreen implements Menu {
     protected static final Texture DEFAULT_BACK_GROUND_TEXTURE = new Texture(BACKGROUND_MENU_PATH);
     protected static final String MUSIC_TYPE = "menu";
     protected Texture backGroundTexture;
+    private final ParallelTexture textures = new ParallelTexture();
 
     protected MenuScreen(Menu previousMenu){
         this.previousMenu = previousMenu;
@@ -117,7 +119,8 @@ public abstract class MenuScreen extends BaseScreen implements Menu {
         Gdx.gl.glClear(GL20.GL_COLOR_BUFFER_BIT);
         if (backGroundTexture != null) {
             stage.getBatch().begin();
-            stage.getBatch().draw(backGroundTexture,0, 0, Gdx.graphics.getWidth(), Gdx.graphics.getHeight());
+            //stage.getBatch().draw(backGroundTexture,0, 0, Gdx.graphics.getWidth(), Gdx.graphics.getHeight());
+            textures.drawLayers(stage);
             stage.getBatch().end();
         }
         stage.draw();
