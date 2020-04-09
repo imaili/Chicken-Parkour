@@ -68,11 +68,7 @@ public class RenderingSystem extends IteratingSystem {
         cam.update();
         batch.setProjectionMatrix(cam.combined);
         batch.begin();
-        Sprite backgroundSprite = new Sprite((Texture) AssetsManager.manager.get(Constants.GAME_BACKGROUND_5_PATH));
-        backgroundSprite.setSize(Gdx.graphics.getWidth(),Gdx.graphics.getHeight());
-        backgroundSprite.setScale(Gdx.graphics.getWidth(),Gdx.graphics.getHeight());
-        //Math.round(cam.position.x-cam.viewportWidth/2), Math.round(cam.position.y-cam.viewportHeight/2)
-        backgroundSprite.draw(batch);
+
         for (Entity entity : renderQueue) {
             TextureComponent tex = textureM.get(entity);
 

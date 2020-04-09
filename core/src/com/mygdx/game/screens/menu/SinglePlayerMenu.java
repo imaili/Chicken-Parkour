@@ -15,9 +15,7 @@ import java.util.List;
 
 public class SinglePlayerMenu extends MenuScreen {
 
-    private static final List<MenuButton> buttons = createButtons();
-
-    private static List<MenuButton> createButtons() {
+    protected List<MenuButton> createButtons() {
         int buttonX = Gdx.graphics.getWidth() / 2 + Gdx.graphics.getWidth() / 8;
         int buttonHeight = Gdx.graphics.getHeight() / 10;
         List<MenuButton> list = new LinkedList<>();
@@ -29,7 +27,7 @@ public class SinglePlayerMenu extends MenuScreen {
     }
 
     public SinglePlayerMenu(Menu previousMenu) {
-        super(previousMenu, buttons);
+        super(previousMenu);
         backGroundTexture = DEFAULT_BACK_GROUND_TEXTURE;
     }
 
@@ -41,5 +39,14 @@ public class SinglePlayerMenu extends MenuScreen {
 
     public void goToGameScreen() {
         goTo(new GameScreen(MainGame.getSingleton()));
+    }
+
+    @Override
+    public void goTo(Menu menu) {
+        if (menu instanceof  GameScreen) {
+            stopMusic();
+            menu.startMusic();
+        }
+        super.goTo(menu);
     }
 }

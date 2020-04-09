@@ -6,7 +6,10 @@ import com.badlogic.gdx.graphics.g2d.TextureRegion;
 import com.badlogic.gdx.math.Vector2;
 import com.badlogic.gdx.scenes.scene2d.ui.Button;
 import com.badlogic.gdx.scenes.scene2d.ui.ImageButton;
+import com.badlogic.gdx.scenes.scene2d.ui.Skin;
+import com.badlogic.gdx.scenes.scene2d.ui.TextButton;
 import com.badlogic.gdx.scenes.scene2d.utils.TextureRegionDrawable;
+import com.mygdx.game.screens.Menu;
 
 public class GoBackButton extends MenuButton {
 
@@ -25,6 +28,10 @@ public class GoBackButton extends MenuButton {
 
     public GoBackButton(Vector2 position) {
         super(createButton(), position);
+    }
+
+    public GoBackButton(Skin skin, Vector2 position, String menuName) {
+        super(new TextButton(menuName, skin), position);
     }
 
     public GoBackButton() {

@@ -40,7 +40,6 @@ public class RandomLevelSystem extends IteratingSystem {
             accumulatedTime = 0;
 
             obstaclesFactory.createPlatform(20, 1, 1);
-            obstaclesFactory.createPlatform(23,    1, 2);
             obstaclesFactory.createSpikes(25, 1);
         }
     }

@@ -17,6 +17,7 @@ import com.badlogic.gdx.physics.box2d.BodyDef;
 import com.badlogic.gdx.physics.box2d.FixtureDef;
 import com.badlogic.gdx.physics.box2d.PolygonShape;
 import com.badlogic.gdx.physics.box2d.World;
+import com.badlogic.gdx.scenes.scene2d.Stage;
 import com.mygdx.game.MainGame;
 import com.mygdx.game.components.AnimationComponent;
 import com.mygdx.game.components.BodyComponent;
@@ -25,7 +26,13 @@ import com.mygdx.game.components.CollisionComponent;
 import com.mygdx.game.components.StateComponent;
 import com.mygdx.game.components.TextureComponent;
 import com.mygdx.game.components.TransformComponent;
+<<<<<<< core/src/com/mygdx/game/screens/GameScreen.java
+import com.mygdx.game.screens.menu.PauseMenu;
+import com.mygdx.game.screens.menu.button.MenuButton;
+import com.mygdx.game.screens.menu.button.PauseButton;
+=======
 import com.mygdx.game.server.Server;
+>>>>>>> core/src/com/mygdx/game/screens/GameScreen.java
 import com.mygdx.game.systems.ChickenSystem;
 import com.mygdx.game.systems.CleanUpSystem;
 import com.mygdx.game.systems.CollisionSystem;
@@ -41,13 +48,18 @@ import com.mygdx.game.utils.Mappers;
 import org.json.JSONObject;
 
 public class GameScreen extends BaseScreen implements Menu {
-
+    private static final String MUSIC_TYPE = "game";
     private World world;
     private SpriteBatch spriteBatch;
     private OrthographicCamera camera;
     private PooledEngine engine;
     private Entity player;
     private MainGame game;
+/*
+
+    private PauseMenu pauseMenu;
+    private Stage stage;
+    private boolean paused;*/
     private Server server;
     private String game_id;
     private String player_id;
@@ -55,17 +67,28 @@ public class GameScreen extends BaseScreen implements Menu {
     public GameScreen(MainGame game) {
         super(game);
         this.game = game;
+        /*this.pauseMenu = new PauseMenu(this);
+        this.stage = createPauseButtonStage();
+        this.paused = false;*/
         this.server = Server.getInstance();
         String[] info = this.server.startGame();
         game_id = info[0];
         player_id = info[1];
     }
 
+    /*private Stage createPauseButtonStage() {
+        Stage stage = new Stage();
+        stage.addActor((new PauseButton(this)).getButton());
+        InputMultiplexer multiplexer = (InputMultiplexer) Gdx.input.getInputProcessor();
+        if (!multiplexer.getProcessors().contains(stage, true))
+            multiplexer.addProcessor(stage);
+        return stage;
+    }*/
+
     @Override
     public void show() {
         super.show();
-        AssetsManager.loadAssets();
-        AssetsManager.manager.finishLoading();
+
         world = new World(new Vector2(0, -13f), true);
         world.setContactListener(new ChickenContactListener());
         spriteBatch = new SpriteBatch();
@@ -83,22 +106,24 @@ public class GameScreen extends BaseScreen implements Menu {
         createPlayer();
         createFloor();
 
-        //spriteBatch.begin();
-        //spriteBatch.draw((Texture) AssetsManager.manager.get(Constants.GAME_BACKGROUND_5_PATH),0,0, (float) Gdx.graphics.getWidth(), (float)Gdx.graphics.getHeight());
-        //spriteBatch.end();
 
     }
 
     @Override
     public void render(float delta) {
-        Gdx.gl.glClearColor(0, 0, 0, 0);
-        Gdx.gl.glClear(GL20.GL_COLOR_BUFFER_BIT);
-        engine.update(delta);
-        if(Mappers.BODY.get(player).body.getPosition().x < 0.5 || Mappers.STATE.get(player).get() == StateComponent.STATE_HIT) {
-            game.setScreen(new GameOverScreen(game));
-        }
-
-        AssetsManager.manager.update();
+        /*if (!paused) {*/
+            Gdx.gl.glClearColor(0, 0, 0, 0);
+            Gdx.gl.glClear(GL20.GL_COLOR_BUFFER_BIT);
+            engine.update(delta);
+            /*stage.draw();
+            stage.act();*/
+            if (Mappers.BODY.get(player).body.getPosition().x < 0.5 || Mappers.STATE.get(player).get() == StateComponent.STATE_HIT) {
+                //game.setScreen(new GameOverScreen(game));
+                goTo(GameOverScreen.class);
+            }
+        /*} else {
+            pauseMenu.render(delta);
+        } */
     }
 
     @Override
@@ -108,8 +133,14 @@ public class GameScreen extends BaseScreen implements Menu {
 
     }
 
+    public void startMusic() {
+        if (game.getMusic())
+            game.getAssetsManager().play_music(MUSIC_TYPE);
+    }
 
-
+    public void stopMusic() {
+        game.getAssetsManager().stop_music();
+    }
 
 
     private void createPlayer(){
@@ -125,21 +156,20 @@ public class GameScreen extends BaseScreen implements Menu {
         AnimationComponent animation = engine.createComponent(AnimationComponent.class);
 
         // set the components data
+
         Pixmap pmap = new Pixmap(32,32, Pixmap.Format.RGBA8888);
         pmap.setColor(Color.RED);
         pmap.fill();
-        //texture.region = new TextureRegion(new Texture(pmap));
+        texture.region = new TextureRegion(new Texture(pmap));
         pmap.dispose();
 
-        texture.region = new TextureRegion((Texture) AssetsManager.manager.get(Constants.WALK_1_PATH));
-
-        animation.animation = AssetsManager.getAnimation(Constants.WALK_ANIMATION_ID);
 
 
-        body.body = createBox(10,10,1,1, true);
+
+        body.body = createBox(1,1,1,1, true);
 
         // set object position (x,y,z) z used to define draw order 0 first drawn
-        position.position.set(10,10,0);
+        position.position.set(1,1,0);
 
         body.body.setUserData(player);
         // add components to entity
@@ -205,11 +235,36 @@ public class GameScreen extends BaseScreen implements Menu {
 
     @Override
     public void goTo(Class<? extends Menu> menu) {
-
+        if (menu.equals(GameOverScreen.class))
+            goToGameOverScreen();
     }
 
     @Override
     public void goBack() {
 
     }
+
+    public void goToGameOverScreen() {
+        stopMusic();
+        GameOverScreen gameOverScreen = new GameOverScreen(game);
+        gameOverScreen.startMusic();
+        game.setMenu(gameOverScreen);
+    }
+    /*
+    @Override
+    public void pause() {
+        paused = true;
+        InputMultiplexer multiplexer = (InputMultiplexer) Gdx.input.getInputProcessor();
+        multiplexer.removeProcessor(stage);
+        pauseMenu.setInputProcessor();
+    }
+
+    @Override
+    public void resume() {
+        paused = false;
+        InputMultiplexer multiplexer = (InputMultiplexer) Gdx.input.getInputProcessor();
+        if (!multiplexer.getProcessors().contains(stage, true))
+            multiplexer.addProcessor(stage);
+        pauseMenu.removeInputProcessor();
+    } */
 }
