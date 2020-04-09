@@ -51,6 +51,7 @@ public class GameScreen extends BaseScreen implements Menu {
     private OrthographicCamera camera;
     private PooledEngine engine;
     private Entity player;
+    private Entity background;
     private MainGame game;
 /*
 
@@ -102,6 +103,7 @@ public class GameScreen extends BaseScreen implements Menu {
         engine.addSystem(renderingSystem);
         createPlayer();
         createFloor();
+        createBackground();
 
 
     }
@@ -137,6 +139,35 @@ public class GameScreen extends BaseScreen implements Menu {
 
     public void stopMusic() {
         game.getAssetsManager().stop_music();
+    }
+
+
+    private void createBackground(){
+        background = engine.createEntity();
+        TransformComponent position = engine.createComponent(TransformComponent.class);
+        TextureComponent textureRegion = engine.createComponent(TextureComponent.class);
+
+        Pixmap pixmapOriginal = new Pixmap(Gdx.files.internal(Constants.GAME_BACKGROUND_5_PATH));
+        Pixmap pixmapScreenSize = new Pixmap(Gdx.graphics.getWidth(), Gdx.graphics.getHeight(), pixmapOriginal.getFormat());
+        pixmapScreenSize.drawPixmap(pixmapOriginal,
+                0, 0, pixmapOriginal.getWidth(), pixmapOriginal.getHeight(),
+                0, 0, pixmapScreenSize.getWidth(), pixmapScreenSize.getHeight()
+        );
+        Texture texture = new Texture(pixmapScreenSize);
+        pixmapOriginal.dispose();
+        pixmapScreenSize.dispose();
+
+        textureRegion.region = new TextureRegion(texture);
+        position.scale.set(1,1);
+        float x = camera.position.x;
+        float y = camera.position.y;
+        position.position.set(x,y,2);
+
+        background.add(textureRegion);
+        background.add(position);
+
+        engine.addEntity(background);
+
     }
 
 

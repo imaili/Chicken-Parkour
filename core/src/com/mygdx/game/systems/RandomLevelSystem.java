@@ -145,12 +145,27 @@ public class RandomLevelSystem extends IteratingSystem {
                 body.body = createTriangle(x + i);
                 body.body.setUserData(entity);
                 body.body.setLinearVelocity(-5f, 0);
-                //texture.region = createTexture(Color.GREEN, false, 32, 32);
+                Pixmap pmap = new Pixmap(32,32, Pixmap.Format.RGBA8888);
+                pmap.setColor(Color.GRAY);
+                pmap.fillTriangle(32,0,32,32 ,0,16 );
+                final int width = pmap.getWidth();
+                final int height = pmap.getHeight();
+                Pixmap rotatedPmap = new Pixmap(height, width, pmap.getFormat());
+
+                for (int x2 = 0; x2 < height; x2++) {
+                    for (int y = 0; y < width; y++) {
+                        rotatedPmap.drawPixel(x2, y, pmap.getPixel(y, x2));
+                    }
+                }
+                texture.region = new TextureRegion(new Texture(rotatedPmap));
+                rotatedPmap.dispose();
+                pmap.dispose();
+
                 obstacle.type = ObstacleComponent.SPIKES;
 
                 entity.add(body);
                 entity.add(collision);
-                //entity.add(texture);
+                entity.add(texture);
                 entity.add(obstacle);
                 entity.add(transform);
                 entity.add(cleanUp);
