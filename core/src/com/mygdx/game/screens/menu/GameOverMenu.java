@@ -1,8 +1,12 @@
 package com.mygdx.game.screens.menu;
 
 import com.badlogic.gdx.Gdx;
+import com.badlogic.gdx.graphics.GL20;
+import com.badlogic.gdx.graphics.Pixmap;
 import com.badlogic.gdx.graphics.Texture;
 import com.badlogic.gdx.math.Vector2;
+import com.badlogic.gdx.utils.BufferUtils;
+import com.badlogic.gdx.utils.ScreenUtils;
 import com.mygdx.game.screens.GameScreen;
 import com.mygdx.game.screens.Menu;
 import com.mygdx.game.screens.MenuScreen;
@@ -38,7 +42,21 @@ public class GameOverMenu extends MenuScreen {
 
     public GameOverMenu(GameScreen gameScreen) {
         super(gameScreen);
-        backGroundTexture = GAME_OVER_BACK_GROUND_TEXTURE;
+        //backGroundTexture = GAME_OVER_BACK_GROUND_TEXTURE;
+        backGroundTexture = getCurrentBackGroundTexture();
+    }
+
+    private Texture getCurrentBackGroundTexture() {
+        byte[] pixels = ScreenUtils.getFrameBufferPixels(0, 0, Gdx.graphics.getBackBufferWidth(), Gdx.graphics.getBackBufferHeight(), true);
+
+        // this loop makes sure the whole screenshot is opaque and looks exactly like what the user is seeing
+        for(int i = 4; i < pixels.length; i += 4) {
+            pixels[i - 1] = (byte) 255;
+        }
+
+        Pixmap pixmap = new Pixmap(Gdx.graphics.getBackBufferWidth(), Gdx.graphics.getBackBufferHeight(), Pixmap.Format.RGBA8888);
+        BufferUtils.copy(pixels, 0, pixmap.getPixels(), pixels.length);
+        return new Texture(pixmap);
     }
 
 
@@ -53,8 +71,11 @@ public class GameOverMenu extends MenuScreen {
     }
 
     public void draw() {
+        Gdx.gl.glClearColor(1, 1, 1, 1);
+        Gdx.gl.glClear(GL20.GL_COLOR_BUFFER_BIT);
         getStage().getBatch().begin();
-        getStage().getBatch().draw(backGroundTexture, X, Y, WIDTH, HEIGHT);
+        getStage().getBatch().draw(backGroundTexture,0, 0, Gdx.graphics.getWidth(), Gdx.graphics.getHeight());
+        getStage().getBatch().draw(GAME_OVER_BACK_GROUND_TEXTURE, X, Y, WIDTH, HEIGHT);
         getStage().getBatch().end();
         getStage().draw();
     }
