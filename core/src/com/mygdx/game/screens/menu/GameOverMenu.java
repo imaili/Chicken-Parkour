@@ -1,30 +1,20 @@
 package com.mygdx.game.screens.menu;
 
 import com.badlogic.gdx.Gdx;
-import com.badlogic.gdx.graphics.GL20;
-import com.badlogic.gdx.graphics.Pixmap;
 import com.badlogic.gdx.graphics.Texture;
 import com.badlogic.gdx.math.Vector2;
-import com.badlogic.gdx.utils.BufferUtils;
-import com.badlogic.gdx.utils.ScreenUtils;
+import com.mygdx.game.MainGame;
 import com.mygdx.game.screens.GameScreen;
 import com.mygdx.game.screens.Menu;
-import com.mygdx.game.screens.MenuScreen;
 import com.mygdx.game.screens.menu.button.MenuButton;
 
 import java.util.Collections;
 import java.util.LinkedList;
 import java.util.List;
 
-public class GameOverMenu extends MenuScreen {
+public class GameOverMenu extends PauseMenu {
 
     protected static final Texture GAME_OVER_BACK_GROUND_TEXTURE = new Texture("background_gameover.png");
-    protected static final int X = Gdx.graphics.getWidth() / 4;
-    protected static final int Y = Gdx.graphics.getHeight() / 4;
-    protected static final int WIDTH = Gdx.graphics.getWidth() / 2;
-    protected static final int HEIGHT = Gdx.graphics.getHeight()/ 2;
-
-
 
     @Override
     protected List<MenuButton> createButtons() {
@@ -39,53 +29,32 @@ public class GameOverMenu extends MenuScreen {
     }
 
     public GameOverMenu(GameScreen gameScreen) {
-        super(gameScreen);
-        //backGroundTexture = GAME_OVER_BACK_GROUND_TEXTURE;
-        backGroundTexture = getCurrentBackGroundTexture();
-    }
-
-    private Texture getCurrentBackGroundTexture() {
-        byte[] pixels = ScreenUtils.getFrameBufferPixels(0, 0, Gdx.graphics.getBackBufferWidth(), Gdx.graphics.getBackBufferHeight(), true);
-
-        // this loop makes sure the whole screenshot is opaque and looks exactly like what the user is seeing
-        for(int i = 4; i < pixels.length; i += 4) {
-            pixels[i - 1] = (byte) 255;
-        }
-
-        Pixmap pixmap = new Pixmap(Gdx.graphics.getBackBufferWidth(), Gdx.graphics.getBackBufferHeight(), Pixmap.Format.RGBA8888);
-        BufferUtils.copy(pixels, 0, pixmap.getPixels(), pixels.length);
-        return new Texture(pixmap);
-    }
-
-
-    @Override
-    public void goTo(Class<? extends Menu> menu) {
-        if (menu.equals(MainMenu.class))
-           goToMainMenu();
-    }
-
-    public void goToMainMenu() {
-        goTo(new MainMenu());
-    }
-
-    public void draw() {
-        Gdx.gl.glClearColor(1, 1, 1, 1);
-        Gdx.gl.glClear(GL20.GL_COLOR_BUFFER_BIT);
-        getStage().getBatch().begin();
-        getStage().getBatch().draw(backGroundTexture,0, 0, Gdx.graphics.getWidth(), Gdx.graphics.getHeight());
-        getStage().getBatch().draw(GAME_OVER_BACK_GROUND_TEXTURE, X, Y, WIDTH, HEIGHT);
-        getStage().getBatch().end();
-        getStage().draw();
+        super(gameScreen, GAME_OVER_BACK_GROUND_TEXTURE);
     }
 
     @Override
     public void goBack() {
-        stopMusic();
-        previousMenu.startMusic();
-        super.goBack();
+        goTo(GameScreen.class);
     }
 
+    @Override
+    public void goTo(Class<? extends Menu> menu) {
+        previousMenu.dispose();
+        super.goTo(menu);
+        if (menu.equals(GameScreen.class))
+            goToGameScreen();
+    }
 
+    @Override
+    public void goToMainMenu() {
+        goTo(new MainMenu());
+    }
 
+    public void goToGameScreen() {
+        stopMusic();
+        GameScreen gameScreen = new GameScreen(MainGame.getSingleton());
+        gameScreen.startMusic();
+        goTo(gameScreen);
+    }
 
 }
