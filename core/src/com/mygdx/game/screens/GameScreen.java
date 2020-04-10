@@ -3,13 +3,14 @@ package com.mygdx.game.screens;
 import com.badlogic.ashley.core.Entity;
 import com.badlogic.ashley.core.PooledEngine;
 import com.badlogic.gdx.Gdx;
-import com.badlogic.gdx.assets.AssetManager;
 import com.badlogic.gdx.graphics.Color;
 import com.badlogic.gdx.graphics.GL20;
 import com.badlogic.gdx.graphics.OrthographicCamera;
 import com.badlogic.gdx.graphics.Pixmap;
 import com.badlogic.gdx.graphics.Texture;
+import com.badlogic.gdx.graphics.g2d.Animation;
 import com.badlogic.gdx.graphics.g2d.SpriteBatch;
+import com.badlogic.gdx.graphics.g2d.TextureAtlas;
 import com.badlogic.gdx.graphics.g2d.TextureRegion;
 import com.badlogic.gdx.math.Vector2;
 import com.badlogic.gdx.physics.box2d.Body;
@@ -17,7 +18,6 @@ import com.badlogic.gdx.physics.box2d.BodyDef;
 import com.badlogic.gdx.physics.box2d.FixtureDef;
 import com.badlogic.gdx.physics.box2d.PolygonShape;
 import com.badlogic.gdx.physics.box2d.World;
-import com.badlogic.gdx.scenes.scene2d.Stage;
 import com.mygdx.game.MainGame;
 import com.mygdx.game.components.AnimationComponent;
 import com.mygdx.game.components.BodyComponent;
@@ -26,10 +26,8 @@ import com.mygdx.game.components.CollisionComponent;
 import com.mygdx.game.components.StateComponent;
 import com.mygdx.game.components.TextureComponent;
 import com.mygdx.game.components.TransformComponent;
-import com.mygdx.game.screens.menu.PauseMenu;
-import com.mygdx.game.screens.menu.button.MenuButton;
-import com.mygdx.game.screens.menu.button.PauseButton;
 import com.mygdx.game.server.Server;
+import com.mygdx.game.systems.AnimationSystem;
 import com.mygdx.game.systems.ChickenSystem;
 import com.mygdx.game.systems.CleanUpSystem;
 import com.mygdx.game.systems.CollisionSystem;
@@ -37,12 +35,9 @@ import com.mygdx.game.systems.RandomLevelSystem;
 import com.mygdx.game.systems.PhysicsDebugSystem;
 import com.mygdx.game.systems.PhysicsSystem;
 import com.mygdx.game.systems.RenderingSystem;
-import com.mygdx.game.utils.AssetsManager;
 import com.mygdx.game.utils.ChickenContactListener;
 import com.mygdx.game.utils.Constants;
 import com.mygdx.game.utils.Mappers;
-
-import org.json.JSONObject;
 
 public class GameScreen extends BaseScreen implements Menu {
     private static final String MUSIC_TYPE = "game";
@@ -100,6 +95,7 @@ public class GameScreen extends BaseScreen implements Menu {
         engine.addSystem(new CollisionSystem());
         engine.addSystem(new RandomLevelSystem(world));
         engine.addSystem(new CleanUpSystem());
+        engine.addSystem(new AnimationSystem());
         engine.addSystem(renderingSystem);
         createPlayer();
         createFloor();
@@ -157,6 +153,8 @@ public class GameScreen extends BaseScreen implements Menu {
         pixmapOriginal.dispose();
         pixmapScreenSize.dispose();
 
+        //texture.setWrap(Texture.TextureWrap.Repeat, Texture.TextureWrap.Repeat);
+
         textureRegion.region = new TextureRegion(texture);
         position.scale.set(1,1);
         float x = camera.position.x;
@@ -188,16 +186,35 @@ public class GameScreen extends BaseScreen implements Menu {
         Pixmap pmap = new Pixmap(32,32, Pixmap.Format.RGBA8888);
         pmap.setColor(Color.RED);
         pmap.fill();
-        texture.region = new TextureRegion(new Texture(pmap));
+        //texture.region = new TextureRegion(new Texture(pmap));
         pmap.dispose();
+        TextureAtlas atlas = new TextureAtlas(Constants.WALK_ATLAS_PATH);
+        Animation ani = new Animation<TextureRegion>(0.1f, atlas.getRegions(), Animation.PlayMode.LOOP);
+        animation.animationsMap.put(StateComponent.STATE_WALKING, ani );
 
+        atlas = new TextureAtlas(Constants.JUMP_ATLAS_PATH);
+        ani = new Animation<TextureRegion>(0.1f, atlas.getRegions());
+        animation.animationsMap.put(StateComponent.STATE_JUMPING, ani );
 
+        atlas = new TextureAtlas(Constants.DEAD_ATLAS_PATH);
+        ani = new Animation<TextureRegion>(0.1f, atlas.getRegions());
+        animation.animationsMap.put(StateComponent.STATE_HIT, ani );
 
+        atlas = new TextureAtlas(Constants.SLIDE_ATLAS_PATH);
+        ani = new Animation<TextureRegion>(0.1f, atlas.getRegions());
+        animation.animationsMap.put(StateComponent.STATE_FALLING, ani );
 
-        body.body = createBox(1,1,1,1, true);
+        atlas = new TextureAtlas(Constants.RUN_ATLAS_PATH);
+        ani = new Animation<TextureRegion>(0.1f, atlas.getRegions());
+        animation.animationsMap.put(StateComponent.STATE_RUN, ani );
+
+        body.body = createBox(10,10,10,10, true); // used to be (1,1,1,1,true) --> Dinosaur outside of the screen??
 
         // set object position (x,y,z) z used to define draw order 0 first drawn
         position.position.set(1,1,0);
+        //position.scale.set(0.3f,0.3f);     // this line resizes the Dinosaur... but brings some more wrong behaviour..
+
+        state.set(StateComponent.STATE_WALKING);
 
         body.body.setUserData(player);
         // add components to entity

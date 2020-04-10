@@ -164,7 +164,7 @@ public class Constants {
     public static final String BACKGROUND_MENU_ID = "background_menu";
     public static final String BACKGROUND_MENU_PATH = "background1.jpg";
     public static final String EXIT_MENU_ID = "exit_menu";
-    public static final String EXIT_MENU_PATH = "exit.jpg";
+    public static final String EXIT_MENU_PATH = "exit1.png";
     public static final String MULTIPLAYER_BUTTON_ID = "multiplayer_button";
     public static final String MULTIPLAYER_BUTTON_PATH = "multiplayerButton.PNG";
     public static final String SINGLEPLAYER_BUTTON_ID = "singleplayer_button";
