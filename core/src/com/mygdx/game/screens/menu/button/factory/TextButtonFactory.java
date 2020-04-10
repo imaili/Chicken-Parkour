@@ -77,6 +77,10 @@ public class TextButtonFactory implements ButtonFactory {
         return new MusicButton(skin, position);
     }
 
+    public MusicButton createMusicButton(Vector2 position) {
+        return new MusicButton(skin, position);
+    }
+
     @Override
     public PauseButton createPauseButton(String name, Vector2 position) {
         return new PauseButton(skin, position, name);

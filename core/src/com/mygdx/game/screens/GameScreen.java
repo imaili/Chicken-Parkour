@@ -26,6 +26,7 @@ import com.mygdx.game.components.CollisionComponent;
 import com.mygdx.game.components.StateComponent;
 import com.mygdx.game.components.TextureComponent;
 import com.mygdx.game.components.TransformComponent;
+import com.mygdx.game.screens.menu.GameOverMenu;
 import com.mygdx.game.server.Server;
 import com.mygdx.game.systems.AnimationSystem;
 import com.mygdx.game.systems.ChickenSystem;
@@ -113,8 +114,7 @@ public class GameScreen extends BaseScreen implements Menu {
             /*stage.draw();
             stage.act();*/
             if (Mappers.BODY.get(player).body.getPosition().x < 0.5 || Mappers.STATE.get(player).get() == StateComponent.STATE_HIT) {
-                //game.setScreen(new GameOverScreen(game));
-                goTo(GameOverScreen.class);
+                goTo(GameOverMenu.class);
             }
         /*} else {
             pauseMenu.render(delta);
@@ -280,8 +280,8 @@ public class GameScreen extends BaseScreen implements Menu {
 
     @Override
     public void goTo(Class<? extends Menu> menu) {
-        if (menu.equals(GameOverScreen.class))
-            goToGameOverScreen();
+        if (menu.equals(GameOverMenu.class))
+            goToGameOverMenu();
     }
 
     @Override
@@ -289,11 +289,12 @@ public class GameScreen extends BaseScreen implements Menu {
 
     }
 
-    public void goToGameOverScreen() {
+    public void goToGameOverMenu() {
         stopMusic();
-        GameOverScreen gameOverScreen = new GameOverScreen(game);
-        gameOverScreen.startMusic();
-        game.setMenu(gameOverScreen);
+        GameOverMenu menu = new GameOverMenu(this);
+        menu.setInputProcessor();
+        game.setMenu(menu);
+        menu.startMusic();
     }
     /*
     @Override

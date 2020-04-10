@@ -34,9 +34,9 @@ public class GameOverMenu extends MenuScreen {
         int buttonX = Gdx.graphics.getWidth() / 2 - Gdx.graphics.getWidth() / 8;
         int buttonHeight = Gdx.graphics.getHeight() / 10;
         List<MenuButton> list = new LinkedList<>();
-        MenuButton Play = new GoBackButton(skin, new Vector2(buttonX, Gdx.graphics.getHeight()/2 - buttonHeight/2), "Play again");
-        MenuButton goToMainMenu = new GoToButton(skin, new Vector2(buttonX, Gdx.graphics.getHeight()/2 - 2*buttonHeight), "Exit", MainMenu.class);
-        Collections.addAll(list,Play, goToMainMenu);
+        MenuButton play = DEFAULT_TEXT_BUTTON_FACTORY.createGoBackButton("Play again", new Vector2(buttonX, Gdx.graphics.getHeight()/2 - buttonHeight/2));
+        MenuButton goToMainMenu = DEFAULT_TEXT_BUTTON_FACTORY.createGoToButton("Exit", new Vector2(buttonX, Gdx.graphics.getHeight()/2 - 2*buttonHeight), MainMenu.class);
+        Collections.addAll(list, play, goToMainMenu);
         return list;
     }
 
