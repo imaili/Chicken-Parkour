@@ -3,10 +3,8 @@ package com.mygdx.game.screens.menu;
 import com.badlogic.gdx.Gdx;
 import com.badlogic.gdx.math.Vector2;
 import com.mygdx.game.screens.MenuScreen;
-import com.mygdx.game.screens.menu.button.GoBackButton;
 import com.mygdx.game.screens.menu.button.MenuButton;
 import com.mygdx.game.screens.Menu;
-import com.mygdx.game.screens.menu.button.MusicButton;
 
 import java.util.LinkedList;
 import java.util.List;

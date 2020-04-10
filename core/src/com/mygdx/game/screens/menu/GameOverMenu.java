@@ -10,8 +10,6 @@ import com.badlogic.gdx.utils.ScreenUtils;
 import com.mygdx.game.screens.GameScreen;
 import com.mygdx.game.screens.Menu;
 import com.mygdx.game.screens.MenuScreen;
-import com.mygdx.game.screens.menu.button.GoBackButton;
-import com.mygdx.game.screens.menu.button.GoToButton;
 import com.mygdx.game.screens.menu.button.MenuButton;
 
 import java.util.Collections;
