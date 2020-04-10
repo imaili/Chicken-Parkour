@@ -11,8 +11,10 @@ import com.badlogic.gdx.scenes.scene2d.ui.Skin;
 import com.badlogic.gdx.scenes.scene2d.ui.TextButton;
 import com.badlogic.gdx.scenes.scene2d.utils.Drawable;
 import com.badlogic.gdx.scenes.scene2d.utils.TextureRegionDrawable;
+import com.mygdx.game.screens.Menu;
 import com.mygdx.game.screens.menu.button.ExitButton;
 import com.mygdx.game.screens.menu.button.GoBackButton;
+import com.mygdx.game.screens.menu.button.GoToButton;
 import com.mygdx.game.screens.menu.button.MenuButton;
 import com.mygdx.game.screens.menu.button.MusicButton;
 import com.mygdx.game.screens.menu.button.PauseButton;
@@ -39,6 +41,8 @@ public class TextButtonFactory implements ButtonFactory {
             return createExitButton(name, position);
         else if (buttonClass.equals(GoBackButton.class))
             return createGoBackButton(name, position);
+        else if (buttonClass.equals(GoToButton.class))
+            return createGoToButton(name, position);
         else if (buttonClass.equals(MusicButton.class))
             return createMusicButton(name, position);
         else if (buttonClass.equals(PauseButton.class))
@@ -54,6 +58,18 @@ public class TextButtonFactory implements ButtonFactory {
     @Override
     public GoBackButton createGoBackButton(String name, Vector2 position) {
         return new GoBackButton(skin, position, name);
+    }
+
+    @Override
+    public GoToButton createGoToButton(String name, Vector2 position) {
+        return new GoToButton(skin, position, name);
+    }
+
+    @Override
+    public GoToButton createGoToButton(String name, Vector2 position, Class<? extends Menu> menuClass) {
+        GoToButton button = createGoToButton(name, position);
+        button.setMenuClass(menuClass);
+        return button;
     }
 
     @Override

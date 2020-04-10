@@ -2,8 +2,10 @@ package com.mygdx.game.screens.menu.button.factory;
 
 import com.badlogic.gdx.graphics.Texture;
 import com.badlogic.gdx.math.Vector2;
+import com.mygdx.game.screens.Menu;
 import com.mygdx.game.screens.menu.button.ExitButton;
 import com.mygdx.game.screens.menu.button.GoBackButton;
+import com.mygdx.game.screens.menu.button.GoToButton;
 import com.mygdx.game.screens.menu.button.MenuButton;
 import com.mygdx.game.screens.menu.button.MusicButton;
 import com.mygdx.game.screens.menu.button.PauseButton;
@@ -20,15 +22,17 @@ public class ImageButtonFactory implements ButtonFactory {
         super();
     }
 
-    public ImageButtonFactory getInstance() {
+    public static ImageButtonFactory getInstance() {
         return SINGLETON;
     }
 
     private Texture getTexture(String filename) {
-        if (textures.containsKey(filename))
-            return textures.get(filename);
-        else
-            return textures.put(filename, new Texture(filename));
+        Texture texture = textures.get(filename);
+        if (texture == null) {
+            texture = new Texture(filename);
+            textures.put(filename, texture);
+        }
+        return texture;
     }
 
     public void dispose() {
@@ -43,6 +47,8 @@ public class ImageButtonFactory implements ButtonFactory {
             return createExitButton(name, position);
         else if (buttonClass.equals(GoBackButton.class))
             return createGoBackButton(name, position);
+        else if (buttonClass.equals(GoToButton.class))
+            return createGoToButton(name, position);
         else if (buttonClass.equals(MusicButton.class))
             return createMusicButton(name, position);
         else if (buttonClass.equals(PauseButton.class))
@@ -62,6 +68,23 @@ public class ImageButtonFactory implements ButtonFactory {
         return createGoBackButton(name, position, texture.getWidth(), texture.getHeight());
     }
 
+    public GoBackButton createGoBackButton() {
+        return createGoBackButton(GoBackButton.GO_BACK_FILE_NAME, GoBackButton.defaultPosition());
+    }
+
+    @Override
+    public GoToButton createGoToButton(String name, Vector2 position) {
+        Texture texture = getTexture(name);
+        return createGoToButton(name, position, texture.getWidth(), texture.getHeight());
+    }
+
+    @Override
+    public GoToButton createGoToButton(String name, Vector2 position, Class<? extends Menu> menuClass) {
+        GoToButton button = createGoToButton(name, position);
+        button.setMenuClass(menuClass);
+        return button;
+    }
+
     @Override
     public MusicButton createMusicButton(String name, Vector2 position) {
         Texture texture = getTexture(name);
@@ -79,6 +102,8 @@ public class ImageButtonFactory implements ButtonFactory {
             return createExitButton(name, position, width, height);
         else if (buttonClass.equals(GoBackButton.class))
             return createGoBackButton(name, position, width, height);
+        else if (buttonClass.equals(GoToButton.class))
+            return createGoToButton(name, position, width, height);
         else if (buttonClass.equals(MusicButton.class))
             return createMusicButton(name, position, width, height);
         else if (buttonClass.equals(PauseButton.class))
@@ -92,6 +117,10 @@ public class ImageButtonFactory implements ButtonFactory {
 
     public GoBackButton createGoBackButton(String name, Vector2 position, int width, int height) {
         return new GoBackButton(getTexture(name), position, width, height);
+    }
+
+    public GoToButton createGoToButton(String name, Vector2 position, int width, int height) {
+        return new GoToButton(getTexture(name), position, width, height);
     }
 
     public MusicButton createMusicButton(String name, Vector2 position, int width, int height) {

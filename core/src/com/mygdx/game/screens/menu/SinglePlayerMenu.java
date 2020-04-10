@@ -9,7 +9,9 @@ import com.mygdx.game.screens.menu.button.GoToButton;
 import com.mygdx.game.screens.menu.button.MenuButton;
 import com.mygdx.game.screens.GameScreen;
 import com.mygdx.game.screens.Menu;
+import com.mygdx.game.screens.menu.button.factory.ImageButtonFactory;
 
+import java.util.Collections;
 import java.util.LinkedList;
 import java.util.List;
 
@@ -19,10 +21,10 @@ public class SinglePlayerMenu extends MenuScreen {
         int buttonX = Gdx.graphics.getWidth() / 2 + Gdx.graphics.getWidth() / 8;
         int buttonHeight = Gdx.graphics.getHeight() / 10;
         List<MenuButton> list = new LinkedList<>();
-        MenuButton goBack = new GoBackButton();
-        MenuButton goToGameScreen = new GoToButton(skin, new Vector2(buttonX, Gdx.graphics.getHeight()/2 - buttonHeight/2), "PLAY", GameScreen.class);
-        list.add(goBack);
-        list.add(goToGameScreen);
+        MenuButton goBack = ImageButtonFactory.getInstance().createGoBackButton();
+        GoToButton goToGameScreen = new GoToButton(skin, new Vector2(buttonX, Gdx.graphics.getHeight()/2 - buttonHeight/2), "PLAY", GameScreen.class);
+        goToGameScreen.setMenuClass(GameScreen.class);
+        Collections.addAll(list, goBack, goToGameScreen);
         return list;
     }
 
