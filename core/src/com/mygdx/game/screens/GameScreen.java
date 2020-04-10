@@ -208,10 +208,12 @@ public class GameScreen extends BaseScreen implements Menu {
         ani = new Animation<TextureRegion>(0.1f, atlas.getRegions());
         animation.animationsMap.put(StateComponent.STATE_RUN, ani );
 
-        body.body = createBox(10,10,10,10, true);
+        body.body = createBox(10,10,10,10, true); // used to be (1,1,1,1,true) --> Dinosaur outside of the screen??
 
         // set object position (x,y,z) z used to define draw order 0 first drawn
         position.position.set(1,1,0);
+        //position.scale.set(0.3f,0.3f);     // this line resizes the Dinosaur... but brings some more wrong behaviour..
+
         state.set(StateComponent.STATE_WALKING);
 
         body.body.setUserData(player);
