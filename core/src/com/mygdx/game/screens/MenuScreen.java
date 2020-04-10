@@ -12,6 +12,8 @@ import com.badlogic.gdx.scenes.scene2d.ui.Skin;
 import com.badlogic.gdx.scenes.scene2d.ui.TextButton;
 import com.mygdx.game.MainGame;
 import com.mygdx.game.screens.menu.button.MenuButton;
+import com.mygdx.game.screens.menu.button.factory.ImageButtonFactory;
+import com.mygdx.game.screens.menu.button.factory.TextButtonFactory;
 
 import java.util.List;
 
@@ -24,6 +26,8 @@ public abstract class MenuScreen extends BaseScreen implements Menu {
     protected static Skin skin = createBasicSkin();
     protected static final Texture DEFAULT_BACK_GROUND_TEXTURE = new Texture(BACKGROUND_MENU_PATH);
     protected static final String MUSIC_TYPE = "menu";
+    protected static final ImageButtonFactory IMAGE_BUTTON_FACTORY = ImageButtonFactory.getInstance();
+    protected static final TextButtonFactory DEFAULT_TEXT_BUTTON_FACTORY = TextButtonFactory.getDefaultInstance();
     protected Texture backGroundTexture;
 
     protected MenuScreen(Menu previousMenu){
