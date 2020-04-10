@@ -5,8 +5,6 @@ import com.badlogic.gdx.graphics.Texture;
 import com.badlogic.gdx.math.Vector2;
 import com.mygdx.game.screens.Menu;
 import com.mygdx.game.screens.MenuScreen;
-import com.mygdx.game.screens.menu.button.ExitButton;
-import com.mygdx.game.screens.menu.button.GoBackButton;
 import com.mygdx.game.screens.menu.button.MenuButton;
 
 import java.util.Collections;
@@ -25,8 +23,8 @@ public class ExitMenu extends MenuScreen {
         int buttonX = Gdx.graphics.getWidth() / 2 - Gdx.graphics.getWidth() / 8;
         int buttonHeight = Gdx.graphics.getHeight() / 10;
         List<MenuButton> list = new LinkedList<>();
-        MenuButton exit = new ExitButton(skin, new Vector2(buttonX, Gdx.graphics.getHeight()/2 - buttonHeight/2), "Yes");
-        MenuButton cancel = new GoBackButton(skin, new Vector2(buttonX, Gdx.graphics.getHeight()/2 - 2*buttonHeight), "Cancel");
+        MenuButton exit = DEFAULT_TEXT_BUTTON_FACTORY.createExitButton("Yes", new Vector2(buttonX, Gdx.graphics.getHeight()/2 - buttonHeight/2));
+        MenuButton cancel = DEFAULT_TEXT_BUTTON_FACTORY.createGoBackButton("Cancel", new Vector2(buttonX, Gdx.graphics.getHeight()/2 - 2*buttonHeight));
         Collections.addAll(list, exit, cancel);
         return list;
     }

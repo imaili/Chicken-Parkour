@@ -1,5 +1,6 @@
 package com.mygdx.game.screens.menu.button;
 
+import com.badlogic.gdx.graphics.Texture;
 import com.badlogic.gdx.math.Vector2;
 import com.badlogic.gdx.scenes.scene2d.ui.Skin;
 import com.badlogic.gdx.scenes.scene2d.ui.TextButton;
@@ -9,7 +10,7 @@ public class MusicButton extends MenuButton {
     private static final String START_MUSIC_BUTTON_NAME = "MUSIC ON";
     private static final String STOP_MUSIC_BUTTON_NAME = "MUSIC OFF";
 
-    private final Action action;
+    private Action action;
 
     public MusicButton(Skin skin, Vector2 position, Action action) {
         super(new TextButton(getName(action), skin), position);
@@ -18,6 +19,15 @@ public class MusicButton extends MenuButton {
 
     public MusicButton(Skin skin, Vector2 position) {
         this(skin, position, getAction());
+    }
+
+    public MusicButton(Texture texture, Vector2 position, int width, int height) {
+        super(texture, position, width, height);
+        this.action = getAction();
+    }
+
+    public void setAction(Action action) {
+        this.action = action;
     }
 
     private static String getName(Action action) {

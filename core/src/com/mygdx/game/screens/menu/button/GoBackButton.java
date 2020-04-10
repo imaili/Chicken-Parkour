@@ -13,7 +13,7 @@ import com.mygdx.game.screens.Menu;
 
 public class GoBackButton extends MenuButton {
 
-    private static final String GO_BACK_FILE_NAME = "exit1.png";
+    public static final String GO_BACK_FILE_NAME = "exit1.png";
 
     private static Button createButton() {
         return new ImageButton(new TextureRegionDrawable(new TextureRegion(new Texture(GO_BACK_FILE_NAME))));
@@ -22,7 +22,7 @@ public class GoBackButton extends MenuButton {
     private static final int BUTTON_WIDTH = 50;
     private static final int BUTTON_HEIGHT = 50;
 
-    private static Vector2 defaultPosition() {
+    public static Vector2 defaultPosition() {
         return new Vector2(Gdx.graphics.getWidth() - BUTTON_WIDTH, Gdx.graphics.getHeight() - BUTTON_HEIGHT);
     }
 
@@ -36,6 +36,10 @@ public class GoBackButton extends MenuButton {
 
     public GoBackButton() {
         this(defaultPosition());
+    }
+
+    public GoBackButton(Texture texture, Vector2 position, int width, int height) {
+        super(texture, position, width, height);
     }
 
     @Override

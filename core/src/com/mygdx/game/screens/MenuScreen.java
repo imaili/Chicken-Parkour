@@ -2,16 +2,13 @@ package com.mygdx.game.screens;
 
 import com.badlogic.gdx.Gdx;
 import com.badlogic.gdx.InputMultiplexer;
-import com.badlogic.gdx.graphics.Color;
 import com.badlogic.gdx.graphics.GL20;
-import com.badlogic.gdx.graphics.Pixmap;
 import com.badlogic.gdx.graphics.Texture;
-import com.badlogic.gdx.graphics.g2d.BitmapFont;
 import com.badlogic.gdx.scenes.scene2d.Stage;
-import com.badlogic.gdx.scenes.scene2d.ui.Skin;
-import com.badlogic.gdx.scenes.scene2d.ui.TextButton;
 import com.mygdx.game.MainGame;
 import com.mygdx.game.screens.menu.button.MenuButton;
+import com.mygdx.game.screens.menu.button.factory.ImageButtonFactory;
+import com.mygdx.game.screens.menu.button.factory.TextButtonFactory;
 
 import java.util.List;
 
@@ -21,9 +18,10 @@ public abstract class MenuScreen extends BaseScreen implements Menu {
     protected final Menu previousMenu;
     private final Stage stage;
     private final List<MenuButton> buttons;
-    protected static Skin skin = createBasicSkin();
     protected static final Texture DEFAULT_BACK_GROUND_TEXTURE = new Texture(BACKGROUND_MENU_PATH);
     protected static final String MUSIC_TYPE = "menu";
+    protected static final ImageButtonFactory IMAGE_BUTTON_FACTORY = ImageButtonFactory.getInstance();
+    protected static final TextButtonFactory DEFAULT_TEXT_BUTTON_FACTORY = TextButtonFactory.getDefaultInstance();
     protected Texture backGroundTexture;
 
     protected MenuScreen(Menu previousMenu){
@@ -31,7 +29,7 @@ public abstract class MenuScreen extends BaseScreen implements Menu {
         this.stage = new Stage();
         this.buttons = createButtons();
         for (MenuButton button : buttons) {
-            //button.setMenu(this);
+            button.setMenu(this);
             stage.addActor(button.getButton());
         }
     }
@@ -62,8 +60,8 @@ public abstract class MenuScreen extends BaseScreen implements Menu {
 
     public void setInputProcessor() {
         InputMultiplexer multiplexer = (InputMultiplexer) Gdx.input.getInputProcessor();
-        for (MenuButton button : buttons)
-            button.setMenu(this);
+        //for (MenuButton button : buttons)
+            //button.setMenu(this);
         if (!multiplexer.getProcessors().contains(stage, true))
             multiplexer.addProcessor(stage);
     }
@@ -82,35 +80,7 @@ public abstract class MenuScreen extends BaseScreen implements Menu {
         MainGame.getSingleton().getAssetsManager().stop_music();
     }
 
-    public static Skin createBasicSkin() {
-        // Create a font
-        BitmapFont font = new BitmapFont();
-        Skin skin = new Skin();
-        skin.add("default", font);
-
-        // Create a texture
-        Pixmap pixmap = new Pixmap(Gdx.graphics.getWidth() / 4, Gdx.graphics.getHeight() / 10, Pixmap.Format.RGB888);
-        pixmap.setColor(Color.WHITE);
-        pixmap.fill();
-        skin.add("background", new Texture(pixmap));
-
-        // Create a button style
-        TextButton.TextButtonStyle textButtonStyle = new TextButton.TextButtonStyle();
-        textButtonStyle.up = skin.newDrawable("background", Color.OLIVE);
-        textButtonStyle.down = skin.newDrawable("background", Color.GOLDENROD);
-        textButtonStyle.checked = skin.newDrawable("background", Color.OLIVE);
-        textButtonStyle.over = skin.newDrawable("background", Color.OLIVE);
-        textButtonStyle.font = skin.getFont("default");
-        skin.add("default", textButtonStyle);
-        return skin;
-    }
-
     // Override from BaseScreen
-
-    @Override
-    public void show() {
-
-    }
 
     public void draw() {
         Gdx.gl.glClearColor(1, 1, 1, 1);
