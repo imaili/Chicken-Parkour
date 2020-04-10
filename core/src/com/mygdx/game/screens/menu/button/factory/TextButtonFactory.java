@@ -1,4 +1,4 @@
-package com.mygdx.game.screens.menu.button;
+package com.mygdx.game.screens.menu.button.factory;
 
 import com.badlogic.gdx.Gdx;
 import com.badlogic.gdx.graphics.Color;
@@ -11,6 +11,11 @@ import com.badlogic.gdx.scenes.scene2d.ui.Skin;
 import com.badlogic.gdx.scenes.scene2d.ui.TextButton;
 import com.badlogic.gdx.scenes.scene2d.utils.Drawable;
 import com.badlogic.gdx.scenes.scene2d.utils.TextureRegionDrawable;
+import com.mygdx.game.screens.menu.button.ExitButton;
+import com.mygdx.game.screens.menu.button.GoBackButton;
+import com.mygdx.game.screens.menu.button.MenuButton;
+import com.mygdx.game.screens.menu.button.MusicButton;
+import com.mygdx.game.screens.menu.button.PauseButton;
 
 public class TextButtonFactory implements ButtonFactory {
     private final static TextButtonFactory DEFAULT_TEXT_BUTTON_FACTORY = new TextButtonFactory();
