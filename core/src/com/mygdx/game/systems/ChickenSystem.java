@@ -35,7 +35,6 @@ public class ChickenSystem extends IteratingSystem {
 
         BodyComponent bodyComponent = Mappers.BODY.get(entity);
         StateComponent stateComponent = Mappers.STATE.get(entity);
-
         if(Gdx.input.isTouched() && stateComponent.get() == StateComponent.STATE_NORMAL){
            Body body = bodyComponent.body;
            stateComponent.set(StateComponent.STATE_JUMPING);

@@ -26,7 +26,7 @@ public class RandomLevelSystem extends IteratingSystem {
 
     private ObstaclesFactory obstaclesFactory;
     private float accumulatedTime = 0;
-
+    float playerPosition = 2;
     public RandomLevelSystem(World world) {
         super(Family.all().get());
         obstaclesFactory = new ObstaclesFactory(world);
@@ -36,11 +36,11 @@ public class RandomLevelSystem extends IteratingSystem {
     public void update(float deltaTime) {
         super.update(deltaTime);
         accumulatedTime+=deltaTime;
+        playerPosition += deltaTime*5;
         if(accumulatedTime>2){
             accumulatedTime = 0;
 
-            obstaclesFactory.createPlatform(20, 1, 1);
-            obstaclesFactory.createSpikes(25, 1);
+
         }
     }
 
@@ -75,7 +75,6 @@ public class RandomLevelSystem extends IteratingSystem {
 
             body.body = createBox(x,1,length,height,true);
             body.body.setUserData(entity);
-            body.body.setLinearVelocity(-5f, 0);
             texture.region = createTexture(Color.GREEN, false, 32*length, 32*height);
             obstacle.type = ObstacleComponent.BOX;
             transform.position.set(x, 1, 0);
@@ -144,7 +143,6 @@ public class RandomLevelSystem extends IteratingSystem {
 
                 body.body = createTriangle(x + i);
                 body.body.setUserData(entity);
-                body.body.setLinearVelocity(-5f, 0);
                 //texture.region = createTexture(Color.GREEN, false, 32, 32);
                 obstacle.type = ObstacleComponent.SPIKES;
 

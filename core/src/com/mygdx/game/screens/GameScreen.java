@@ -3,11 +3,8 @@ package com.mygdx.game.screens;
 import com.badlogic.ashley.core.Entity;
 import com.badlogic.ashley.core.PooledEngine;
 import com.badlogic.gdx.Gdx;
-import com.badlogic.gdx.assets.AssetManager;
-import com.badlogic.gdx.graphics.Color;
 import com.badlogic.gdx.graphics.GL20;
 import com.badlogic.gdx.graphics.OrthographicCamera;
-import com.badlogic.gdx.graphics.Pixmap;
 import com.badlogic.gdx.graphics.Texture;
 import com.badlogic.gdx.graphics.g2d.SpriteBatch;
 import com.badlogic.gdx.graphics.g2d.TextureRegion;
@@ -17,18 +14,16 @@ import com.badlogic.gdx.physics.box2d.BodyDef;
 import com.badlogic.gdx.physics.box2d.FixtureDef;
 import com.badlogic.gdx.physics.box2d.PolygonShape;
 import com.badlogic.gdx.physics.box2d.World;
-import com.badlogic.gdx.scenes.scene2d.Stage;
 import com.mygdx.game.MainGame;
 import com.mygdx.game.components.AnimationComponent;
 import com.mygdx.game.components.BodyComponent;
+import com.mygdx.game.components.CameraComponent;
 import com.mygdx.game.components.ChickenComponent;
 import com.mygdx.game.components.CollisionComponent;
 import com.mygdx.game.components.StateComponent;
 import com.mygdx.game.components.TextureComponent;
 import com.mygdx.game.components.TransformComponent;
-import com.mygdx.game.screens.menu.PauseMenu;
-import com.mygdx.game.screens.menu.button.MenuButton;
-import com.mygdx.game.screens.menu.button.PauseButton;
+import com.mygdx.game.systems.CameraSystem;
 import com.mygdx.game.systems.ChickenSystem;
 import com.mygdx.game.systems.CleanUpSystem;
 import com.mygdx.game.systems.CollisionSystem;
@@ -36,7 +31,6 @@ import com.mygdx.game.systems.RandomLevelSystem;
 import com.mygdx.game.systems.PhysicsDebugSystem;
 import com.mygdx.game.systems.PhysicsSystem;
 import com.mygdx.game.systems.RenderingSystem;
-import com.mygdx.game.utils.AssetsManager;
 import com.mygdx.game.utils.ChickenContactListener;
 import com.mygdx.game.utils.Constants;
 import com.mygdx.game.utils.Mappers;
@@ -48,6 +42,10 @@ public class GameScreen extends BaseScreen implements Menu {
     private OrthographicCamera camera;
     private PooledEngine engine;
     private Entity player;
+    private Entity ground1;
+    private Entity ground2;
+    private int ground1end = 100;
+    private int ground2end = 200;
     private MainGame game;
 /*
 
@@ -79,7 +77,7 @@ public class GameScreen extends BaseScreen implements Menu {
         world = new World(new Vector2(0, -13f), true);
         world.setContactListener(new ChickenContactListener());
         spriteBatch = new SpriteBatch();
-        RenderingSystem renderingSystem = new RenderingSystem(spriteBatch);
+        RenderingSystem renderingSystem = new RenderingSystem(spriteBatch, 2);
         camera = renderingSystem.getCamera();
         engine = new PooledEngine();
 
@@ -90,8 +88,14 @@ public class GameScreen extends BaseScreen implements Menu {
         engine.addSystem(new RandomLevelSystem(world));
         engine.addSystem(new CleanUpSystem());
         engine.addSystem(renderingSystem);
+        engine.addSystem(new CameraSystem());
         createPlayer();
-        createFloor();
+        ground1 = createGround(50);
+        ground2 = createGround(150);
+        engine.addEntity(ground1);
+        engine.addEntity(ground2);
+
+        createCameraEntity();
 
 
     }
@@ -104,10 +108,21 @@ public class GameScreen extends BaseScreen implements Menu {
             engine.update(delta);
             /*stage.draw();
             stage.act();*/
-            if (Mappers.BODY.get(player).body.getPosition().x < 0.5 || Mappers.STATE.get(player).get() == StateComponent.STATE_HIT) {
+            if (Mappers.STATE.get(player).get() == StateComponent.STATE_HIT) {
                 //game.setScreen(new GameOverScreen(game));
                 goTo(GameOverScreen.class);
             }
+            if(Mappers.BODY.get(player).body.getPosition().x > ground1end) {
+
+                Mappers.BODY.get(ground1).body = createBox(ground2end+50, 0.5f, 100, 0, false);
+                ground1end += 200;
+            }
+            else if(Mappers.BODY.get(player).body.getPosition().x > ground2end) {
+
+                Mappers.BODY.get(ground2).body = createBox(ground1end+50, 0.5f, 100, 0, false);
+                ground2end += 200;
+            }
+            System.out.println(Mappers.BODY.get(player).body.getPosition().x);
         /*} else {
             pauseMenu.render(delta);
         } */
@@ -121,13 +136,12 @@ public class GameScreen extends BaseScreen implements Menu {
     }
 
     public void startMusic() {
-        if (game.getMusic())
-            game.getAssetsManager().play_music(MUSIC_TYPE);
+
     }
 
     public void stopMusic() {
-        game.getAssetsManager().stop_music();
     }
+
 
 
     private void createPlayer(){
@@ -144,19 +158,13 @@ public class GameScreen extends BaseScreen implements Menu {
 
         // set the components data
 
-        Pixmap pmap = new Pixmap(32,32, Pixmap.Format.RGBA8888);
-        pmap.setColor(Color.RED);
-        pmap.fill();
-        texture.region = new TextureRegion(new Texture(pmap));
-        pmap.dispose();
+        texture.region = new TextureRegion((Texture)game.getAssetsManager().get(Constants.RUN_2_PATH));
+        position.scale.set(0.15f, 0.15f);
 
-
-
-
-        body.body = createBox(1,1,1,1, true);
-
+        body.body = createBox(2,1,1,1, true);
+        body.body.setLinearVelocity(5,0);
         // set object position (x,y,z) z used to define draw order 0 first drawn
-        position.position.set(1,1,0);
+        position.position.set(2,1,0);
 
         body.body.setUserData(player);
         // add components to entity
@@ -167,6 +175,7 @@ public class GameScreen extends BaseScreen implements Menu {
         player.add(animation);
         player.add(state);
         player.add(collision);
+        player.add(texture);
 
         engine.addEntity(player);
 
@@ -179,13 +188,13 @@ public class GameScreen extends BaseScreen implements Menu {
 
 
 
-    private void createFloor(){
-        Entity entity = engine.createEntity();
+    private Entity createGround(int x){
+        Entity ground = engine.createEntity();
         BodyComponent body = engine.createComponent(BodyComponent.class);
-        body.body = createBox(0,0.5f,100,0,false);
-        body.body.setUserData(entity);
-        entity.add(body);
-        engine.addEntity(entity);
+        body.body = createBox(x,0.5f,100,0,false);
+        body.body.setUserData(ground);
+        ground.add(body);
+        return ground;
     }
 
     private Body createBox(float x, float y, float w, float h, boolean dynamic){
@@ -236,6 +245,16 @@ public class GameScreen extends BaseScreen implements Menu {
         GameOverScreen gameOverScreen = new GameOverScreen(game);
         gameOverScreen.startMusic();
         game.setMenu(gameOverScreen);
+    }
+
+    private void createCameraEntity() {
+        CameraComponent camera = engine.createComponent(CameraComponent.class);
+        camera.camera = this.camera;
+        camera.target = player;
+
+        Entity entity = engine.createEntity();
+        entity.add(camera);
+        engine.addEntity(entity);
     }
     /*
     @Override

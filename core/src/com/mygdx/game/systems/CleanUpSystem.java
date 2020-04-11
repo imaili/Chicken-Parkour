@@ -18,9 +18,8 @@ public class CleanUpSystem extends IteratingSystem {
     protected void processEntity(Entity entity, float deltaTime) {
 
         BodyComponent body = Mappers.BODY.get(entity);
-        if(body.body.getPosition().x < 0){
+        if(body.body.getPosition().y < 0){
             getEngine().removeEntity(entity);
-            System.out.println("eliminado");
         }
 
     }
