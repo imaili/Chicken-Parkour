@@ -4,7 +4,6 @@ import com.badlogic.ashley.core.ComponentMapper;
 import com.badlogic.ashley.core.Entity;
 import com.badlogic.ashley.core.Family;
 import com.badlogic.ashley.systems.IteratingSystem;
-import com.badlogic.gdx.physics.box2d.Body;
 import com.mygdx.game.components.BodyComponent;
 import com.mygdx.game.components.ChickenComponent;
 import com.mygdx.game.components.CoinComponent;
@@ -12,11 +11,7 @@ import com.mygdx.game.components.CollisionComponent;
 import com.mygdx.game.components.ObstacleComponent;
 import com.mygdx.game.components.PowerUpComponent;
 import com.mygdx.game.components.StateComponent;
-import com.mygdx.game.components.TextureComponent;
-import com.mygdx.game.components.TransformComponent;
 import com.mygdx.game.utils.Mappers;
-
-import java.util.Map;
 
 
 public class CollisionSystem  extends IteratingSystem {
@@ -67,7 +62,7 @@ public class CollisionSystem  extends IteratingSystem {
                 //TODO add powerup to chicken
             } else {
                 StateComponent stateComponent = Mappers.STATE.get(entity);
-                stateComponent.set(StateComponent.STATE_NORMAL);
+                stateComponent.set(StateComponent.STATE_WALKING);
             }
 
 
@@ -78,7 +73,7 @@ public class CollisionSystem  extends IteratingSystem {
 
     private void collisionWithBox(Entity chickenEntity) {
         StateComponent state = Mappers.STATE.get(chickenEntity);
-        state.set(StateComponent.STATE_NORMAL);
+        state.set(StateComponent.STATE_WALKING);
 
 
     }

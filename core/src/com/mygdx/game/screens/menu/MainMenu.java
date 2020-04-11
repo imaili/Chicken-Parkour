@@ -3,7 +3,6 @@ package com.mygdx.game.screens.menu;
 import com.badlogic.gdx.Gdx;
 import com.badlogic.gdx.math.Vector2;
 import com.mygdx.game.screens.MenuScreen;
-import com.mygdx.game.screens.menu.button.GoToButton;
 import com.mygdx.game.screens.menu.button.MenuButton;
 import com.mygdx.game.screens.Menu;
 
@@ -19,10 +18,10 @@ public class MainMenu extends MenuScreen {
         int buttonHeight = Gdx.graphics.getHeight() / 10;
         int buttonOffset = (Gdx.graphics.getHeight() - buttonHeight * nButtons) / (nButtons + 1);
         List<MenuButton> list = new LinkedList<>();
-        MenuButton goToSinglePlayerMenu = new GoToButton(skin, new Vector2(buttonX, buttonOffset + 3*(buttonHeight+buttonOffset)), "Single Player", SinglePlayerMenu.class);
-        MenuButton goToMultiPlayerMenu = new GoToButton(skin, new Vector2(buttonX, buttonOffset + 2*(buttonHeight+buttonOffset)), "MultiPlayer", MultiPlayerMenu.class);
-        MenuButton goToSettings = new GoToButton(skin, new Vector2(buttonX, buttonOffset + (buttonHeight+buttonOffset)), "Settings", Settings.class);
-        MenuButton exitGame = new GoToButton(skin, new Vector2(buttonX, buttonOffset), "Exit", ExitMenu.class);
+        MenuButton goToSinglePlayerMenu = DEFAULT_TEXT_BUTTON_FACTORY.createGoToButton("Single Player", new Vector2(buttonX, buttonOffset + 3*(buttonHeight+buttonOffset)), SinglePlayerMenu.class);
+        MenuButton goToMultiPlayerMenu = DEFAULT_TEXT_BUTTON_FACTORY.createGoToButton("MultiPlayer", new Vector2(buttonX, buttonOffset + 2*(buttonHeight+buttonOffset)), MultiPlayerMenu.class);
+        MenuButton goToSettings = DEFAULT_TEXT_BUTTON_FACTORY.createGoToButton("Settings", new Vector2(buttonX, buttonOffset + (buttonHeight+buttonOffset)), Settings.class);
+        MenuButton exitGame = DEFAULT_TEXT_BUTTON_FACTORY.createGoToButton("Exit", new Vector2(buttonX, buttonOffset), ExitMenu.class);
         Collections.addAll(list, goToSinglePlayerMenu, goToMultiPlayerMenu, goToSettings, exitGame);
         return list;
     }
