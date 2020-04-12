@@ -21,15 +21,18 @@ import com.mygdx.game.components.CollisionComponent;
 import com.mygdx.game.components.ObstacleComponent;
 import com.mygdx.game.components.TextureComponent;
 import com.mygdx.game.components.TransformComponent;
+import com.mygdx.game.server.Server;
 
 public class RandomLevelSystem extends IteratingSystem {
 
     private ObstaclesFactory obstaclesFactory;
     private float accumulatedTime = 0;
+    private Server server;
     float playerPosition = 2;
     public RandomLevelSystem(World world) {
         super(Family.all().get());
         obstaclesFactory = new ObstaclesFactory(world);
+        server = Server.getInstance();
     }
 
     @Override
@@ -40,6 +43,10 @@ public class RandomLevelSystem extends IteratingSystem {
         if(accumulatedTime>2){
             accumulatedTime = 0;
 
+            obstaclesFactory.createPlatform(20, 1, 1);
+            server.addObstacle(deltaTime, "platform");
+            obstaclesFactory.createSpikes(25, 1);
+            server.addObstacle(deltaTime, "spikes");
 
         }
     }

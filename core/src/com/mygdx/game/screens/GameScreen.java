@@ -74,9 +74,6 @@ public class GameScreen extends BaseScreen implements Menu {
         this.stage = createPauseButtonStage();
         this.paused = false;
         this.server = Server.getInstance();
-        String[] info = this.server.startGame();
-        game_id = info[0];
-        player_id = info[1];
     }
 
     private Stage createPauseButtonStage() {
@@ -91,6 +88,10 @@ public class GameScreen extends BaseScreen implements Menu {
     @Override
     public void show() {
         super.show();
+
+        String[] info = this.server.startGame();
+        game_id = info[1];
+        player_id = info[0];
 
         world = new World(new Vector2(0, -13f), true);
         world.setContactListener(new ChickenContactListener());
@@ -129,9 +130,14 @@ public class GameScreen extends BaseScreen implements Menu {
             engine.update(delta);
             /*stage.draw();
             stage.act();*/
+
+        server.updatePlayerLocation(Mappers.BODY.get(player).body.getPosition().x, Mappers.BODY.get(player).body.getPosition().y);
+
             if (Mappers.STATE.get(player).get() == StateComponent.STATE_HIT) {
                 //game.setScreen(new GameOverScreen(game));
                 goTo(GameOverScreen.class);
+                int score = 5000000;
+                server.endGame(score);
             }
             if(Mappers.BODY.get(player).body.getPosition().x > ground1end) {
 
