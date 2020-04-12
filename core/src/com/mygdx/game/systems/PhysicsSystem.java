@@ -12,9 +12,11 @@ import com.mygdx.game.components.BodyComponent;
 import com.mygdx.game.components.TransformComponent;
 import com.mygdx.game.utils.Mappers;
 
+import java.util.Map;
+
 public class PhysicsSystem extends IteratingSystem {
     // create variables to stabilize speed
-    private static final float MAX_STEP_TIME = 1/45f;
+    private static final float MAX_STEP_TIME = 1/60f;
     private static float accumulator = 0f;
 
     private World world;
@@ -49,6 +51,8 @@ public class PhysicsSystem extends IteratingSystem {
                 tfm.position.x = position.x;
                 tfm.position.y = position.y;
                 tfm.rotation = bodyComp.body.getAngle() * MathUtils.radiansToDegrees;
+
+
             }
         }
         // empty queue

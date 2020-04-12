@@ -3,6 +3,7 @@ package com.mygdx.game.utils;
 import com.badlogic.ashley.core.Component;
 import com.badlogic.ashley.core.ComponentMapper;
 import com.mygdx.game.components.BodyComponent;
+import com.mygdx.game.components.CameraComponent;
 import com.mygdx.game.components.CoinComponent;
 import com.mygdx.game.components.CollisionComponent;
 import com.mygdx.game.components.ChickenComponent;
@@ -23,4 +24,5 @@ public class Mappers {
     public static final ComponentMapper<ObstacleComponent> OBSTACLE = ComponentMapper.getFor(ObstacleComponent.class);
     public static final ComponentMapper<CoinComponent> COIN = ComponentMapper.getFor(CoinComponent.class);
     public static final ComponentMapper<PowerUpComponent> POWERUP = ComponentMapper.getFor(PowerUpComponent.class);
+    public static final ComponentMapper<CameraComponent> CAMERA = ComponentMapper.getFor(CameraComponent.class);
 }

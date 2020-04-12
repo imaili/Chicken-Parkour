@@ -28,7 +28,7 @@ public class RandomLevelSystem extends IteratingSystem {
     private ObstaclesFactory obstaclesFactory;
     private float accumulatedTime = 0;
     private Server server;
-
+    float playerPosition = 2;
     public RandomLevelSystem(World world) {
         super(Family.all().get());
         obstaclesFactory = new ObstaclesFactory(world);
@@ -39,6 +39,7 @@ public class RandomLevelSystem extends IteratingSystem {
     public void update(float deltaTime) {
         super.update(deltaTime);
         accumulatedTime+=deltaTime;
+        playerPosition += deltaTime*5;
         if(accumulatedTime>2){
             accumulatedTime = 0;
 
@@ -81,7 +82,6 @@ public class RandomLevelSystem extends IteratingSystem {
 
             body.body = createBox(x,1,length,height,true);
             body.body.setUserData(entity);
-            body.body.setLinearVelocity(-5f, 0);
             texture.region = createTexture(Color.GREEN, false, 32*length, 32*height);
             obstacle.type = ObstacleComponent.BOX;
             transform.position.set(x, 1, 0);
@@ -150,13 +150,28 @@ public class RandomLevelSystem extends IteratingSystem {
 
                 body.body = createTriangle(x + i);
                 body.body.setUserData(entity);
-                body.body.setLinearVelocity(-5f, 0);
-                //texture.region = createTexture(Color.GREEN, false, 32, 32);
+
+                Pixmap pmap = new Pixmap(32,32, Pixmap.Format.RGBA8888);
+                pmap.setColor(Color.GRAY);
+                pmap.fillTriangle(32,0,32,32 ,0,16 );
+                final int width = pmap.getWidth();
+                final int height = pmap.getHeight();
+                Pixmap rotatedPmap = new Pixmap(height, width, pmap.getFormat());
+
+                for (int x2 = 0; x2 < height; x2++) {
+                    for (int y = 0; y < width; y++) {
+                        rotatedPmap.drawPixel(x2, y, pmap.getPixel(y, x2));
+                    }
+                }
+                texture.region = new TextureRegion(new Texture(rotatedPmap));
+                rotatedPmap.dispose();
+                pmap.dispose();
+
                 obstacle.type = ObstacleComponent.SPIKES;
 
                 entity.add(body);
                 entity.add(collision);
-                //entity.add(texture);
+                entity.add(texture);
                 entity.add(obstacle);
                 entity.add(transform);
                 entity.add(cleanUp);
