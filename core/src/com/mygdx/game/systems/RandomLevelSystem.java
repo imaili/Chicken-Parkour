@@ -43,10 +43,10 @@ public class RandomLevelSystem extends IteratingSystem {
         if(accumulatedTime>2){
             accumulatedTime = 0;
 
-            obstaclesFactory.createPlatform(20, 1, 1);
-            server.addObstacle(deltaTime, "platform");
-            obstaclesFactory.createSpikes(25, 1);
-            server.addObstacle(deltaTime, "spikes");
+            //obstaclesFactory.createPlatform(20, 1, 1);
+           // server.addObstacle(deltaTime, "platform");
+            //obstaclesFactory.createSpikes(25, 1);
+            //server.addObstacle(deltaTime, "spikes");
 
         }
     }
