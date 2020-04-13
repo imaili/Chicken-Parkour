@@ -1,6 +1,5 @@
 package com.mygdx.game.utils;
 
-import com.badlogic.ashley.core.Component;
 import com.badlogic.ashley.core.ComponentMapper;
 import com.badlogic.gdx.graphics.g2d.Animation;
 import com.mygdx.game.components.AnimationComponent;
@@ -23,6 +22,7 @@ public class Mappers {
     public static final ComponentMapper<StateComponent> STATE = ComponentMapper.getFor(StateComponent.class);
     public static final ComponentMapper<TransformComponent> TRANSFORM = ComponentMapper.getFor(TransformComponent.class);
     public static final ComponentMapper<TextureComponent> TEXTURE = ComponentMapper.getFor(TextureComponent.class);
+    public static final ComponentMapper<ButtonComponent> BUTTON = ComponentMapper.getFor(ButtonComponent.class);
     public static final ComponentMapper<ObstacleComponent> OBSTACLE = ComponentMapper.getFor(ObstacleComponent.class);
     public static final ComponentMapper<CoinComponent> COIN = ComponentMapper.getFor(CoinComponent.class);
     public static final ComponentMapper<PowerUpComponent> POWERUP = ComponentMapper.getFor(PowerUpComponent.class);
