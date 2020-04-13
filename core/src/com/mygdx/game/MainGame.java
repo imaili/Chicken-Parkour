@@ -29,16 +29,15 @@ public class MainGame extends Game {
 	@Override
 	public void create() {
 		singleton = this;
-		//setMenu(new GameScreen(this));
 		MainMenu menu = new MainMenu();
-		/*setMenu(menu);
+		setMenu(menu);
 		Gdx.input.setInputProcessor(new InputMultiplexer());
-		menu.setInputProcessor();*/
+		menu.setInputProcessor();
 		manager = new AssetManager();
 		loadAssetManager();
-		music = true;
-		//menu.startMusic();
-		setScreen(new GameScreen(this));
+		music = false;
+		menu.startMusic();
+		//setScreen(new GameScreen(this));
 
 	}
 

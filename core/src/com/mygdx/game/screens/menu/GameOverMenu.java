@@ -39,7 +39,7 @@ public class GameOverMenu extends PauseMenu {
 
     @Override
     public void goTo(Class<? extends Menu> menu) {
-        previousMenu.dispose();
+        //previousMenu.dispose();
         super.goTo(menu);
         if (menu.equals(GameScreen.class))
             goToGameScreen();
