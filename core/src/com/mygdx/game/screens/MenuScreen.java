@@ -2,14 +2,9 @@ package com.mygdx.game.screens;
 
 import com.badlogic.gdx.Gdx;
 import com.badlogic.gdx.InputMultiplexer;
-import com.badlogic.gdx.graphics.Color;
 import com.badlogic.gdx.graphics.GL20;
-import com.badlogic.gdx.graphics.Pixmap;
 import com.badlogic.gdx.graphics.Texture;
-import com.badlogic.gdx.graphics.g2d.BitmapFont;
 import com.badlogic.gdx.scenes.scene2d.Stage;
-import com.badlogic.gdx.scenes.scene2d.ui.Skin;
-import com.badlogic.gdx.scenes.scene2d.ui.TextButton;
 import com.mygdx.game.MainGame;
 import com.mygdx.game.screens.menu.button.MenuButton;
 import com.mygdx.game.screens.menu.button.factory.ImageButtonFactory;
@@ -80,6 +75,7 @@ public abstract class MenuScreen extends BaseScreen implements Menu {
 
     }
 
+<<<<<<< HEAD
     public void stopMusic() { }
 
     public static Skin createBasicSkin() {
@@ -105,6 +101,8 @@ public abstract class MenuScreen extends BaseScreen implements Menu {
         return skin;
     }
 
+=======
+>>>>>>> 707b97e16aa953717b71f10005d177957a822e59
     // Override from BaseScreen
 
     public void draw() {
