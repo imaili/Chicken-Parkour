@@ -2,6 +2,8 @@ package com.mygdx.game.utils;
 
 import com.badlogic.ashley.core.Component;
 import com.badlogic.ashley.core.ComponentMapper;
+import com.badlogic.gdx.graphics.g2d.Animation;
+import com.mygdx.game.components.AnimationComponent;
 import com.mygdx.game.components.BodyComponent;
 import com.mygdx.game.components.CameraComponent;
 import com.mygdx.game.components.CoinComponent;
@@ -25,4 +27,5 @@ public class Mappers {
     public static final ComponentMapper<CoinComponent> COIN = ComponentMapper.getFor(CoinComponent.class);
     public static final ComponentMapper<PowerUpComponent> POWERUP = ComponentMapper.getFor(PowerUpComponent.class);
     public static final ComponentMapper<CameraComponent> CAMERA = ComponentMapper.getFor(CameraComponent.class);
+    public static final ComponentMapper<AnimationComponent> ANIMATION = ComponentMapper.getFor(AnimationComponent.class);
 }

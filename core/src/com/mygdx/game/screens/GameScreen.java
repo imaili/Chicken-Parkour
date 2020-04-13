@@ -71,11 +71,11 @@ public class GameScreen extends BaseScreen implements Menu {
     public GameScreen(MainGame game) {
         super(game);
         this.game = game;
-        this.stage = createPauseButtonStage();
+       // this.stage = createPauseButtonStage();
         this.paused = false;
         this.server = Server.getInstance();
     }
-
+/*
     private Stage createPauseButtonStage() {
         Stage stage = new Stage();
         stage.addActor((new PauseButton(this)).getButton());
@@ -83,7 +83,7 @@ public class GameScreen extends BaseScreen implements Menu {
         if (!multiplexer.getProcessors().contains(stage, true))
             multiplexer.addProcessor(stage);
         return stage;
-    }
+    }*/
 
     @Override
     public void show() {
@@ -106,7 +106,7 @@ public class GameScreen extends BaseScreen implements Menu {
         engine.addSystem(new ChickenSystem());
         engine.addSystem(new CollisionSystem());
         engine.addSystem(new RandomLevelSystem(world));
-        engine.addSystem(new CleanUpSystem());
+        engine.addSystem(new CleanUpSystem(world, camera));
         engine.addSystem(new AnimationSystem());
         engine.addSystem(renderingSystem);
         engine.addSystem(new CameraSystem());
@@ -117,7 +117,7 @@ public class GameScreen extends BaseScreen implements Menu {
         engine.addEntity(ground2);
 
         createCameraEntity();
-        createBackground();
+       // createBackground();
 
 
     }
@@ -134,8 +134,8 @@ public class GameScreen extends BaseScreen implements Menu {
         server.updatePlayerLocation(Mappers.BODY.get(player).body.getPosition().x, Mappers.BODY.get(player).body.getPosition().y);
 
             if (Mappers.STATE.get(player).get() == StateComponent.STATE_HIT) {
-                //game.setScreen(new GameOverScreen(game));
-                goTo(GameOverScreen.class);
+                game.setScreen(new GameOverScreen(game));
+                //goTo(GameOverScreen.class);
                 int score = 5000000;
                 server.endGame(score);
             }
@@ -222,7 +222,6 @@ public class GameScreen extends BaseScreen implements Menu {
         // set the components data
 
         texture.region = new TextureRegion((Texture)game.getAssetsManager().get(Constants.RUN_2_PATH));
-        position.scale.set(0.15f, 0.15f);
 
         TextureAtlas atlas = new TextureAtlas(Constants.WALK_ATLAS_PATH);
         Animation ani = new Animation<TextureRegion>(0.1f, atlas.getRegions(), Animation.PlayMode.LOOP);
@@ -244,7 +243,7 @@ public class GameScreen extends BaseScreen implements Menu {
         ani = new Animation<TextureRegion>(0.1f, atlas.getRegions());
         animation.animationsMap.put(StateComponent.STATE_RUN, ani );
 
-        body.body = createBox(10,10,10,10, true); // used to be (1,1,1,1,true) --> Dinosaur outside of the screen??
+       // body.body = createBox(10,10,10,10, true); // used to be (1,1,1,1,true) --> Dinosaur outside of the screen??
 
         body.body = createBox(2,1,1,1, true);
         body.body.setLinearVelocity(5,0);
@@ -259,11 +258,11 @@ public class GameScreen extends BaseScreen implements Menu {
         player.add(body);
         player.add(position);
         player.add(chicken);
-        player.add(texture);
-        player.add(animation);
+       // player.add(texture);
+        //player.add(animation);
         player.add(state);
         player.add(collision);
-        player.add(texture);
+       //player.add(texture);
 
         engine.addEntity(player);
 

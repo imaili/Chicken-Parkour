@@ -43,9 +43,9 @@ public class RandomLevelSystem extends IteratingSystem {
         if(accumulatedTime>2){
             accumulatedTime = 0;
 
-            //obstaclesFactory.createPlatform(20, 1, 1);
+            obstaclesFactory.createPlatform(playerPosition+20, 1, 1);
            // server.addObstacle(deltaTime, "platform");
-            //obstaclesFactory.createSpikes(25, 1);
+            //obstaclesFactory.createSpikes(playerPosition+25, 1);
             //server.addObstacle(deltaTime, "spikes");
 
         }
@@ -79,7 +79,7 @@ public class RandomLevelSystem extends IteratingSystem {
             TextureComponent texture = engine.createComponent(TextureComponent.class);
             ObstacleComponent obstacle = engine.createComponent(ObstacleComponent.class);
             TransformComponent transform = engine.createComponent(TransformComponent.class);
-
+            CleanUpComponent cleanUp = engine.createComponent(CleanUpComponent.class);
             body.body = createBox(x,1,length,height,true);
             body.body.setUserData(entity);
             texture.region = createTexture(Color.GREEN, false, 32*length, 32*height);
@@ -90,6 +90,7 @@ public class RandomLevelSystem extends IteratingSystem {
             entity.add(texture);
             entity.add(obstacle);
             entity.add(transform);
+            entity.add(cleanUp);
             engine.addEntity(entity);
 
         }
@@ -171,7 +172,7 @@ public class RandomLevelSystem extends IteratingSystem {
 
                 entity.add(body);
                 entity.add(collision);
-                entity.add(texture);
+               // entity.add(texture);
                 entity.add(obstacle);
                 entity.add(transform);
                 entity.add(cleanUp);

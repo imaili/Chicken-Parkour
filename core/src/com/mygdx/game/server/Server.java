@@ -138,7 +138,7 @@ public class Server {
         this.send(this.createJSONObject("end_game", dataObj));
     }
     private void send(JSONObject message) {
-        System.out.println((message));
+        //System.out.println((message));
         try { socket.send(message);
 
         }
