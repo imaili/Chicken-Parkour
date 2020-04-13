@@ -4,6 +4,7 @@ import com.badlogic.ashley.core.ComponentMapper;
 import com.badlogic.gdx.graphics.g2d.Animation;
 import com.mygdx.game.components.AnimationComponent;
 import com.mygdx.game.components.BodyComponent;
+import com.mygdx.game.components.ButtonComponent;
 import com.mygdx.game.components.CameraComponent;
 import com.mygdx.game.components.CoinComponent;
 import com.mygdx.game.components.CollisionComponent;

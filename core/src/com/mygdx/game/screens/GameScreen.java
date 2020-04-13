@@ -371,7 +371,7 @@ public class GameScreen extends BaseScreen implements Menu {
     public void pause() {
         paused = true;
         /*InputMultiplexer multiplexer = (InputMultiplexer) Gdx.input.getInputProcessor();
-        multiplexer.removeProcessor(stage);*/
+        multiplexer.removeProcessor(stage);
         pauseMenu = new PauseMenu(this);
         pauseMenu.setInputProcessor();
         renderingSystem.setProcessing(false);
@@ -382,7 +382,7 @@ public class GameScreen extends BaseScreen implements Menu {
         paused = false;
         /*InputMultiplexer multiplexer = (InputMultiplexer) Gdx.input.getInputProcessor();
         if (!multiplexer.getProcessors().contains(stage, true))
-            multiplexer.addProcessor(stage);*/
+            multiplexer.addProcessor(stage);
         pauseMenu.removeInputProcessor();
         renderingSystem.setProcessing(true);
     }*/
