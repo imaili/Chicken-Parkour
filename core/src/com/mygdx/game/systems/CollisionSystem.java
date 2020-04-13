@@ -4,7 +4,6 @@ import com.badlogic.ashley.core.ComponentMapper;
 import com.badlogic.ashley.core.Entity;
 import com.badlogic.ashley.core.Family;
 import com.badlogic.ashley.systems.IteratingSystem;
-import com.badlogic.gdx.physics.box2d.Body;
 import com.mygdx.game.components.BodyComponent;
 import com.mygdx.game.components.ChickenComponent;
 import com.mygdx.game.components.CoinComponent;
@@ -13,10 +12,6 @@ import com.mygdx.game.components.ObstacleComponent;
 import com.mygdx.game.components.PowerUpComponent;
 import com.mygdx.game.components.StateComponent;
 import com.mygdx.game.utils.Mappers;
-
-import java.util.Map;
-
-import javax.swing.plaf.nimbus.State;
 
 
 public class CollisionSystem  extends IteratingSystem {
@@ -77,14 +72,8 @@ public class CollisionSystem  extends IteratingSystem {
     }
 
     private void collisionWithBox(Entity chickenEntity) {
-
-        BodyComponent chickenBody = Mappers.BODY.get(chickenEntity);
         StateComponent state = Mappers.STATE.get(chickenEntity);
-
-        if(chickenBody.body.getLinearVelocity().x < 5)
-            state.set(StateComponent.STATE_HIT);
-        else
-            state.set(StateComponent.STATE_WALKING);
+        state.set(StateComponent.STATE_WALKING);
 
 
     }

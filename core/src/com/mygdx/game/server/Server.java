@@ -15,10 +15,6 @@ import org.json.JSONObject;
 public class Server {
     private static Server _server;
     private Socket socket;
-
-    private String game_id;
-    private String player_id;
-
     private Server() {
         try {
             socket = IO.socket("http://localhost:8300");
@@ -29,12 +25,10 @@ public class Server {
                     System.out.println("Connected!");
                 }
 
-            }).on(Socket.EVENT_MESSAGE, new Emitter.Listener() {
+            }).on("event", new Emitter.Listener() {
 
                 @Override
-                public void call(Object... args) {
-                    System.out.println(args[0]);
-                }
+                public void call(Object... args) {}
 
             }).on(Socket.EVENT_DISCONNECT, new Emitter.Listener() {
 
@@ -47,8 +41,6 @@ public class Server {
         catch (Exception e) {
             System.out.println(e.getMessage());
         }
-
-        this.getHighscores();
 
     }
 
@@ -90,55 +82,34 @@ public class Server {
         return _server;
     }
 
-    private JSONObject createJSONObject(String type, JSONObject data) {
+    private JSONObject createJSONObject(String type, String game_id, String player_id, JSONObject data) {
         JSONObject obj = new JSONObject();
         obj.put("type", type);
-        obj.put("game_id", this.game_id);
-        obj.put("player_id", this.player_id);
+        obj.put("game_id", game_id);
+        obj.put("player_id", player_id);
         obj.put("data", data);
         return obj;
     }
 
     public String[] startGame() {
-        this.game_id =  Server.generateId();
-        this.player_id = Server.generateId();
+        final String generated_game_id = Server.generateId();
+        final String generated_player_id = Server.generateId();
         JSONObject dataObj = new JSONObject();
         dataObj.put("player_name", "Fred");
 
-        this.send(this.createJSONObject("new_game", dataObj));
-
+        this.send(this.createJSONObject("new_game", generated_game_id, generated_player_id, dataObj));
         return new String [] {
-            this.player_id,
-           this.game_id
+            generated_player_id,
+           generated_game_id
         };
     }
 
-    public void getHighscores() {
-        this.send(this.createJSONObject("get_highscores", null));
+    public void updatePlayerLocation(String game_id, String player_id, float x, float y) {
+
     }
 
-    public void updatePlayerLocation(float x, float y) {
-        JSONObject dataObj = new JSONObject();
-        dataObj.put( "x", x );
-        dataObj.put("y", y  );
-        this.send(this.createJSONObject("update_location", dataObj));
-    }
-
-    public void addObstacle(float deltatime, String type){
-        JSONObject dataObj = new JSONObject();
-        dataObj.put("deltatime", deltatime);
-        dataObj.put("type", type);
-        this.send(this.createJSONObject("add_obstacle", dataObj));
-    }
-
-
-    public void endGame(int score){
-        JSONObject dataObj = new JSONObject();
-        dataObj.put("score", score);
-        this.send(this.createJSONObject("end_game", dataObj));
-    }
     private void send(JSONObject message) {
-        //System.out.println((message));
+        System.out.println((message));
         try { socket.send(message);
 
         }

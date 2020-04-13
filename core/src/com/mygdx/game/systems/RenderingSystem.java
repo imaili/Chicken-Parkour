@@ -13,7 +13,6 @@ import com.badlogic.gdx.graphics.g2d.Sprite;
 import com.badlogic.gdx.graphics.g2d.SpriteBatch;
 import com.badlogic.gdx.math.MathUtils;
 import com.badlogic.gdx.utils.Array;
-import com.mygdx.game.components.BodyComponent;
 import com.mygdx.game.components.ChickenComponent;
 import com.mygdx.game.components.TextureComponent;
 import com.mygdx.game.components.TransformComponent;
@@ -38,7 +37,7 @@ public class RenderingSystem extends IteratingSystem {
     private ComponentMapper<TextureComponent> textureM;
     private ComponentMapper<TransformComponent> transformM;
 
-    public RenderingSystem(SpriteBatch batch, float position) {
+    public RenderingSystem(SpriteBatch batch) {
         super(Family.all(TransformComponent.class, TextureComponent.class).get());
 
         textureM = Mappers.TEXTURE;
@@ -55,8 +54,9 @@ public class RenderingSystem extends IteratingSystem {
         };
 
         this.batch = batch;
+
         cam = new OrthographicCamera(WORLD_WIDTH, WORLD_HEIGHT);
-        cam.position.set(9, WORLD_HEIGHT / 2, 0);
+        cam.position.set(WORLD_WIDTH / 2, WORLD_HEIGHT / 2, 0);
     }
 
     @Override
@@ -77,12 +77,12 @@ public class RenderingSystem extends IteratingSystem {
             }
 
             TransformComponent t = transformM.get(entity);
-            ChickenComponent c = Mappers.CHICKEN.get(entity);
 
             float width = tex.region.getRegionWidth();
             float height = tex.region.getRegionHeight();
             float originX = width * 0.5f;
             float originY = height * 0.5f;
+
             batch.draw(tex.region,
                     t.position.x - originX, t.position.y - originY,
                     originX, originY,
