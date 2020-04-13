@@ -7,6 +7,7 @@ import com.badlogic.gdx.assets.AssetManager;
 import com.badlogic.gdx.audio.Music;
 import com.badlogic.gdx.graphics.Texture;
 import com.badlogic.gdx.graphics.g2d.TextureAtlas;
+import com.badlogic.gdx.graphics.g2d.TextureRegion;
 import com.mygdx.game.screens.GameScreen;
 import com.mygdx.game.screens.menu.MainMenu;
 import com.mygdx.game.screens.Menu;
@@ -15,14 +16,13 @@ import com.mygdx.game.utils.Constants;
 
 public class MainGame extends Game {
 	private static MainGame singleton;
-	AssetManager manager;
 
+	private AssetManager manager;
 	public static MainGame getSingleton() {
 		return singleton;
 	}
 
 	private Menu menu;
-	private AssetsManager assetsManager;
 	private boolean music;
 
 
@@ -31,14 +31,15 @@ public class MainGame extends Game {
 		singleton = this;
 		//setMenu(new GameScreen(this));
 		MainMenu menu = new MainMenu();
-		setMenu(menu);
+		/*setMenu(menu);
 		Gdx.input.setInputProcessor(new InputMultiplexer());
-		menu.setInputProcessor();
+		menu.setInputProcessor();*/
 		manager = new AssetManager();
 		loadAssetManager();
-		assetsManager = new AssetsManager();
 		music = true;
-		menu.startMusic();
+		//menu.startMusic();
+		setScreen(new GameScreen(this));
+
 	}
 
 	@Override
@@ -72,7 +73,6 @@ public class MainGame extends Game {
 	private void loadAssetManager(){
 
 		manager.load(Constants.RUN_2_PATH, Texture.class);
-		//TODO load textures and animations
 
 		manager.load(Constants.WALK_ATLAS_PATH, TextureAtlas.class);
 		manager.load(Constants.DEAD_ATLAS_PATH, TextureAtlas.class);
@@ -85,7 +85,7 @@ public class MainGame extends Game {
 		manager.load(Constants.BACKGROUND_MENU_PATH, Texture.class);
 		manager.load(Constants.MULTIPLAYER_BUTTON_PATH, Texture.class);
 		manager.load(Constants.SINGLEPLAYER_BUTTON_PATH, Texture.class);
-
+		manager.load(Constants.RUN_2_PATH, Texture.class);
 		manager.load(Constants.MUSIC_GAME_PATH, Music.class);
 		manager.load(Constants.MUSIC_MENU_PATH, Music.class);
 
@@ -94,8 +94,8 @@ public class MainGame extends Game {
 
 	}
 
-	public AssetsManager getAssetsManager() {
-		return assetsManager;
+	public AssetManager getAssetsManager() {
+		return manager;
 	}
 }
 

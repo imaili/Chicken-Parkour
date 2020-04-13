@@ -22,12 +22,14 @@ import com.badlogic.gdx.physics.box2d.World;
 import com.mygdx.game.MainGame;
 import com.mygdx.game.components.AnimationComponent;
 import com.mygdx.game.components.BodyComponent;
+import com.mygdx.game.components.CameraComponent;
 import com.mygdx.game.components.ChickenComponent;
 import com.mygdx.game.components.ButtonComponent;
 import com.mygdx.game.components.CollisionComponent;
 import com.mygdx.game.components.StateComponent;
 import com.mygdx.game.components.TextureComponent;
 import com.mygdx.game.components.TransformComponent;
+import com.mygdx.game.systems.CameraSystem;
 import com.mygdx.game.screens.menu.GameOverMenu;
 import com.mygdx.game.screens.menu.PauseMenu;
 import com.mygdx.game.screens.menu.button.GoBackButton;
@@ -53,9 +55,12 @@ public class GameScreen extends BaseScreen implements Menu {
     private OrthographicCamera camera;
     private PooledEngine engine;
     private Entity player;
+    private Entity ground1;
+    private Entity ground2;
+    private int ground1end = 100;
+    private int ground2end = 200;
     private Entity background;
     private MainGame game;
-    private RenderingSystem renderingSystem;
 
     private PauseMenu pauseMenu;
     /*private Stage stage;*/
@@ -68,15 +73,12 @@ public class GameScreen extends BaseScreen implements Menu {
     public GameScreen(MainGame game) {
         super(game);
         this.game = game;
-        /*this.stage = createPauseButtonStage();*/
+       // this.stage = createPauseButtonStage();
         this.paused = false;
         this.server = Server.getInstance();
-        String[] info = this.server.startGame();
-        game_id = info[0];
-        player_id = info[1];
     }
-
-    /*private Stage createPauseButtonStage() {
+/*
+    private Stage createPauseButtonStage() {
         Stage stage = new Stage();
         stage.addActor((new PauseButton(this)).getButton());
         InputMultiplexer multiplexer = (InputMultiplexer) Gdx.input.getInputProcessor();
@@ -89,10 +91,15 @@ public class GameScreen extends BaseScreen implements Menu {
     public void show() {
         super.show();
 
+        String[] info = this.server.startGame();
+        game_id = info[1];
+        player_id = info[0];
+
         world = new World(new Vector2(0, -13f), true);
         world.setContactListener(new ChickenContactListener());
         spriteBatch = new SpriteBatch();
-        renderingSystem = new RenderingSystem(spriteBatch);
+        RenderingSystem renderingSystem = new RenderingSystem(spriteBatch, 2);
+
         camera = renderingSystem.getCamera();
         engine = new PooledEngine();
 
@@ -101,14 +108,18 @@ public class GameScreen extends BaseScreen implements Menu {
         engine.addSystem(new ChickenSystem());
         engine.addSystem(new CollisionSystem());
         engine.addSystem(new RandomLevelSystem(world));
-        engine.addSystem(new CleanUpSystem());
+        engine.addSystem(new CleanUpSystem(world, camera));
         engine.addSystem(new AnimationSystem());
         engine.addSystem(renderingSystem);
-        engine.addSystem(new ButtonSystem());
+        engine.addSystem(new CameraSystem());
         createPlayer();
-        createFloor();
-        createBackground();
-        createPauseButton();
+        ground1 = createGround(50);
+        ground2 = createGround(150);
+        engine.addEntity(ground1);
+        engine.addEntity(ground2);
+
+        createCameraEntity();
+       // createBackground();
 
 
     }
@@ -121,11 +132,33 @@ public class GameScreen extends BaseScreen implements Menu {
             engine.update(delta);
             /*stage.draw();
             stage.act();*/
+
+        server.updatePlayerLocation(Mappers.BODY.get(player).body.getPosition().x, Mappers.BODY.get(player).body.getPosition().y);
+
+            if (Mappers.STATE.get(player).get() == StateComponent.STATE_HIT) {
+                game.setScreen(new GameOverScreen(game));
+                //goTo(GameOverScreen.class);
+                int score = 5000000;
+                server.endGame(score);
+            }
+            if(Mappers.BODY.get(player).body.getPosition().x > ground1end) {
+
+                Mappers.BODY.get(ground1).body = createBox(ground2end+50, 0.5f, 100, 0, false);
+                ground1end += 200;
+            }
+            else if(Mappers.BODY.get(player).body.getPosition().x > ground2end) {
+
+                Mappers.BODY.get(ground2).body = createBox(ground1end+50, 0.5f, 100, 0, false);
+                ground2end += 200;
+            }
+        /*} else {
+            stage.draw();
+            stage.act();
             if (Mappers.BODY.get(player).body.getPosition().x < 0.5 || Mappers.STATE.get(player).get() == StateComponent.STATE_HIT) {
                 goTo(GameOverMenu.class);
             }
         } else {
-            pauseMenu.render(delta);
+            pauseMenu.render(delta);*/
         }
     }
 
@@ -137,12 +170,10 @@ public class GameScreen extends BaseScreen implements Menu {
     }
 
     public void startMusic() {
-        if (game.getMusic())
-            game.getAssetsManager().play_music(MUSIC_TYPE);
+
     }
 
     public void stopMusic() {
-        game.getAssetsManager().stop_music();
     }
 
 
@@ -177,6 +208,7 @@ public class GameScreen extends BaseScreen implements Menu {
     }
 
 
+
     private void createPlayer(){
         //create an empty entity
         player = engine.createEntity();
@@ -191,11 +223,8 @@ public class GameScreen extends BaseScreen implements Menu {
 
         // set the components data
 
-        Pixmap pmap = new Pixmap(32,32, Pixmap.Format.RGBA8888);
-        pmap.setColor(Color.RED);
-        pmap.fill();
-        //texture.region = new TextureRegion(new Texture(pmap));
-        pmap.dispose();
+        texture.region = new TextureRegion((Texture)game.getAssetsManager().get(Constants.RUN_2_PATH));
+
         TextureAtlas atlas = new TextureAtlas(Constants.WALK_ATLAS_PATH);
         Animation ani = new Animation<TextureRegion>(0.1f, atlas.getRegions(), Animation.PlayMode.LOOP);
         animation.animationsMap.put(StateComponent.STATE_WALKING, ani );
@@ -216,11 +245,13 @@ public class GameScreen extends BaseScreen implements Menu {
         ani = new Animation<TextureRegion>(0.1f, atlas.getRegions());
         animation.animationsMap.put(StateComponent.STATE_RUN, ani );
 
-        body.body = createBox(10,10,10,10, true); // used to be (1,1,1,1,true) --> Dinosaur outside of the screen??
+       // body.body = createBox(10,10,10,10, true); // used to be (1,1,1,1,true) --> Dinosaur outside of the screen??
 
+        body.body = createBox(2,1,1,1, true);
+        body.body.setLinearVelocity(5,0);
         // set object position (x,y,z) z used to define draw order 0 first drawn
-        position.position.set(1,1,0);
-        //position.scale.set(0.3f,0.3f);     // this line resizes the Dinosaur... but brings some more wrong behaviour..
+        position.position.set(2,1,0);
+        position.scale.set(0.3f,0.3f);     // this line resizes the Dinosaur... but brings some more wrong behaviour..
 
         state.set(StateComponent.STATE_WALKING);
 
@@ -229,10 +260,11 @@ public class GameScreen extends BaseScreen implements Menu {
         player.add(body);
         player.add(position);
         player.add(chicken);
-        player.add(texture);
-        player.add(animation);
+       // player.add(texture);
+        //player.add(animation);
         player.add(state);
         player.add(collision);
+       //player.add(texture);
 
         engine.addEntity(player);
 
@@ -265,13 +297,13 @@ public class GameScreen extends BaseScreen implements Menu {
     }
 
 
-    private void createFloor(){
-        Entity entity = engine.createEntity();
+    private Entity createGround(int x){
+        Entity ground = engine.createEntity();
         BodyComponent body = engine.createComponent(BodyComponent.class);
-        body.body = createBox(0,0.5f,100,0,false);
-        body.body.setUserData(entity);
-        entity.add(body);
-        engine.addEntity(entity);
+        body.body = createBox(x,0.5f,100,0,false);
+        body.body.setUserData(ground);
+        ground.add(body);
+        return ground;
     }
 
     private Body createBox(float x, float y, float w, float h, boolean dynamic){
@@ -325,6 +357,16 @@ public class GameScreen extends BaseScreen implements Menu {
         menu.startMusic();
     }
 
+    private void createCameraEntity() {
+        CameraComponent camera = engine.createComponent(CameraComponent.class);
+        camera.camera = this.camera;
+        camera.target = player;
+
+        Entity entity = engine.createEntity();
+        entity.add(camera);
+        engine.addEntity(entity);
+    }
+    /*
     @Override
     public void pause() {
         paused = true;
@@ -343,5 +385,5 @@ public class GameScreen extends BaseScreen implements Menu {
             multiplexer.addProcessor(stage);*/
         pauseMenu.removeInputProcessor();
         renderingSystem.setProcessing(true);
-    }
+    }*/
 }

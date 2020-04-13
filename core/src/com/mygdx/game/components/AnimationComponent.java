@@ -11,9 +11,10 @@ import com.mygdx.game.utils.AssetsManager;
 public class AnimationComponent implements Component, Pool.Poolable {
 
     public Animation animation;
+
     //Strings as key for assertmanager
     public IntMap<Animation> animationsMap = new IntMap<Animation>();
     @Override
-    public void reset() {}
+    public void reset() {animation = null;}
 
 }

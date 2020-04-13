@@ -9,27 +9,21 @@ import com.badlogic.gdx.graphics.g2d.TextureRegion;
 import com.mygdx.game.components.AnimationComponent;
 import com.mygdx.game.components.StateComponent;
 import com.mygdx.game.components.TextureComponent;
+import com.mygdx.game.utils.Mappers;
 
 public class AnimationSystem extends IteratingSystem {
-    private ComponentMapper<TextureComponent> tm;
-    private ComponentMapper<AnimationComponent> am;
-    private ComponentMapper<StateComponent> sm;
+
 
     public AnimationSystem() {
-        super(Family.all(TextureComponent.class,
-                AnimationComponent.class,
-                StateComponent.class).get());
+        super(Family.all(AnimationComponent.class).get());
 
-        tm = ComponentMapper.getFor(TextureComponent.class);
-        am = ComponentMapper.getFor(AnimationComponent.class);
-        sm = ComponentMapper.getFor(StateComponent.class);
     }
 
     @Override
     public void processEntity(Entity entity, float deltaTime) {
-        TextureComponent tex = tm.get(entity);
-        AnimationComponent anim = am.get(entity);
-        StateComponent state = sm.get(entity);
+        TextureComponent tex = Mappers.TEXTURE.get(entity);
+        AnimationComponent anim = Mappers.ANIMATION.get(entity);
+        StateComponent state = Mappers.STATE.get(entity);
 
         Animation<TextureRegion> animation = anim.animationsMap.get(state.get());
 
