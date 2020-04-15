@@ -4,10 +4,12 @@ import com.badlogic.gdx.Game;
 import com.badlogic.gdx.Gdx;
 import com.badlogic.gdx.InputMultiplexer;
 import com.badlogic.gdx.assets.AssetManager;
+import com.badlogic.gdx.assets.loaders.SkinLoader;
 import com.badlogic.gdx.audio.Music;
 import com.badlogic.gdx.graphics.Texture;
 import com.badlogic.gdx.graphics.g2d.TextureAtlas;
 import com.badlogic.gdx.graphics.g2d.TextureRegion;
+import com.badlogic.gdx.scenes.scene2d.ui.Skin;
 import com.mygdx.game.screens.GameScreen;
 import com.mygdx.game.screens.menu.MainMenu;
 import com.mygdx.game.screens.Menu;
@@ -29,16 +31,15 @@ public class MainGame extends Game {
 	@Override
 	public void create() {
 		singleton = this;
-		//setMenu(new GameScreen(this));
 		MainMenu menu = new MainMenu();
-		/*setMenu(menu);
+		setMenu(menu);
 		Gdx.input.setInputProcessor(new InputMultiplexer());
-		menu.setInputProcessor();*/
+		menu.setInputProcessor();
 		manager = new AssetManager();
 		loadAssetManager();
-		music = true;
-		//menu.startMusic();
-		setScreen(new GameScreen(this));
+		music = false;
+		menu.startMusic();
+		//setScreen(new GameScreen(this));
 
 	}
 
@@ -75,6 +76,8 @@ public class MainGame extends Game {
 		manager.load(Constants.RUN_2_PATH, Texture.class);
 
 		manager.load(Constants.WALK_ATLAS_PATH, TextureAtlas.class);
+		manager.load(Constants.TABLE_SKIN_ATLAS, TextureAtlas.class);
+		manager.load(Constants.TABLE_SKIN, Skin.class, new SkinLoader.SkinParameter(Constants.TABLE_SKIN_ATLAS));
 		manager.load(Constants.DEAD_ATLAS_PATH, TextureAtlas.class);
 		manager.load(Constants.IDLE_ATLAS_PATH, TextureAtlas.class);
 		manager.load(Constants.JUMP_ATLAS_PATH, TextureAtlas.class);

@@ -182,6 +182,9 @@ public class Constants {
     public static final String GAME_BACKGROUND_5_ID = "game_background_5";
     public static final String GAME_BACKGROUND_5_PATH = "background/plx-5.png";
 
+    public static final String TABLE_SKIN_ATLAS = "table-skin/uiskin.atlas";
+    public static final String TABLE_SKIN = "table-skin/uiskin.json";
+
 
     //public static final String = "key" running (1)
 }

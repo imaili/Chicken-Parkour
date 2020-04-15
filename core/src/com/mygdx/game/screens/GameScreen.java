@@ -19,12 +19,12 @@ import com.badlogic.gdx.physics.box2d.BodyDef;
 import com.badlogic.gdx.physics.box2d.FixtureDef;
 import com.badlogic.gdx.physics.box2d.PolygonShape;
 import com.badlogic.gdx.physics.box2d.World;
-import com.badlogic.gdx.scenes.scene2d.Stage;
 import com.mygdx.game.MainGame;
 import com.mygdx.game.components.AnimationComponent;
 import com.mygdx.game.components.BodyComponent;
 import com.mygdx.game.components.CameraComponent;
 import com.mygdx.game.components.ChickenComponent;
+import com.mygdx.game.components.ButtonComponent;
 import com.mygdx.game.components.CollisionComponent;
 import com.mygdx.game.components.StateComponent;
 import com.mygdx.game.components.TextureComponent;
@@ -32,9 +32,11 @@ import com.mygdx.game.components.TransformComponent;
 import com.mygdx.game.systems.CameraSystem;
 import com.mygdx.game.screens.menu.GameOverMenu;
 import com.mygdx.game.screens.menu.PauseMenu;
+import com.mygdx.game.screens.menu.button.GoBackButton;
 import com.mygdx.game.screens.menu.button.PauseButton;
 import com.mygdx.game.server.Server;
 import com.mygdx.game.systems.AnimationSystem;
+import com.mygdx.game.systems.ButtonSystem;
 import com.mygdx.game.systems.ChickenSystem;
 import com.mygdx.game.systems.CleanUpSystem;
 import com.mygdx.game.systems.CollisionSystem;
@@ -61,7 +63,7 @@ public class GameScreen extends BaseScreen implements Menu {
     private MainGame game;
 
     private PauseMenu pauseMenu;
-    private Stage stage;
+    /*private Stage stage;*/
     private boolean paused;
 
     private Server server;
@@ -272,7 +274,27 @@ public class GameScreen extends BaseScreen implements Menu {
     }
 
 
+    private void createPauseButton() {
+        Entity entity = engine.createEntity();
+        TransformComponent position = engine.createComponent(TransformComponent.class);
+        TextureComponent texture = engine.createComponent(TextureComponent.class);
+        ButtonComponent button = engine.createComponent(ButtonComponent.class);
 
+        texture.region = new TextureRegion(new Texture(GoBackButton.GO_BACK_FILE_NAME));
+        float x =  Gdx.graphics.getWidth() - texture.region.getRegionWidth();
+        float y = Gdx.graphics.getHeight() - texture.region.getRegionHeight();
+        position.position.set(x, y, 0);
+
+        PauseButton pauseButton = new PauseButton(); // TODO Use factory
+        pauseButton.setMenu(this);
+        button.button = pauseButton.getButton();
+
+        entity.add(position);
+        entity.add(texture);
+        entity.add(button);
+
+        engine.addEntity(entity);
+    }
 
 
     private Entity createGround(int x){
@@ -348,7 +370,7 @@ public class GameScreen extends BaseScreen implements Menu {
     @Override
     public void pause() {
         paused = true;
-        InputMultiplexer multiplexer = (InputMultiplexer) Gdx.input.getInputProcessor();
+        /*InputMultiplexer multiplexer = (InputMultiplexer) Gdx.input.getInputProcessor();
         multiplexer.removeProcessor(stage);
         pauseMenu = new PauseMenu(this);
         pauseMenu.setInputProcessor();
@@ -358,7 +380,7 @@ public class GameScreen extends BaseScreen implements Menu {
     @Override
     public void resume() {
         paused = false;
-        InputMultiplexer multiplexer = (InputMultiplexer) Gdx.input.getInputProcessor();
+        /*InputMultiplexer multiplexer = (InputMultiplexer) Gdx.input.getInputProcessor();
         if (!multiplexer.getProcessors().contains(stage, true))
             multiplexer.addProcessor(stage);
         pauseMenu.removeInputProcessor();
