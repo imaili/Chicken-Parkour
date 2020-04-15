@@ -21,7 +21,7 @@ import java.util.List;
 public class MultiPlayerMenu extends MenuScreen {
     public MultiPlayerMenu(Menu previousMenu) {
         super(previousMenu);
-        backGroundTexture = DEFAULT_BACK_GROUND_TEXTURE;
+        backGroundTexture = BACK_GROUND_TEXTURE_EMPTY;
     }
 
 
@@ -31,7 +31,7 @@ public class MultiPlayerMenu extends MenuScreen {
         float buttonHeight = Gdx.graphics.getHeight() / 10;
         List<MenuButton> list = new LinkedList<>();
         MenuButton goBack = IMAGE_BUTTON_FACTORY.createGoBackButton();
-        GoToButton goToGameScreen = DEFAULT_TEXT_BUTTON_FACTORY.createGoToButton("PLAY", new Vector2(buttonX, Gdx.graphics.getHeight()* (float)0.1 - buttonHeight/2), GameScreen.class);
+        GoToButton goToGameScreen = DEFAULT_TEXT_BUTTON_FACTORY.createGoToButton("START", new Vector2(buttonX, Gdx.graphics.getHeight()* (float)0.1 - buttonHeight/2), GameScreen.class);
         Collections.addAll(list, goBack, goToGameScreen);
         return list;
     }

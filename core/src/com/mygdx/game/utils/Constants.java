@@ -1,6 +1,8 @@
 package com.mygdx.game.utils;
 
+import com.badlogic.gdx.graphics.Texture;
 import com.badlogic.gdx.math.Vector2;
+//import com.sun.xml.internal.bind.v2.TODO;
 
 public class Constants {
 
@@ -162,6 +164,8 @@ public class Constants {
     public static final String WALK_10_PATH = "Walk (10).png";
 
     public static final String BACKGROUND_MENU_ID = "background_menu";
+    public static final String BACKGROUND_TUTORIAL_PATH="Tutorial.png";
+    public static final String BACKGROUND_MENU_EMPTY_PATH="background_empty.jpg";
     public static final String BACKGROUND_MENU_PATH = "background1.jpg";
     public static final String EXIT_MENU_ID = "exit_menu";
     public static final String EXIT_MENU_PATH = "exit1.png";
