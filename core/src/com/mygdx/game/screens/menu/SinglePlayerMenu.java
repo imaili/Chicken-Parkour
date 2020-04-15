@@ -20,7 +20,7 @@ public class SinglePlayerMenu extends MenuScreen {
         int buttonHeight = Gdx.graphics.getHeight() / 10;
         List<MenuButton> list = new LinkedList<>();
         MenuButton goBack = IMAGE_BUTTON_FACTORY.createGoBackButton();
-        GoToButton goToGameScreen = DEFAULT_TEXT_BUTTON_FACTORY.createGoToButton("PLAY", new Vector2(buttonX, Gdx.graphics.getHeight()/2 - buttonHeight/2), GameScreen.class);
+        GoToButton goToGameScreen = DEFAULT_TEXT_BUTTON_FACTORY.createGoToButton("PLAY", new Vector2(buttonX, Gdx.graphics.getHeight()* (float)0.1 - buttonHeight/2), GameScreen.class);
         Collections.addAll(list, goBack, goToGameScreen);
         return list;
     }
@@ -38,14 +38,5 @@ public class SinglePlayerMenu extends MenuScreen {
 
     public void goToGameScreen() {
         goTo(new GameScreen(MainGame.getSingleton()));
-    }
-
-    @Override
-    public void goTo(Menu menu) {
-        if (menu instanceof  GameScreen) {
-            stopMusic();
-            menu.startMusic();
-        }
-        super.goTo(menu);
     }
 }
