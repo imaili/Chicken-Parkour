@@ -39,10 +39,19 @@ public class MultiPlayerMenu extends MenuScreen {
 
     @Override
     public List<Actor> getActors() {
+
+
+// TODO get name and save it with highscore
+
+
         List<Actor> list = new LinkedList<>();
         Skin skin = MainGame.getSingleton().getAssetsManager().get(Constants.TABLE_SKIN);
+
         TextField nameText = new TextField("", skin);
+        nameText.setPosition(30, 30);
         Table table = new Table(skin);
+        TextField.TextFieldFilter test =nameText.getTextFieldFilter();
+
         list.add(table);
 
         table.add("Player name").colspan(2);
@@ -52,7 +61,7 @@ public class MultiPlayerMenu extends MenuScreen {
         table.row();
         table.add("Other players").colspan(2).padTop(20);
         table.row();
-        table.add("Player name").padRight(50);
+       // table.add((Actor) test).padRight(50);
         table.add("Player name");
         table.row();
         table.add("Player name").padRight(50);
