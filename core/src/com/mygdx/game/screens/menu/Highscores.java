@@ -1,5 +1,7 @@
 package com.mygdx.game.screens.menu;
 
+import com.badlogic.gdx.Gdx;
+import com.badlogic.gdx.scenes.scene2d.ui.Label;
 import com.mygdx.game.MainGame;
 import com.mygdx.game.screens.MenuScreen;
 import com.mygdx.game.screens.menu.button.MenuButton;
@@ -30,14 +32,14 @@ public class Highscores extends MenuScreen {
     }
 
     protected Table createTable(){
-        table.add("Number").padLeft(-200).width(0);
-        table.add("Name").padLeft(10).width(100);
-        table.add("Score").padRight(12).width(55);
+        table.add("#");
+        table.add("Name").center().padLeft(50).padRight(50);
+        table.add("Score");
 
         table.row();
 
         table.setFillParent(true);
-        table.top().center();
+        table.center();
         return table;
     }
 
@@ -47,6 +49,12 @@ public class Highscores extends MenuScreen {
         Skin skin = MainGame.getSingleton().getAssetsManager().get(Constants.TABLE_SKIN);
         table = new Table(skin);
         list.add(table);
+        Label title = new Label("Highscores", skin);
+        int screenSize = Gdx.graphics.getWidth() /2;
+        float screenHight = Gdx.graphics.getHeight() * (float)0.85;
+        float labelSize = title.getWidth() / 2;
+        title.setPosition(screenSize - labelSize, screenHight);
+        list.add(title);
         return list;
     }
 
@@ -67,10 +75,10 @@ public class Highscores extends MenuScreen {
                 for (Object highscore :
                         highscores) {
                     String y = String.valueOf(x);
-                    table.add(y).padLeft(-190);
+                    table.add(y);
                     x++;
-                    table.add(((JSONObject)highscore).getString("name")).padLeft(10).width(100);
-                    table.add((((JSONObject)highscore).get("score")).toString());
+                    table.add(((JSONObject)highscore).getString("name")).center().padLeft(50).padRight(50);
+                    table.add(String.valueOf(((JSONObject)highscore).get("score")));
 
 
 
