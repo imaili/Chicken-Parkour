@@ -30,8 +30,10 @@ public class Highscores extends MenuScreen {
     }
 
     protected Table createTable(){
-        table.add("name");
-        table.add("score");
+        table.add("Number").padLeft(-200).width(0);
+        table.add("Name").padLeft(10).width(100);
+        table.add("Score").padRight(12).width(55);
+
         table.row();
 
         table.setFillParent(true);
@@ -61,10 +63,19 @@ public class Highscores extends MenuScreen {
             public void call(Object... args) {
                 JSONObject message = (JSONObject) args[0];
                 JSONArray highscores = (JSONArray) message.get("data");
+                int x = 1;
                 for (Object highscore :
                         highscores) {
-                    table.add(((JSONObject)highscore).getString("name"));
+                    String y = String.valueOf(x);
+                    table.add(y).padLeft(-190);
+                    x++;
+                    table.add(((JSONObject)highscore).getString("name")).padLeft(10).width(100);
                     table.add((((JSONObject)highscore).get("score")).toString());
+
+
+
+
+
                     table.row();
                 }
 
