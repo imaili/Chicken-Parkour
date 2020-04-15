@@ -21,8 +21,9 @@ import java.util.List;
 public class SinglePlayerMenu extends MenuScreen {
 
     protected List<MenuButton> createButtons() {
-        int buttonX = Gdx.graphics.getWidth() / 2 + Gdx.graphics.getWidth() / 8;
-        int buttonHeight = Gdx.graphics.getHeight() / 10;
+        float buttonWidth = Gdx.graphics.getWidth() / 4;
+        float buttonX = Gdx.graphics.getWidth() / 2 - buttonWidth / 2;
+        float buttonHeight = Gdx.graphics.getHeight() / 10;
         List<MenuButton> list = new LinkedList<>();
         MenuButton goBack = IMAGE_BUTTON_FACTORY.createGoBackButton();
         GoToButton goToGameScreen = DEFAULT_TEXT_BUTTON_FACTORY.createGoToButton("START", new Vector2(buttonX, Gdx.graphics.getHeight()* (float)0.1 - buttonHeight/2), GameScreen.class);
