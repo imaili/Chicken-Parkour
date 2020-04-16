@@ -382,4 +382,10 @@ public class GameScreen extends BaseScreen implements Menu {
         pauseMenu.removeInputProcessor();
         renderingSystem.setProcessing(true);
     }*/
+
+    public int getScore() {
+        // TODO
+        return 40;
+    }
+
 }
