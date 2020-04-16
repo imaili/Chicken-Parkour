@@ -24,7 +24,7 @@ public class MultiPlayerTypeMenu extends MenuScreen {
 
     public MultiPlayerTypeMenu(Menu previousMenu) {
         super(previousMenu);
-        backGroundTexture = DEFAULT_BACK_GROUND_TEXTURE;
+        backGroundTexture = BACK_GROUND_TEXTURE_EMPTY;
     }
 
     protected List<MenuButton> createButtons() {

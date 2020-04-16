@@ -33,7 +33,7 @@ public class MultiPlayerJoinMenu extends MenuScreen {
 
     public MultiPlayerJoinMenu(Menu previousMenu) {
         super(previousMenu);
-        backGroundTexture = DEFAULT_BACK_GROUND_TEXTURE;
+        backGroundTexture = BACK_GROUND_TEXTURE_EMPTY;
         server = Server.getInstance();
     }
 
@@ -98,19 +98,24 @@ public class MultiPlayerJoinMenu extends MenuScreen {
             server.joinGame(gameId.getText(), playerName.getText(), new Emitter.Listener() {
                 @Override
                 public void call(Object... args) {
-                    JSONObject server_message = (JSONObject) args[0];
-                    String type = server_message.getString("type");
-                    if (type.equals("join_game")) {
-                        System.out.println(server_message.getJSONObject("data").getString("message"));
-                        goToGameScreen.updateText("Start");
-                        goToGameScreen.enable();
-                    }
-                    else if (type.equals("start_game")) {
-                        goToGameScreen();
-                    }
+                    try {
+                        JSONObject server_message = (JSONObject) args[0];
+                        String type = server_message.getString("type");
+                        if (type.equals("join_game")) {
+                            System.out.println(server_message.getJSONObject("data").getString("message"));
+                            goToGameScreen.updateText("Start");
+                            goToGameScreen.enable();
+                        } else if (type.equals("start_game")) {
+                            goToGameScreen();
+                        }
 
-                    server.removeListener("join_game", this);
-                    server.removeListener("start_game", this);
+                        server.removeListener("join_game", this);
+                        server.removeListener("start_game", this);
+
+                    }
+                    catch (Exception e){
+                        System.out.println(e);
+                    }
                 }
             });
             goToGameScreen.updateText("Waiting for host...");

@@ -36,44 +36,47 @@ public class MultiPlayerHostMenu extends MenuScreen {
 
     public MultiPlayerHostMenu(Menu previousMenu) {
         super(previousMenu);
-        backGroundTexture = DEFAULT_BACK_GROUND_TEXTURE;
+        backGroundTexture = BACK_GROUND_TEXTURE_EMPTY;
         server = Server.getInstance();
         String[] data = server.newGame(new Emitter.Listener() {
             @Override
             public void call(Object... args) {
-                JSONObject message = (JSONObject)args[0];
-                String type = message.getString("type");
+                try {
+                    JSONObject message = (JSONObject) args[0];
+                    String type = message.getString("type");
 
-                System.out.println(message);
+                    System.out.println(message);
 
-                if (type.equals("join_game")) {
-                    JSONObject player = message.getJSONObject("data").getJSONObject("player");
-                    players.add(player);
-                    table.add(String.valueOf(players.size())).padRight(50);
-                    table.add(player.getString("name"));
-                }
-                else if (type.equals("leave_game")) {
-                    String player_id = message.getJSONObject("data").getString("player_id");
-                    for (JSONObject player :
-                            players) {
-                        if (player.getString("id").equals("player_id")) {
-                            Array<Cell> cells = table.getCells();
+                    if (type.equals("join_game")) {
+                        JSONObject player = message.getJSONObject("data").getJSONObject("player");
+                        players.add(player);
+                        table.add(String.valueOf(players.size())).padRight(50);
+                        table.add(player.getString("name"));
+                    } else if (type.equals("leave_game")) {
+                        String player_id = message.getJSONObject("data").getString("player_id");
+                        for (JSONObject player :
+                                players) {
+                            if (player.getString("id").equals("player_id")) {
+                                Array<Cell> cells = table.getCells();
 
-                            for (Cell cell :
-                                    cells) {
-                                if (((Label) cell.getActor()).getText().equals(player.getString("name"))) {
-                                    table.removeActor(cell.getActor());
+                                for (Cell cell :
+                                        cells) {
+                                    if (((Label) cell.getActor()).getText().equals(player.getString("name"))) {
+                                        table.removeActor(cell.getActor());
+                                    }
                                 }
-                            }
-                            players.remove(player);
+                                players.remove(player);
 
-                            break;
+                                break;
+                            }
                         }
-                        }
+                    }
+                } catch (Exception e) {
+                    System.out.println(e);
                 }
             }
         });
-        this.updateGameId(data[1]);
+        updateGameId(data[1]);
     }
 
     private void updateGameId(String gameId) {
@@ -138,4 +141,5 @@ public class MultiPlayerHostMenu extends MenuScreen {
         if (menu.equals(GameScreen.class))
             goToGameScreen();
     }
+
 }

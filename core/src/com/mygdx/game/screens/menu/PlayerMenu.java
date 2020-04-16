@@ -26,7 +26,7 @@ public class PlayerMenu extends MenuScreen {
         List<MenuButton> list = new LinkedList<>();
         MenuButton goToTutorial = DEFAULT_TEXT_BUTTON_FACTORY.createGoToButton("How to play", new Vector2(buttonX, Gdx.graphics.getHeight() - 3*buttonHeight), Tutorial.class);
         MenuButton goToSinglePlayerMenu = DEFAULT_TEXT_BUTTON_FACTORY.createGoToButton("Single Player", new Vector2(buttonX, Gdx.graphics.getHeight()/2 - buttonHeight/2), SinglePlayerMenu.class);
-        MenuButton goToMultiPlayerMenu = DEFAULT_TEXT_BUTTON_FACTORY.createGoToButton("MultiPlayer", new Vector2(buttonX, Gdx.graphics.getHeight()/2 - 2*buttonHeight), MultiPlayerMenu.class);
+        MenuButton goToMultiPlayerMenu = DEFAULT_TEXT_BUTTON_FACTORY.createGoToButton("MultiPlayer", new Vector2(buttonX, Gdx.graphics.getHeight()/2 - 2*buttonHeight), MultiPlayerTypeMenu.class);
         MenuButton goBack = IMAGE_BUTTON_FACTORY.createGoBackButton();
         Collections.addAll(list,goToTutorial,goToMultiPlayerMenu, goToSinglePlayerMenu, goBack);
         return list;
@@ -48,7 +48,7 @@ public class PlayerMenu extends MenuScreen {
             goToPlayerMenu();
         else if (menu.equals(SinglePlayerMenu.class))
             goToSinglePlayerMenu();
-        else if (menu.equals(MultiPlayerMenu.class))
+        else if (menu.equals(MultiPlayerTypeMenu.class))
             goToMultiPlayerMenu();
         else if (menu.equals(Tutorial.class))
             goToTutorial();
@@ -56,7 +56,7 @@ public class PlayerMenu extends MenuScreen {
     }
 
  public void goToSinglePlayerMenu() { goTo(new SinglePlayerMenu(this)); }
- public void goToMultiPlayerMenu() { goTo(new MultiPlayerMenu(this)); }
+ public void goToMultiPlayerMenu() { goTo(new MultiPlayerTypeMenu(this)); }
  public void goToTutorial() { goTo(new Tutorial(this)); }
 
 }

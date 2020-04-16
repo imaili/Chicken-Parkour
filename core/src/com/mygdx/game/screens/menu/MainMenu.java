@@ -20,7 +20,7 @@ public class MainMenu extends MenuScreen {
         List<MenuButton> list = new LinkedList<>();
       //  MenuButton goToSinglePlayerMenu = DEFAULT_TEXT_BUTTON_FACTORY.createGoToButton("Single Player", new Vector2(buttonX, buttonOffset + 4*(buttonHeight+buttonOffset)), SinglePlayerMenu.class);
      //   MenuButton goToMultiPlayerMenu = DEFAULT_TEXT_BUTTON_FACTORY.createGoToButton("MultiPlayer", new Vector2(buttonX, buttonOffset + 3*(buttonHeight+buttonOffset)), MultiPlayerMenu.class);
-        MenuButton goToHighscores = DEFAULT_TEXT_BUTTON_FACTORY.createGoToButton("Highscores", new Vector2(buttonX, buttonOffset + 2* (buttonHeight+buttonOffset)), Highscores.class);
+        MenuButton goToHighscores = DEFAULT_TEXT_BUTTON_FACTORY.createGoToButton("Highscores", new Vector2(buttonX, buttonOffset + 2* (buttonHeight+buttonOffset)), HighscoresMenu.class);
         MenuButton goToPlayerMenu = DEFAULT_TEXT_BUTTON_FACTORY.createGoToButton("Play", new Vector2(buttonX, buttonOffset + 3*(buttonHeight+buttonOffset)), PlayerMenu.class);
         MenuButton goToSettings = DEFAULT_TEXT_BUTTON_FACTORY.createGoToButton("Settings", new Vector2(buttonX, buttonOffset + (buttonHeight+buttonOffset)), Settings.class);
         MenuButton exitGame = DEFAULT_TEXT_BUTTON_FACTORY.createGoToButton("Exit", new Vector2(buttonX, buttonOffset), ExitMenu.class);
@@ -46,7 +46,7 @@ public class MainMenu extends MenuScreen {
             goToPlayerMenu();
         else if (menu.equals(ExitMenu.class))
             goToExitMenu();
-        else if (menu.equals(Highscores.class))
+        else if (menu.equals(HighscoresMenu.class))
             goToHighscores();
     }
 
@@ -59,7 +59,7 @@ public class MainMenu extends MenuScreen {
     }
 
     public void goToHighscores() {
-        goTo(new Highscores(this));
+        goTo(new HighscoresMenu(this));
     }
 
    // public void goToSinglePlayerMenu() {

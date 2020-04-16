@@ -37,7 +37,10 @@ public class Server {
                 public void call(Object... args) {
                     JSONObject message = (JSONObject) args[0];
 
-                    ArrayList<Emitter.Listener> registeredListeners = listeners.get(message.getString("type"));
+                    try{
+                        ArrayList<Emitter.Listener> registeredListeners = listeners.get(message.getString("type"));
+
+
 
                     if (registeredListeners == null) return;
                     //clone arraylist so the listener can safely remove itself without causing iteration problems
@@ -46,6 +49,10 @@ public class Server {
                     for (Emitter.Listener listener : i
                     ) {
                         listener.call(message);
+                    }
+                    }
+                    catch (Exception e) {
+                        System.out.println(e.getMessage());
                     }
 
                 }
@@ -122,10 +129,16 @@ public class Server {
 
     private JSONObject createJSONObject(String type, JSONObject data) {
         JSONObject obj = new JSONObject();
+
+        try {
         obj.put("type", type);
         obj.put("game_id", this.game_id);
         obj.put("player_id", this.player_id);
         obj.put("data", data);
+        }
+        catch (Exception e) {
+            System.out.println(e.getMessage());
+        }
         return obj;
     }
 
@@ -154,7 +167,12 @@ public class Server {
         this.player_id = Server.generateId();
 
         JSONObject data = new JSONObject();
-        data.put("player_name", player_name);
+        try {
+            data.put("player_name", player_name);
+        }
+        catch (Exception e) {
+            System.out.println(e.getMessage());
+        }
 
         this.send(this.createJSONObject("join_game", data));
 
@@ -177,8 +195,12 @@ public class Server {
 
     public void updatePlayerName(String player_name) {
         JSONObject data = new JSONObject();
-        data.put("player_name", player_name);
-
+        try {
+            data.put("player_name", player_name);
+        }
+        catch (Exception e) {
+            System.out.println(e.getMessage());
+        }
         this.send(createJSONObject("update_player_name", data));
     }
 
@@ -189,22 +211,47 @@ public class Server {
 
     public void updatePlayerLocation(float x, float y) {
         JSONObject dataObj = new JSONObject();
-        dataObj.put("x", x);
-        dataObj.put("y", y);
+        try {
+            dataObj.put("x", x);
+        }
+        catch (Exception e) {
+            System.out.println(e.getMessage());
+        }
+        try {
+            dataObj.put("y", y);
+        }
+        catch (Exception e) {
+            System.out.println(e.getMessage());
+        }
         this.send(this.createJSONObject("update_location", dataObj));
     }
 
     public void addObstacle(float deltatime, String type) {
         JSONObject dataObj = new JSONObject();
-        dataObj.put("deltatime", deltatime);
-        dataObj.put("type", type);
+        try {
+            dataObj.put("deltatime", deltatime);
+        }
+        catch (Exception e) {
+            System.out.println(e.getMessage());
+        }
+        try {
+            dataObj.put("type", type);
+        }
+        catch (Exception e) {
+            System.out.println(e.getMessage());
+        }
         this.send(this.createJSONObject("add_obstacle", dataObj));
     }
 
 
     public void endGame(int score) {
         JSONObject dataObj = new JSONObject();
-        dataObj.put("score", score);
+        try {
+            dataObj.put("score", score);
+        }
+        catch (Exception e) {
+            System.out.println(e.getMessage());
+        }
         this.send(this.createJSONObject("end_game", dataObj));
     }
 

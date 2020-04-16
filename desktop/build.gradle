@@ -34,5 +34,4 @@ task dist(type: Jar) {
     with jar
 }
 
-
 dist.dependsOn classes

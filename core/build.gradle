@@ -6,9 +6,10 @@ sourceCompatibility = 1.7
 sourceSets.main.java.srcDirs = [ "src/" ]
 
 dependencies {
-    compile ('io.socket:socket.io-client:0.8.3') {
+    implementation ('io.socket:socket.io-client:0.8.3') {
         exclude group: 'org.json', module: 'json'
     }
-    compile('org.json:json:20171018')
-    implementation 'com.google.code.gson:gson:2.8.6'
+
+   implementation('org.json:json:20090211')
+
 }

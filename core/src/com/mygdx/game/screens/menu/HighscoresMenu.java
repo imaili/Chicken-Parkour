@@ -75,23 +75,22 @@ public class HighscoresMenu extends MenuScreen {
             @Override
             public void call(Object... args) {
                 JSONObject message = (JSONObject) args[0];
-                JSONArray highscores = (JSONArray) message.get("data");
-                int x = 1;
-                for (Object highscore :
-                        highscores) {
-                    String y = String.valueOf(x);
+                try {
+                    JSONArray highscores = (JSONArray) message.get("data");
+
+
+                for (int i = 0; i < highscores.length(); i++) {
+                    JSONObject highscore = highscores.getJSONObject(i);
+
+                    String y = String.valueOf(i + 1);
                     table.add(y);
-                    x++;
-                    table.add(((JSONObject)highscore).getString("name")).center().padLeft(50).padRight(50);
-                    table.add(String.valueOf(((JSONObject)highscore).get("score")));
+                    table.add(((JSONObject) highscore).getString("name")).center().padLeft(50).padRight(50);
+                    table.add(String.valueOf(((JSONObject) highscore).get("score")));
 
-
-
-
-
-                    table.row();
                 }
-
+            }catch (Exception e){
+                    System.out.println(e);
+                }
                 server.removeListener("get_highscores",this);
             }
 
