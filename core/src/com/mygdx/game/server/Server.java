@@ -3,10 +3,10 @@ package com.mygdx.game.server;
 import org.json.JSONObject;
 
 import java.util.ArrayList;
-import java.util.Date;
 import java.util.HashMap;
 import java.util.LinkedList;
 import java.util.List;
+import java.util.Random;
 
 import io.socket.client.IO;
 import io.socket.client.Socket;
@@ -14,7 +14,7 @@ import io.socket.emitter.Emitter;
 
 
 public class Server {
-    private static Server _server;
+    private static Server _server = new Server();
     private HashMap<String, ArrayList<Emitter.Listener>> listeners = new HashMap<>();
     private List<Emitter.Listener> unregister = new LinkedList<>();
     private Socket socket;
@@ -37,8 +37,11 @@ public class Server {
                 public void call(Object... args) {
                     JSONObject message = (JSONObject) args[0];
 
+                    ArrayList<Emitter.Listener> registeredListeners = listeners.get(message.getString("type"));
+
+                    if (registeredListeners == null) return;
                     //clone arraylist so the listener can safely remove itself without causing iteration problems
-                    ArrayList<Emitter.Listener> i = (ArrayList<Emitter.Listener>) listeners.get(message.getString("type")).clone();
+                    ArrayList<Emitter.Listener> i = (ArrayList<Emitter.Listener>) registeredListeners.clone();
 
                     for (Emitter.Listener listener : i
                     ) {
@@ -87,13 +90,17 @@ public class Server {
     }
 
     private static String generateId() {
-        return new Date().getTime() + "_" + Server.getAlphaNumericString(5);
+        char[] _base62chars =
+                "0123456789ABCDEFGHIJKLMNOPQRSTUVWXYZabcdefghijklmnopqrstuvwxyz".toCharArray();
+        String result = "";
+        Random random = new Random();
+        for (int i = 0; i < 8; i++) {
+            result += _base62chars[random.nextInt(62)];
+        }
+        return result;
     }
 
     public static Server getInstance() {
-        if (_server == null) {
-            _server = new Server();
-        }
         return _server;
     }
 
@@ -122,18 +129,57 @@ public class Server {
         return obj;
     }
 
-    public String[] startGame() {
+    public String[] newGame(Emitter.Listener listener) {
         this.game_id = Server.generateId();
         this.player_id = Server.generateId();
-        JSONObject dataObj = new JSONObject();
-        dataObj.put("player_name", "Fred");
 
-        this.send(this.createJSONObject("new_game", dataObj));
+        this.send(this.createJSONObject("new_game", null));
+
+        this.addListener("join_game", listener);
+        this.addListener("leave_game", listener);
 
         return new String[]{
                 this.player_id,
                 this.game_id
         };
+    }
+
+    public void leaveGame() {
+        System.out.println("leave!");
+        this.send(this.createJSONObject("leave_game", null));
+    }
+
+    public String[] joinGame(String game_id, String player_name, Emitter.Listener listener) {
+        this.game_id = game_id;
+        this.player_id = Server.generateId();
+
+        JSONObject data = new JSONObject();
+        data.put("player_name", player_name);
+
+        this.send(this.createJSONObject("join_game", data));
+
+        this.addListener("join_game", listener);
+        this.addListener("add_game", listener);
+
+        return new String[]{
+                this.player_id,
+                this.game_id
+        };
+    }
+
+    public String[] startGame() {
+        this.send(this.createJSONObject("start_game", null));
+        return new String[]{
+                this.player_id,
+                this.game_id
+        };
+    }
+
+    public void updatePlayerName(String player_name) {
+        JSONObject data = new JSONObject();
+        data.put("player_name", player_name);
+
+        this.send(createJSONObject("update_player_name", data));
     }
 
     public void getHighscores(Emitter.Listener listener) {
@@ -163,7 +209,7 @@ public class Server {
     }
 
     private void send(JSONObject message) {
-        //System.out.println((message));
+        System.out.println((message));
         try {
             socket.send(message);
 

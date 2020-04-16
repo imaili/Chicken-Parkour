@@ -20,7 +20,7 @@ import org.json.JSONObject;
 
 import io.socket.emitter.Emitter;
 
-public class Highscores extends MenuScreen {
+public class HighscoresMenu extends MenuScreen {
     Table table;
     private Server server;
 
@@ -49,16 +49,21 @@ public class Highscores extends MenuScreen {
         Skin skin = MainGame.getSingleton().getAssetsManager().get(Constants.TABLE_SKIN);
         table = new Table(skin);
         list.add(table);
+        Label title = this.createLabel(skin);
+        list.add(title);
+        return list;
+    }
+
+    private Label createLabel(Skin skin) {
         Label title = new Label("Highscores", skin);
         int screenSize = Gdx.graphics.getWidth() /2;
         float screenHight = Gdx.graphics.getHeight() * (float)0.85;
         float labelSize = title.getWidth() / 2;
         title.setPosition(screenSize - labelSize, screenHight);
-        list.add(title);
-        return list;
+        return title;
     }
 
-    public Highscores(Menu previousMenu) {
+    public HighscoresMenu(Menu previousMenu) {
         super(previousMenu);
         backGroundTexture = DEFAULT_BACK_GROUND_TEXTURE;
 
@@ -91,16 +96,6 @@ public class Highscores extends MenuScreen {
             }
 
         });
-
-//        highscores = new JSONArray();
-//        JSONObject fredScore = new JSONObject();
-//        fredScore.put("name", "fred");
-//        fredScore.put("score", 34342);
-//
-//        highscores.put(fredScore);
-//        highscores.put(fredScore);
-//        highscores.put(fredScore);
-//        highscores.put(fredScore);
     }
 
     @Override

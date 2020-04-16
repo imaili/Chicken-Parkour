@@ -138,7 +138,7 @@ public class GameScreen extends BaseScreen implements Menu {
             if (Mappers.STATE.get(player).get() == StateComponent.STATE_HIT) {
                 game.setScreen(new GameOverScreen(game));
                 //goTo(GameOverScreen.class);
-                int score = 5000000;
+                int score = 50000000;
                 server.endGame(score);
             }
             if(Mappers.BODY.get(player).body.getPosition().x > ground1end) {

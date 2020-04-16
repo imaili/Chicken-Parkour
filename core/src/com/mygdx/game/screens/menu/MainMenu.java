@@ -19,8 +19,8 @@ public class MainMenu extends MenuScreen {
         int buttonOffset = (Gdx.graphics.getHeight() - buttonHeight * nButtons) / (nButtons + 1);
         List<MenuButton> list = new LinkedList<>();
         MenuButton goToSinglePlayerMenu = DEFAULT_TEXT_BUTTON_FACTORY.createGoToButton("Single Player", new Vector2(buttonX, buttonOffset + 4*(buttonHeight+buttonOffset)), SinglePlayerMenu.class);
-        MenuButton goToMultiPlayerMenu = DEFAULT_TEXT_BUTTON_FACTORY.createGoToButton("MultiPlayer", new Vector2(buttonX, buttonOffset + 3*(buttonHeight+buttonOffset)), MultiPlayerMenu.class);
-        MenuButton goToHighscores = DEFAULT_TEXT_BUTTON_FACTORY.createGoToButton("Highscores", new Vector2(buttonX, buttonOffset + 2* (buttonHeight+buttonOffset)), Highscores.class);
+        MenuButton goToMultiPlayerMenu = DEFAULT_TEXT_BUTTON_FACTORY.createGoToButton("MultiPlayer", new Vector2(buttonX, buttonOffset + 3*(buttonHeight+buttonOffset)), MultiPlayerTypeMenu.class);
+        MenuButton goToHighscores = DEFAULT_TEXT_BUTTON_FACTORY.createGoToButton("Highscores", new Vector2(buttonX, buttonOffset + 2* (buttonHeight+buttonOffset)), HighscoresMenu.class);
         MenuButton goToSettings = DEFAULT_TEXT_BUTTON_FACTORY.createGoToButton("Settings", new Vector2(buttonX, buttonOffset + (buttonHeight+buttonOffset)), Settings.class);
         MenuButton exitGame = DEFAULT_TEXT_BUTTON_FACTORY.createGoToButton("Exit", new Vector2(buttonX, buttonOffset), ExitMenu.class);
         Collections.addAll(list, goToSinglePlayerMenu, goToMultiPlayerMenu, goToSettings, goToHighscores, exitGame);
@@ -38,11 +38,11 @@ public class MainMenu extends MenuScreen {
             goToSettings();
         else if (menu.equals(SinglePlayerMenu.class))
             goToSinglePlayerMenu();
-        else if (menu.equals(MultiPlayerMenu.class))
+        else if (menu.equals(MultiPlayerTypeMenu.class))
             goToMultiPlayerMenu();
         else if (menu.equals(ExitMenu.class))
             goToExitMenu();
-        else if (menu.equals(Highscores.class))
+        else if (menu.equals(HighscoresMenu.class))
             goToHighscores();
     }
 
@@ -51,7 +51,7 @@ public class MainMenu extends MenuScreen {
     }
 
     public void goToHighscores() {
-        goTo(new Highscores(this));
+        goTo(new HighscoresMenu(this));
     }
 
     public void goToSinglePlayerMenu() {
@@ -59,7 +59,7 @@ public class MainMenu extends MenuScreen {
     }
 
     public void goToMultiPlayerMenu() {
-        goTo(new MultiPlayerMenu(this));
+        goTo(new MultiPlayerTypeMenu(this));
     }
 
     public void goToExitMenu() {
