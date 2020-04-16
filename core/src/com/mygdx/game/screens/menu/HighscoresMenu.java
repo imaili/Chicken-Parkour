@@ -65,7 +65,7 @@ public class HighscoresMenu extends MenuScreen {
 
     public HighscoresMenu(Menu previousMenu) {
         super(previousMenu);
-        backGroundTexture = DEFAULT_BACK_GROUND_TEXTURE;
+        backGroundTexture = BACK_GROUND_TEXTURE_EMPTY;
 
         this.createTable();
         server = Server.getInstance();

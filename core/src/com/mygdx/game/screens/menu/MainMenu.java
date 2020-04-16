@@ -14,16 +14,18 @@ public class MainMenu extends MenuScreen {
 
     protected List<MenuButton> createButtons() {
         int buttonX = Gdx.graphics.getWidth() / 2 + Gdx.graphics.getWidth() / 8;
-        int nButtons = 5;
+        int nButtons = 4;
         int buttonHeight = Gdx.graphics.getHeight() / 10;
         int buttonOffset = (Gdx.graphics.getHeight() - buttonHeight * nButtons) / (nButtons + 1);
         List<MenuButton> list = new LinkedList<>();
-        MenuButton goToSinglePlayerMenu = DEFAULT_TEXT_BUTTON_FACTORY.createGoToButton("Single Player", new Vector2(buttonX, buttonOffset + 4*(buttonHeight+buttonOffset)), SinglePlayerMenu.class);
-        MenuButton goToMultiPlayerMenu = DEFAULT_TEXT_BUTTON_FACTORY.createGoToButton("MultiPlayer", new Vector2(buttonX, buttonOffset + 3*(buttonHeight+buttonOffset)), MultiPlayerTypeMenu.class);
-        MenuButton goToHighscores = DEFAULT_TEXT_BUTTON_FACTORY.createGoToButton("Highscores", new Vector2(buttonX, buttonOffset + 2* (buttonHeight+buttonOffset)), HighscoresMenu.class);
+      //  MenuButton goToSinglePlayerMenu = DEFAULT_TEXT_BUTTON_FACTORY.createGoToButton("Single Player", new Vector2(buttonX, buttonOffset + 4*(buttonHeight+buttonOffset)), SinglePlayerMenu.class);
+     //   MenuButton goToMultiPlayerMenu = DEFAULT_TEXT_BUTTON_FACTORY.createGoToButton("MultiPlayer", new Vector2(buttonX, buttonOffset + 3*(buttonHeight+buttonOffset)), MultiPlayerMenu.class);
+        MenuButton goToHighscores = DEFAULT_TEXT_BUTTON_FACTORY.createGoToButton("Highscores", new Vector2(buttonX, buttonOffset + 2* (buttonHeight+buttonOffset)), Highscores.class);
+        MenuButton goToPlayerMenu = DEFAULT_TEXT_BUTTON_FACTORY.createGoToButton("Play", new Vector2(buttonX, buttonOffset + 3*(buttonHeight+buttonOffset)), PlayerMenu.class);
         MenuButton goToSettings = DEFAULT_TEXT_BUTTON_FACTORY.createGoToButton("Settings", new Vector2(buttonX, buttonOffset + (buttonHeight+buttonOffset)), Settings.class);
         MenuButton exitGame = DEFAULT_TEXT_BUTTON_FACTORY.createGoToButton("Exit", new Vector2(buttonX, buttonOffset), ExitMenu.class);
-        Collections.addAll(list, goToSinglePlayerMenu, goToMultiPlayerMenu, goToSettings, goToHighscores, exitGame);
+      //  Collections.addAll(list, goToSinglePlayerMenu, goToMultiPlayerMenu, goToSettings, goToHighscores, exitGame);
+       Collections.addAll(list,goToPlayerMenu , goToSettings, goToHighscores, exitGame);
         return list;
     }
 
@@ -36,14 +38,20 @@ public class MainMenu extends MenuScreen {
     public void goTo(Class<? extends Menu> menu) {
         if (menu.equals(Settings.class))
             goToSettings();
-        else if (menu.equals(SinglePlayerMenu.class))
-            goToSinglePlayerMenu();
-        else if (menu.equals(MultiPlayerTypeMenu.class))
-            goToMultiPlayerMenu();
+        //else if (menu.equals(SinglePlayerMenu.class))
+        //    goToSinglePlayerMenu();
+        //else if (menu.equals(MultiPlayerMenu.class))
+       //     goToMultiPlayerMenu();
+        else if (menu.equals(PlayerMenu.class))
+            goToPlayerMenu();
         else if (menu.equals(ExitMenu.class))
             goToExitMenu();
-        else if (menu.equals(HighscoresMenu.class))
+        else if (menu.equals(Highscores.class))
             goToHighscores();
+    }
+
+    public void goToPlayerMenu() {
+        goTo(new PlayerMenu(this));
     }
 
     public void goToSettings() {
@@ -51,16 +59,16 @@ public class MainMenu extends MenuScreen {
     }
 
     public void goToHighscores() {
-        goTo(new HighscoresMenu(this));
+        goTo(new Highscores(this));
     }
 
-    public void goToSinglePlayerMenu() {
-        goTo(new SinglePlayerMenu(this));
-    }
+   // public void goToSinglePlayerMenu() {
+  //      goTo(new SinglePlayerMenu(this));
+   // }
 
-    public void goToMultiPlayerMenu() {
-        goTo(new MultiPlayerTypeMenu(this));
-    }
+ //   public void goToMultiPlayerMenu() {
+     //   goTo(new MultiPlayerMenu(this));
+  //  }
 
     public void goToExitMenu() {
         goTo(new ExitMenu(this));

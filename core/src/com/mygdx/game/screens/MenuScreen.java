@@ -20,7 +20,9 @@ import com.mygdx.game.screens.menu.button.factory.TextButtonFactory;
 import java.util.ArrayList;
 import java.util.List;
 
+import static com.mygdx.game.utils.Constants.BACKGROUND_MENU_EMPTY_PATH;
 import static com.mygdx.game.utils.Constants.BACKGROUND_MENU_PATH;
+import static com.mygdx.game.utils.Constants.BACKGROUND_TUTORIAL_PATH;
 
 public abstract class MenuScreen extends BaseScreen implements Menu {
     protected final Menu previousMenu;
@@ -28,6 +30,9 @@ public abstract class MenuScreen extends BaseScreen implements Menu {
     private final List<MenuButton> buttons;
     private final List<Actor> actors;
     protected static final Texture DEFAULT_BACK_GROUND_TEXTURE = new Texture(BACKGROUND_MENU_PATH);
+    protected static final Texture BACK_GROUND_TEXTURE_EMPTY = new Texture(BACKGROUND_MENU_EMPTY_PATH);
+    protected static final Texture BACK_GROUND_TUTORIAL  = new Texture(BACKGROUND_TUTORIAL_PATH);
+
     protected static final String MUSIC_TYPE = "menu";
     protected static final ImageButtonFactory IMAGE_BUTTON_FACTORY = ImageButtonFactory.getInstance();
     protected static final TextButtonFactory DEFAULT_TEXT_BUTTON_FACTORY = TextButtonFactory.getDefaultInstance();

@@ -8,7 +8,6 @@ public class StateComponent implements Component, Poolable {
     public static final int STATE_JUMPING = 1;
     public static final int STATE_HIT = 2; // does this mean "Dead"?
     public static final int STATE_FALLING = 3; //does this mean "Sliding"?
-    public static final int STATE_RUN = 4;
 
     private int state = 0;
     public float time =0;

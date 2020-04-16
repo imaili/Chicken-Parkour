@@ -11,24 +11,31 @@ import com.mygdx.game.components.StateComponent;
 import com.mygdx.game.components.TextureComponent;
 import com.mygdx.game.utils.Mappers;
 
+import java.util.Map;
+
 public class AnimationSystem extends IteratingSystem {
 
-
+    ComponentMapper<TextureComponent> textureMapper = Mappers.TEXTURE;
+    ComponentMapper<AnimationComponent> animationMapper = Mappers.ANIMATION;
+    ComponentMapper<StateComponent> stateMapper = Mappers.STATE;
+    StateComponent state;
     public AnimationSystem() {
-        super(Family.all(AnimationComponent.class).get());
+        super(Family.all(AnimationComponent.class,
+                         TextureComponent.class,
+                         StateComponent.class)
+                    .get());
 
     }
 
     @Override
     public void processEntity(Entity entity, float deltaTime) {
-        TextureComponent tex = Mappers.TEXTURE.get(entity);
-        AnimationComponent anim = Mappers.ANIMATION.get(entity);
-        StateComponent state = Mappers.STATE.get(entity);
 
-        Animation<TextureRegion> animation = anim.animationsMap.get(state.get());
+        AnimationComponent animation = animationMapper.get(entity);
+        StateComponent state = stateMapper.get(entity);
 
-        if (animation != null) {
-            tex.region = animation.getKeyFrame(state.time);
+        if (animation.animationsMap.containsKey(state.get())) {
+           TextureComponent texture = textureMapper.get(entity);
+           texture.region = (TextureRegion) animation.animationsMap.get(state.get()).getKeyFrame(state.time, true);
         }
         state.time += deltaTime;
     }

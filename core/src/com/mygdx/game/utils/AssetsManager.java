@@ -73,6 +73,8 @@ public class AssetsManager {
         manager.load(Constants.GAME_BACKGROUND_5_PATH, Texture.class);
         //manager.finishLoading();
         texturesMap.put(Constants.BACKGROUND_MENU_ID, new TextureRegion(new Texture(Gdx.files.internal(Constants.BACKGROUND_MENU_PATH))));
+       //TODO
+       //textureMap.put(constants.BACKGROUND_TUTORIAL, new TextureRegion(new Texture(Gdx.files.internal(Constants.BACKGROUND_TUTORIAL))))
         texturesMap.put(Constants.EXIT_MENU_ID, new TextureRegion(new Texture(Gdx.files.internal(Constants.EXIT_MENU_PATH))));
         texturesMap.put(Constants.MULTIPLAYER_BUTTON_ID, new TextureRegion(new Texture(Gdx.files.internal(Constants.MULTIPLAYER_BUTTON_PATH))));
         texturesMap.put(Constants.SINGLEPLAYER_BUTTON_ID, new TextureRegion(new Texture(Gdx.files.internal(Constants.SINGLEPLAYER_BUTTON_PATH))));
