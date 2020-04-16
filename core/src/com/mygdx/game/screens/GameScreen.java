@@ -236,14 +236,11 @@ public class GameScreen extends BaseScreen implements Menu {
         atlas = new TextureAtlas(Constants.DEAD_ATLAS_PATH);
         ani = new Animation<TextureRegion>(0.1f, atlas.getRegions());
         animation.animationsMap.put(StateComponent.STATE_HIT, ani );
-
+        /*
         atlas = new TextureAtlas(Constants.SLIDE_ATLAS_PATH);
         ani = new Animation<TextureRegion>(0.1f, atlas.getRegions());
-        animation.animationsMap.put(StateComponent.STATE_FALLING, ani );
+        animation.animationsMap.put(StateComponent.STATE_FALLING, ani );*/
 
-        atlas = new TextureAtlas(Constants.RUN_ATLAS_PATH);
-        ani = new Animation<TextureRegion>(0.1f, atlas.getRegions());
-        animation.animationsMap.put(StateComponent.STATE_RUN, ani );
 
        // body.body = createBox(10,10,10,10, true); // used to be (1,1,1,1,true) --> Dinosaur outside of the screen??
 
@@ -251,7 +248,7 @@ public class GameScreen extends BaseScreen implements Menu {
         body.body.setLinearVelocity(5,0);
         // set object position (x,y,z) z used to define draw order 0 first drawn
         position.position.set(2,1,0);
-        position.scale.set(0.3f,0.3f);     // this line resizes the Dinosaur... but brings some more wrong behaviour..
+        position.scale.set(0.2f,0.2f);     // this line resizes the Dinosaur... but brings some more wrong behaviour..
 
         state.set(StateComponent.STATE_WALKING);
 
@@ -260,11 +257,10 @@ public class GameScreen extends BaseScreen implements Menu {
         player.add(body);
         player.add(position);
         player.add(chicken);
-       // player.add(texture);
-        //player.add(animation);
+        player.add(texture);
+        player.add(animation);
         player.add(state);
         player.add(collision);
-       //player.add(texture);
 
         engine.addEntity(player);
 

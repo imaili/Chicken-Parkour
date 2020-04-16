@@ -79,16 +79,19 @@ public class RenderingSystem extends IteratingSystem {
             TransformComponent t = transformM.get(entity);
             ChickenComponent c = Mappers.CHICKEN.get(entity);
 
-            float width = tex.region.getRegionWidth();
-            float height = tex.region.getRegionHeight();
-            float originX = width * 0.5f;
-            float originY = height * 0.5f;
-            batch.draw(tex.region,
+            float width = tex.region.getRegionWidth()*t.scale.x*PIXELS_TO_METRES;
+            float height = tex.region.getRegionHeight()*t.scale.y*PIXELS_TO_METRES;
+            System.out.println(width +" "+ height);
+            float originX = width * 0.25f;
+            float originY = height * 0.25f;
+
+            batch.draw(tex.region, t.position.x-originX, t.position.y-originY, width, height);
+           /* batch.draw(tex.region,
                     t.position.x - originX, t.position.y - originY,
                     originX, originY,
                     width, height,
                     t.scale.x * PIXELS_TO_METRES, t.scale.y * PIXELS_TO_METRES,
-                    MathUtils.radiansToDegrees * t.rotation);
+                    MathUtils.radiansToDegrees * t.rotation);*/
         }
 
         batch.end();
