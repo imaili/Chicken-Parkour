@@ -13,12 +13,15 @@ import com.badlogic.gdx.graphics.g2d.Animation;
 import com.badlogic.gdx.graphics.g2d.SpriteBatch;
 import com.badlogic.gdx.graphics.g2d.TextureAtlas;
 import com.badlogic.gdx.graphics.g2d.TextureRegion;
+import com.badlogic.gdx.math.Rectangle;
 import com.badlogic.gdx.math.Vector2;
+import com.badlogic.gdx.math.Vector3;
 import com.badlogic.gdx.physics.box2d.Body;
 import com.badlogic.gdx.physics.box2d.BodyDef;
 import com.badlogic.gdx.physics.box2d.FixtureDef;
 import com.badlogic.gdx.physics.box2d.PolygonShape;
 import com.badlogic.gdx.physics.box2d.World;
+import com.badlogic.gdx.scenes.scene2d.utils.TextureRegionDrawable;
 import com.mygdx.game.MainGame;
 import com.mygdx.game.components.AnimationComponent;
 import com.mygdx.game.components.BodyComponent;
@@ -63,8 +66,11 @@ public class GameScreen extends BaseScreen implements Menu {
     private MainGame game;
 
     private PauseMenu pauseMenu;
-    /*private Stage stage;*/
     private boolean paused;
+    private Texture pauseTexture = new Texture(Constants.EXIT_MENU_PATH);
+    private int pauseTextureX = Gdx.graphics.getWidth() - pauseTexture.getWidth();
+    private int pauseTextureY = Gdx.graphics.getHeight() - pauseTexture.getHeight();
+    private RenderingSystem renderingSystem;
 
     private Server server;
     private String game_id;
@@ -73,19 +79,9 @@ public class GameScreen extends BaseScreen implements Menu {
     public GameScreen(MainGame game) {
         super(game);
         this.game = game;
-       // this.stage = createPauseButtonStage();
         this.paused = false;
         this.server = Server.getInstance();
     }
-/*
-    private Stage createPauseButtonStage() {
-        Stage stage = new Stage();
-        stage.addActor((new PauseButton(this)).getButton());
-        InputMultiplexer multiplexer = (InputMultiplexer) Gdx.input.getInputProcessor();
-        if (!multiplexer.getProcessors().contains(stage, true))
-            multiplexer.addProcessor(stage);
-        return stage;
-    }*/
 
     @Override
     public void show() {
@@ -98,7 +94,7 @@ public class GameScreen extends BaseScreen implements Menu {
         world = new World(new Vector2(0, -13f), true);
         world.setContactListener(new ChickenContactListener());
         spriteBatch = new SpriteBatch();
-        RenderingSystem renderingSystem = new RenderingSystem(spriteBatch, 2);
+        renderingSystem = new RenderingSystem(spriteBatch, 2);
 
         camera = renderingSystem.getCamera();
         engine = new PooledEngine();
@@ -124,20 +120,31 @@ public class GameScreen extends BaseScreen implements Menu {
 
     }
 
+    private boolean buttonPressed() {
+        if (Gdx.input.isTouched()) {
+            Rectangle buttonRectangle = new Rectangle(pauseTextureX, pauseTextureY, pauseTexture.getWidth(), pauseTexture.getHeight());
+            Vector2 mousePosition = new Vector2(Gdx.input.getX(), Gdx.graphics.getHeight() - Gdx.input.getY());
+            return buttonRectangle.contains(mousePosition);
+        }
+        return false;
+    }
+
     @Override
     public void render(float delta) {
         if (!paused) {
             Gdx.gl.glClearColor(0, 0, 0, 0);
             Gdx.gl.glClear(GL20.GL_COLOR_BUFFER_BIT);
             engine.update(delta);
-            /*stage.draw();
-            stage.act();*/
+            spriteBatch = new SpriteBatch();
+            spriteBatch.begin();
+            spriteBatch.draw(pauseTexture, pauseTextureX, pauseTextureY);
+            spriteBatch.end();
 
-        server.updatePlayerLocation(Mappers.BODY.get(player).body.getPosition().x, Mappers.BODY.get(player).body.getPosition().y);
+            server.updatePlayerLocation(Mappers.BODY.get(player).body.getPosition().x, Mappers.BODY.get(player).body.getPosition().y);
 
             if (Mappers.STATE.get(player).get() == StateComponent.STATE_HIT) {
-                game.setScreen(new GameOverScreen(game));
-                //goTo(GameOverScreen.class);
+                //game.setScreen(new GameOverScreen(game));
+                goTo(GameOverMenu.class);
                 int score = 50000000;
                 server.endGame(score);
             }
@@ -151,14 +158,15 @@ public class GameScreen extends BaseScreen implements Menu {
                 Mappers.BODY.get(ground2).body = createBox(ground1end+50, 0.5f, 100, 0, false);
                 ground2end += 200;
             }
+
+            if (buttonPressed())
+                pause();
         /*} else {
-            stage.draw();
-            stage.act();
             if (Mappers.BODY.get(player).body.getPosition().x < 0.5 || Mappers.STATE.get(player).get() == StateComponent.STATE_HIT) {
                 goTo(GameOverMenu.class);
-            }
+            }*/
         } else {
-            pauseMenu.render(delta);*/
+            pauseMenu.render(delta);
         }
     }
 
@@ -270,29 +278,6 @@ public class GameScreen extends BaseScreen implements Menu {
     }
 
 
-    private void createPauseButton() {
-        Entity entity = engine.createEntity();
-        TransformComponent position = engine.createComponent(TransformComponent.class);
-        TextureComponent texture = engine.createComponent(TextureComponent.class);
-        ButtonComponent button = engine.createComponent(ButtonComponent.class);
-
-        texture.region = new TextureRegion(new Texture(GoBackButton.GO_BACK_FILE_NAME));
-        float x =  Gdx.graphics.getWidth() - texture.region.getRegionWidth();
-        float y = Gdx.graphics.getHeight() - texture.region.getRegionHeight();
-        position.position.set(x, y, 0);
-
-        PauseButton pauseButton = new PauseButton(); // TODO Use factory
-        pauseButton.setMenu(this);
-        button.button = pauseButton.getButton();
-
-        entity.add(position);
-        entity.add(texture);
-        entity.add(button);
-
-        engine.addEntity(entity);
-    }
-
-
     private Entity createGround(int x){
         Entity ground = engine.createEntity();
         BodyComponent body = engine.createComponent(BodyComponent.class);
@@ -362,12 +347,10 @@ public class GameScreen extends BaseScreen implements Menu {
         entity.add(camera);
         engine.addEntity(entity);
     }
-    /*
+
     @Override
     public void pause() {
         paused = true;
-        /*InputMultiplexer multiplexer = (InputMultiplexer) Gdx.input.getInputProcessor();
-        multiplexer.removeProcessor(stage);
         pauseMenu = new PauseMenu(this);
         pauseMenu.setInputProcessor();
         renderingSystem.setProcessing(false);
@@ -376,12 +359,9 @@ public class GameScreen extends BaseScreen implements Menu {
     @Override
     public void resume() {
         paused = false;
-        /*InputMultiplexer multiplexer = (InputMultiplexer) Gdx.input.getInputProcessor();
-        if (!multiplexer.getProcessors().contains(stage, true))
-            multiplexer.addProcessor(stage);
         pauseMenu.removeInputProcessor();
         renderingSystem.setProcessing(true);
-    }*/
+    }
 
     public int getScore() {
         // TODO
