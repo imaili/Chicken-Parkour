@@ -25,6 +25,7 @@ public class PauseMenu extends MenuScreen {
     protected static final int HEIGHT = Gdx.graphics.getHeight()/ 2;
 
     private final Texture pauseTexture;
+    protected final boolean isMultiPlayer;
 
     @Override
     protected List<MenuButton> createButtons() {
@@ -43,6 +44,7 @@ public class PauseMenu extends MenuScreen {
         //backGroundTexture = GAME_OVER_BACK_GROUND_TEXTURE;
         backGroundTexture = getCurrentBackGroundTexture();
         this.pauseTexture = pauseTexture;
+        this.isMultiPlayer = gameScreen.isMultiPlayer();
     }
 
     public PauseMenu(GameScreen gameScreen) {
@@ -77,10 +79,13 @@ public class PauseMenu extends MenuScreen {
     }
 
     public void draw() {
-        Gdx.gl.glClearColor(1, 1, 1, 1);
-        Gdx.gl.glClear(GL20.GL_COLOR_BUFFER_BIT);
+        if (!isMultiPlayer) {
+            Gdx.gl.glClearColor(1, 1, 1, 1);
+            Gdx.gl.glClear(GL20.GL_COLOR_BUFFER_BIT);
+        }
         getStage().getBatch().begin();
-        getStage().getBatch().draw(backGroundTexture,0, 0, Gdx.graphics.getWidth(), Gdx.graphics.getHeight());
+        if (!isMultiPlayer)
+            getStage().getBatch().draw(backGroundTexture,0, 0, Gdx.graphics.getWidth(), Gdx.graphics.getHeight());
         getStage().getBatch().draw(pauseTexture, X, Y, WIDTH, HEIGHT);
         getStage().getBatch().end();
         getStage().draw();
