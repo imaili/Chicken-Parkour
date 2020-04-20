@@ -15,35 +15,43 @@ import com.badlogic.gdx.physics.box2d.BodyDef;
 import com.badlogic.gdx.physics.box2d.FixtureDef;
 import com.badlogic.gdx.physics.box2d.PolygonShape;
 import com.badlogic.gdx.physics.box2d.World;
+import com.mygdx.game.components.AnimationComponent;
 import com.mygdx.game.components.BodyComponent;
 import com.mygdx.game.components.CleanUpComponent;
 import com.mygdx.game.components.CollisionComponent;
 import com.mygdx.game.components.ObstacleComponent;
+import com.mygdx.game.components.PowerUp;
+import com.mygdx.game.components.PowerUpComponent;
+import com.mygdx.game.components.StateComponent;
 import com.mygdx.game.components.TextureComponent;
 import com.mygdx.game.components.TransformComponent;
 import com.mygdx.game.server.Server;
+import com.mygdx.game.utils.Mappers;
+
+import java.util.Map;
+import java.util.function.Consumer;
 
 public class RandomLevelSystem extends IteratingSystem {
 
     private ObstaclesFactory obstaclesFactory;
     private float accumulatedTime = 0;
     private Server server;
-    float playerPosition = 2;
-    public RandomLevelSystem(World world) {
+    private Entity player;
+    public RandomLevelSystem(World world, Entity player) {
         super(Family.all().get());
         obstaclesFactory = new ObstaclesFactory(world);
         server = Server.getInstance();
+        this.player = player;
     }
 
     @Override
     public void update(float deltaTime) {
         super.update(deltaTime);
         accumulatedTime+=deltaTime;
-        playerPosition += deltaTime*5;
         if(accumulatedTime>2){
             accumulatedTime = 0;
 
-            obstaclesFactory.createPlatform(playerPosition+20, 1, 1);
+            obstaclesFactory.createSpeedPowerUp(Mappers.TRANSFORM.get(player).position.x+20, 3);
            // server.addObstacle(deltaTime, "platform");
             //obstaclesFactory.createSpikes(playerPosition+25, 1);
             //server.addObstacle(deltaTime, "spikes");
@@ -149,7 +157,7 @@ public class RandomLevelSystem extends IteratingSystem {
                 TransformComponent transform = engine.createComponent(TransformComponent.class);
                 CleanUpComponent cleanUp = engine.createComponent(CleanUpComponent.class);
 
-                body.body = createTriangle(x + i);
+                body.body = createTriangle(x + i, 1);
                 body.body.setUserData(entity);
 
                 Pixmap pmap = new Pixmap(32,32, Pixmap.Format.RGBA8888);
@@ -181,12 +189,14 @@ public class RandomLevelSystem extends IteratingSystem {
             }
 
         }
-        private Body createTriangle(float x){
+        private Body createTriangle(float x, float y){
             BodyDef bodyDef = new BodyDef();
             bodyDef.position.x = x;
-            bodyDef.position.y = 1;
+            bodyDef.position.y = y;
             bodyDef.fixedRotation = true;
-            bodyDef.type = BodyDef.BodyType.DynamicBody;
+            bodyDef.type = BodyDef.BodyType.StaticBody;
+            bodyDef.gravityScale = 0.0f;
+
             Body body = world.createBody(bodyDef);
             //create the body to attach said definition
             Vector2[] vertices = {new Vector2(-0.4f, -0.4f), new Vector2(0.4f, -0.4f), new Vector2(0,0.4f)};
@@ -196,10 +206,68 @@ public class RandomLevelSystem extends IteratingSystem {
             FixtureDef fixtureDef = new FixtureDef();
             fixtureDef.shape = poly;
             fixtureDef.friction = 0;
+            fixtureDef.isSensor = true;
 
             body.createFixture(fixtureDef);
             poly.dispose();
             return body;
+        }
+
+        public void createSpeedPowerUp(float x, float _y){
+            Entity entity = engine.createEntity();
+            final PowerUpComponent powerUp = engine.createComponent(PowerUpComponent.class);
+            TextureComponent texture = engine.createComponent(TextureComponent.class);
+            CollisionComponent collision = engine.createComponent(CollisionComponent.class);
+            BodyComponent body = engine.createComponent(BodyComponent.class);
+            TransformComponent transform = engine.createComponent(TransformComponent.class);
+
+            body.body = createTriangle(x, _y);
+            body.body.setUserData(entity);
+            Pixmap pmap = new Pixmap(32,32, Pixmap.Format.RGBA8888);
+            pmap.setColor(Color.GRAY);
+            pmap.fillTriangle(32,0,32,32 ,0,16 );
+            final int width = pmap.getWidth();
+            final int height = pmap.getHeight();
+            Pixmap rotatedPmap = new Pixmap(height, width, pmap.getFormat());
+
+            for (int x2 = 0; x2 < height; x2++) {
+                for (int y = 0; y < width; y++) {
+                    rotatedPmap.drawPixel(x2, y, pmap.getPixel(y, x2));
+                }
+            }
+            texture.region = new TextureRegion(new Texture(rotatedPmap));
+            rotatedPmap.dispose();
+            pmap.dispose();
+            Consumer<Entity> action = new Consumer<Entity>() {
+                @Override
+                public void accept(Entity entity) {
+                    BodyComponent body = Mappers.BODY.get(entity);
+                    body.body.setLinearVelocity(8, body.body.getLinearVelocity().y);
+                    AnimationComponent animation = Mappers.ANIMATION.get(entity);
+                    animation.animationsMap.get(StateComponent.STATE_WALKING).setFrameDuration(0.07f);
+
+                }
+            };
+            Consumer<Entity> reset = new Consumer<Entity>() {
+                @Override
+                public void accept(Entity entity) {
+                    BodyComponent body = Mappers.BODY.get(entity);
+                    body.body.setLinearVelocity(5, body.body.getLinearVelocity().y);
+                    AnimationComponent animation = Mappers.ANIMATION.get(entity);
+                    animation.animationsMap.get(StateComponent.STATE_WALKING).setFrameDuration(0.1f);
+
+                }
+            };
+            powerUp.powerUp = new PowerUp(action, reset);
+            powerUp.duration = 5;
+
+            entity.add(texture);
+            entity.add(transform);
+            entity.add(body);
+            entity.add(powerUp);
+            entity.add(collision);
+            engine.addEntity(entity);
+
         }
 
 

@@ -256,7 +256,7 @@ public class Server {
     }
 
     private void send(JSONObject message) {
-        System.out.println((message));
+       // System.out.println((message));
         try {
             socket.send(message);
 

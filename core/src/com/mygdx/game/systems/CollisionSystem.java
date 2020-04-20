@@ -37,10 +37,9 @@ public class CollisionSystem  extends IteratingSystem {
         CollisionComponent collisionCom = collisionMapper.get(entity);
         Entity collidedEntity = collisionCom.collisionEntity;
         if (collidedEntity != null) {
-            BodyComponent body = Mappers.BODY.get(entity);
             ObstacleComponent obstacle = Mappers.OBSTACLE.get(collidedEntity);
             CoinComponent coin = Mappers.COIN.get(collidedEntity);
-            PowerUpComponent powerup = Mappers.POWERUP.get(collidedEntity);
+            PowerUpComponent powerUp = Mappers.POWERUP.get(collidedEntity);
 
             if (obstacle != null) {
 
@@ -63,8 +62,12 @@ public class CollisionSystem  extends IteratingSystem {
             } else if (coin != null) {
                 //TODO increment coin counter and delete coin entity
 
-            } else if (powerup != null) {
-                //TODO add powerup to chicken
+            } else if (powerUp != null) {
+                PowerUpComponent playerPowerUp = Mappers.POWERUP.get(entity);
+                playerPowerUp.powerUp = powerUp.powerUp;
+                playerPowerUp.duration = powerUp.duration;
+                getEngine().removeEntity(collidedEntity);
+
             } else {
                 StateComponent stateComponent = Mappers.STATE.get(entity);
                 stateComponent.set(StateComponent.STATE_WALKING);

@@ -14,6 +14,7 @@ public class PauseButton extends GoBackButton {
     public PauseButton(Menu menu) {
         this();
         setMenu(menu);
+
     }
 
     public PauseButton(Skin skin, Vector2 position, String menuName) {

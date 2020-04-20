@@ -81,9 +81,8 @@ public class RenderingSystem extends IteratingSystem {
 
             float width = tex.region.getRegionWidth()*t.scale.x*PIXELS_TO_METRES;
             float height = tex.region.getRegionHeight()*t.scale.y*PIXELS_TO_METRES;
-            System.out.println(width +" "+ height);
-            float originX = width * 0.25f;
-            float originY = height * 0.25f;
+            float originX = width * 0.5f;
+            float originY = height * 0.5f;
 
             batch.draw(tex.region, t.position.x-originX, t.position.y-originY, width, height);
            /* batch.draw(tex.region,

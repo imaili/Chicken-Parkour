@@ -29,6 +29,8 @@ import com.mygdx.game.components.CameraComponent;
 import com.mygdx.game.components.ChickenComponent;
 import com.mygdx.game.components.ButtonComponent;
 import com.mygdx.game.components.CollisionComponent;
+import com.mygdx.game.components.PowerUp;
+import com.mygdx.game.components.PowerUpComponent;
 import com.mygdx.game.components.StateComponent;
 import com.mygdx.game.components.TextureComponent;
 import com.mygdx.game.components.TransformComponent;
@@ -98,17 +100,16 @@ public class GameScreen extends BaseScreen implements Menu {
 
         camera = renderingSystem.getCamera();
         engine = new PooledEngine();
-
+        createPlayer();
         engine.addSystem(new PhysicsSystem(world));
         engine.addSystem(new PhysicsDebugSystem(world, camera));
         engine.addSystem(new ChickenSystem());
         engine.addSystem(new CollisionSystem());
-        engine.addSystem(new RandomLevelSystem(world));
+        engine.addSystem(new RandomLevelSystem(world, player));
         engine.addSystem(new CleanUpSystem(world, camera));
         engine.addSystem(new AnimationSystem());
         engine.addSystem(renderingSystem);
         engine.addSystem(new CameraSystem());
-        createPlayer();
         ground1 = createGround(50);
         ground2 = createGround(150);
         engine.addEntity(ground1);
@@ -161,10 +162,7 @@ public class GameScreen extends BaseScreen implements Menu {
 
             if (buttonPressed())
                 pause();
-        /*} else {
-            if (Mappers.BODY.get(player).body.getPosition().x < 0.5 || Mappers.STATE.get(player).get() == StateComponent.STATE_HIT) {
-                goTo(GameOverMenu.class);
-            }*/
+
         } else {
             pauseMenu.render(delta);
         }
@@ -228,7 +226,7 @@ public class GameScreen extends BaseScreen implements Menu {
         StateComponent state = engine.createComponent(StateComponent.class);
         CollisionComponent collision = engine.createComponent(CollisionComponent.class);
         AnimationComponent animation = engine.createComponent(AnimationComponent.class);
-
+        PowerUpComponent powerUp = engine.createComponent(PowerUpComponent.class);
         // set the components data
 
         texture.region = new TextureRegion((Texture)game.getAssetsManager().get(Constants.RUN_2_PATH));
@@ -269,7 +267,7 @@ public class GameScreen extends BaseScreen implements Menu {
         player.add(animation);
         player.add(state);
         player.add(collision);
-
+        player.add(powerUp);
         engine.addEntity(player);
 
 

@@ -27,7 +27,6 @@ public class CleanUpSystem extends IteratingSystem {
         if(body.body.getPosition().x+1 < camera.position.x- Gdx.graphics.getWidth()/64){
             getEngine().removeEntity(entity);
             world.destroyBody(body.body);
-            System.out.println("removed");
 
         }
 

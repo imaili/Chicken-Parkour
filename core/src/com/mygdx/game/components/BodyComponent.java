@@ -10,6 +10,6 @@ public class BodyComponent implements Component, Poolable {
 
     @Override
     public void reset() {
-        body = null;
+        body.getWorld().destroyBody(body);
     }
 }
