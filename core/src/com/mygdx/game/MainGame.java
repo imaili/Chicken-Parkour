@@ -8,9 +8,7 @@ import com.badlogic.gdx.assets.loaders.SkinLoader;
 import com.badlogic.gdx.audio.Music;
 import com.badlogic.gdx.graphics.Texture;
 import com.badlogic.gdx.graphics.g2d.TextureAtlas;
-import com.badlogic.gdx.graphics.g2d.TextureRegion;
 import com.badlogic.gdx.scenes.scene2d.ui.Skin;
-import com.mygdx.game.screens.GameScreen;
 import com.mygdx.game.screens.menu.MainMenu;
 import com.mygdx.game.screens.Menu;
 import com.mygdx.game.utils.AssetsManager;
@@ -80,6 +78,10 @@ public class MainGame extends Game {
 	private void loadAssetManager(){
 
 		manager.load(Constants.RUN_2_PATH, Texture.class);
+
+		manager.load(Constants.PLATFORM_PATH, Texture.class);
+		manager.load(Constants.FLOOR_PATH, Texture.class);
+		manager.load(Constants.SPIKE_PATH, Texture.class);
 
 		manager.load(Constants.WALK_ATLAS_PATH, TextureAtlas.class);
 		manager.load(Constants.TABLE_SKIN_ATLAS, TextureAtlas.class);

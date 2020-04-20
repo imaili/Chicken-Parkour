@@ -5,6 +5,7 @@ import com.badlogic.ashley.core.Entity;
 import com.badlogic.ashley.core.Family;
 import com.badlogic.ashley.core.PooledEngine;
 import com.badlogic.ashley.systems.IteratingSystem;
+import com.badlogic.gdx.Gdx;
 import com.badlogic.gdx.graphics.Color;
 import com.badlogic.gdx.graphics.Pixmap;
 import com.badlogic.gdx.graphics.Texture;
@@ -22,6 +23,7 @@ import com.mygdx.game.components.ObstacleComponent;
 import com.mygdx.game.components.TextureComponent;
 import com.mygdx.game.components.TransformComponent;
 import com.mygdx.game.server.Server;
+import com.mygdx.game.utils.Constants;
 
 public class RandomLevelSystem extends IteratingSystem {
 
@@ -45,7 +47,7 @@ public class RandomLevelSystem extends IteratingSystem {
 
             obstaclesFactory.createPlatform(playerPosition+20, 1, 1);
            // server.addObstacle(deltaTime, "platform");
-            //obstaclesFactory.createSpikes(playerPosition+25, 1);
+           // obstaclesFactory.createSpikes(playerPosition+25, 1);
             //server.addObstacle(deltaTime, "spikes");
 
         }
@@ -82,7 +84,9 @@ public class RandomLevelSystem extends IteratingSystem {
             CleanUpComponent cleanUp = engine.createComponent(CleanUpComponent.class);
             body.body = createBox(x,1,length,height,true);
             body.body.setUserData(entity);
-            texture.region = createTexture(Color.GREEN, false, 32*length, 32*height);
+            //texture.region = createTexture(Color.GREEN, false, 32*length, 32*height);
+            texture.region = new TextureRegion(new Texture(new Pixmap(Gdx.files.internal(Constants.PLATFORM_PATH))));
+            transform.scale.set(0.5f, 0.5f);
             obstacle.type = ObstacleComponent.BOX;
             transform.position.set(x, 1, 0);
             entity.add(body);
@@ -139,8 +143,8 @@ public class RandomLevelSystem extends IteratingSystem {
 
         }
 
-        private void createSpikes(float x, int lenght) {
-            for (int i = 0; i < lenght; i++) {
+        private void createSpikes(float x, int length) {
+            for (int i = 0; i < length; i++) {
                 Entity entity = engine.createEntity();
                 BodyComponent body = engine.createComponent(BodyComponent.class);
                 CollisionComponent collision = engine.createComponent(CollisionComponent.class);
@@ -151,7 +155,7 @@ public class RandomLevelSystem extends IteratingSystem {
 
                 body.body = createTriangle(x + i);
                 body.body.setUserData(entity);
-
+                /*
                 Pixmap pmap = new Pixmap(32,32, Pixmap.Format.RGBA8888);
                 pmap.setColor(Color.GRAY);
                 pmap.fillTriangle(32,0,32,32 ,0,16 );
@@ -167,12 +171,15 @@ public class RandomLevelSystem extends IteratingSystem {
                 texture.region = new TextureRegion(new Texture(rotatedPmap));
                 rotatedPmap.dispose();
                 pmap.dispose();
+                */
+                texture.region = new TextureRegion(new Texture(new Pixmap(Gdx.files.internal(Constants.SPIKE_PATH))));
+                transform.scale.set(0.15f, 0.15f);
 
                 obstacle.type = ObstacleComponent.SPIKES;
 
                 entity.add(body);
                 entity.add(collision);
-               // entity.add(texture);
+                entity.add(texture);
                 entity.add(obstacle);
                 entity.add(transform);
                 entity.add(cleanUp);

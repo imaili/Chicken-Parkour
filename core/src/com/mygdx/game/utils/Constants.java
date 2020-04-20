@@ -23,6 +23,10 @@ public class Constants {
     public static final String MUSIC_MENU_PATH = "sounds/bensound-sunny.mp3";
     public static final String MUSIC_GAME_PATH = "sounds/bensound-scifi.mp3";
 
+    public static final String PLATFORM_PATH = "box.png";
+    public static final String FLOOR_PATH = "floor.png";
+    public static final String SPIKE_PATH = "opponent.png";
+
     public static final String RUN_ATLAS_PATH = "TextureAtlas/Run.atlas";
     public static final String RUN_ANIMATION_ID = "run_animation";
     public static final String RUN_1_ID = "run1";
