@@ -6,7 +6,6 @@ import com.badlogic.gdx.math.Vector2;
 import com.badlogic.gdx.scenes.scene2d.Actor;
 import com.badlogic.gdx.scenes.scene2d.ui.Label;
 import com.badlogic.gdx.scenes.scene2d.ui.Skin;
-import com.badlogic.gdx.scenes.scene2d.ui.Table;
 import com.mygdx.game.MainGame;
 import com.mygdx.game.screens.GameScreen;
 import com.mygdx.game.screens.Menu;
@@ -36,7 +35,7 @@ public class GameOverMenu extends PauseMenu {
     @Override
     public List<Actor> getActors() {
         List<Actor> list = new LinkedList<>();
-        Skin skin = MainGame.getSingleton().getAssetsManager().get(Constants.TABLE_SKIN);
+        Skin skin = MainGame.getSingleton().getAssetManager().get(Constants.TABLE_SKIN);
         String score = "Score: " + ((GameScreen) previousMenu).getScore();
         Label title = new Label(score, skin);
         //int screenSize = Gdx.graphics.getWidth() /2;

@@ -33,7 +33,7 @@ public class SinglePlayerMenu extends MenuScreen {
 
     public List<Actor> getActors() {
         List<com.badlogic.gdx.scenes.scene2d.Actor> list = new LinkedList<>();
-        Skin skin = MainGame.getSingleton().getAssetsManager().get(Constants.TABLE_SKIN);
+        Skin skin = MainGame.getSingleton().getAssetManager().get(Constants.TABLE_SKIN);
         TextField nameText = new TextField("", skin);
         Table table = new Table(skin);
         list.add(table);
@@ -73,6 +73,9 @@ public class SinglePlayerMenu extends MenuScreen {
     }
 
     public void goToGameScreen() {
-        goTo(new GameScreen(MainGame.getSingleton()));
+        stopMusic();
+        GameScreen gameScreen = new GameScreen(MainGame.getSingleton());
+        gameScreen.startMusic();
+        goTo(gameScreen);
     }
 }

@@ -8,7 +8,6 @@ import com.badlogic.gdx.scenes.scene2d.ui.Label;
 import com.badlogic.gdx.scenes.scene2d.ui.Skin;
 import com.badlogic.gdx.scenes.scene2d.ui.Table;
 import com.badlogic.gdx.scenes.scene2d.ui.TextField;
-import com.badlogic.gdx.utils.Align;
 import com.badlogic.gdx.utils.Array;
 import com.mygdx.game.MainGame;
 import com.mygdx.game.screens.MenuScreen;
@@ -107,7 +106,7 @@ public class MultiPlayerHostMenu extends MenuScreen {
     @Override
     public List<Actor> getActors() {
         List<Actor> list = new LinkedList<>();
-        Skin skin = MainGame.getSingleton().getAssetsManager().get(Constants.TABLE_SKIN);
+        Skin skin = MainGame.getSingleton().getAssetManager().get(Constants.TABLE_SKIN);
         nameText = new TextField("", skin);
         table = createTable(skin);
         gameId = this.createLabel(skin);
@@ -133,7 +132,10 @@ public class MultiPlayerHostMenu extends MenuScreen {
 
     public void goToGameScreen() {
         this.server.updatePlayerName(this.nameText.getText());
-        goTo(new GameScreen(MainGame.getSingleton()));
+        stopMusic();
+        GameScreen gameScreen = new GameScreen(MainGame.getSingleton());
+        gameScreen.startMusic();
+        goTo(gameScreen);
     }
 
     @Override

@@ -61,7 +61,7 @@ public class MultiPlayerJoinMenu extends MenuScreen {
     @Override
     public List<Actor> getActors() {
         List<Actor> list = new LinkedList<>();
-        Skin skin = MainGame.getSingleton().getAssetsManager().get(Constants.TABLE_SKIN);
+        Skin skin = MainGame.getSingleton().getAssetManager().get(Constants.TABLE_SKIN);
         playerName = new TextField("", skin);
         gameId = new TextField("", skin);
         table = createTable(skin);
@@ -83,7 +83,10 @@ public class MultiPlayerJoinMenu extends MenuScreen {
     }
 
     public void goToGameScreen() {
-        goTo(new GameScreen(MainGame.getSingleton()));
+        stopMusic();
+        GameScreen gameScreen = new GameScreen(MainGame.getSingleton());
+        gameScreen.startMusic();
+        goTo(gameScreen);
     }
 
     @Override

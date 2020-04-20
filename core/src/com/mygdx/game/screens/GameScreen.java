@@ -3,8 +3,6 @@ package com.mygdx.game.screens;
 import com.badlogic.ashley.core.Entity;
 import com.badlogic.ashley.core.PooledEngine;
 import com.badlogic.gdx.Gdx;
-import com.badlogic.gdx.InputMultiplexer;
-import com.badlogic.gdx.graphics.Color;
 import com.badlogic.gdx.graphics.GL20;
 import com.badlogic.gdx.graphics.OrthographicCamera;
 import com.badlogic.gdx.graphics.Pixmap;
@@ -15,19 +13,16 @@ import com.badlogic.gdx.graphics.g2d.TextureAtlas;
 import com.badlogic.gdx.graphics.g2d.TextureRegion;
 import com.badlogic.gdx.math.Rectangle;
 import com.badlogic.gdx.math.Vector2;
-import com.badlogic.gdx.math.Vector3;
 import com.badlogic.gdx.physics.box2d.Body;
 import com.badlogic.gdx.physics.box2d.BodyDef;
 import com.badlogic.gdx.physics.box2d.FixtureDef;
 import com.badlogic.gdx.physics.box2d.PolygonShape;
 import com.badlogic.gdx.physics.box2d.World;
-import com.badlogic.gdx.scenes.scene2d.utils.TextureRegionDrawable;
 import com.mygdx.game.MainGame;
 import com.mygdx.game.components.AnimationComponent;
 import com.mygdx.game.components.BodyComponent;
 import com.mygdx.game.components.CameraComponent;
 import com.mygdx.game.components.ChickenComponent;
-import com.mygdx.game.components.ButtonComponent;
 import com.mygdx.game.components.CollisionComponent;
 import com.mygdx.game.components.StateComponent;
 import com.mygdx.game.components.TextureComponent;
@@ -35,11 +30,8 @@ import com.mygdx.game.components.TransformComponent;
 import com.mygdx.game.systems.CameraSystem;
 import com.mygdx.game.screens.menu.GameOverMenu;
 import com.mygdx.game.screens.menu.PauseMenu;
-import com.mygdx.game.screens.menu.button.GoBackButton;
-import com.mygdx.game.screens.menu.button.PauseButton;
 import com.mygdx.game.server.Server;
 import com.mygdx.game.systems.AnimationSystem;
-import com.mygdx.game.systems.ButtonSystem;
 import com.mygdx.game.systems.ChickenSystem;
 import com.mygdx.game.systems.CleanUpSystem;
 import com.mygdx.game.systems.CollisionSystem;
@@ -178,10 +170,12 @@ public class GameScreen extends BaseScreen implements Menu {
     }
 
     public void startMusic() {
-
+        if (MainGame.getSingleton().getMusic())
+            MainGame.getSingleton().getMusicManager().play_music(MUSIC_TYPE);
     }
 
     public void stopMusic() {
+        MainGame.getSingleton().getMusicManager().stop_music();
     }
 
 
@@ -231,7 +225,7 @@ public class GameScreen extends BaseScreen implements Menu {
 
         // set the components data
 
-        texture.region = new TextureRegion((Texture)game.getAssetsManager().get(Constants.RUN_2_PATH));
+        texture.region = new TextureRegion((Texture)game.getAssetManager().get(Constants.RUN_2_PATH));
 
         TextureAtlas atlas = new TextureAtlas(Constants.WALK_ATLAS_PATH);
         Animation ani = new Animation<TextureRegion>(0.1f, atlas.getRegions(), Animation.PlayMode.LOOP);
