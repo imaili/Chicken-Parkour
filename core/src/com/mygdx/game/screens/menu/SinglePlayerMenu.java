@@ -121,6 +121,7 @@ public class SinglePlayerMenu extends MenuScreen {
                         stopMusic();
         GameScreen gameScreen = new GameScreen(MainGame.getSingleton());
         gameScreen.startMusic();
+        gameScreen.setMultiPlayer(false);
         goTo(gameScreen);
     }
 }

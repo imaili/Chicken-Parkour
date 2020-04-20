@@ -57,6 +57,8 @@ public class GameScreen extends BaseScreen implements Menu {
     private Entity background;
     private MainGame game;
 
+    private boolean isMultiPlayer = true;
+
     private PauseMenu pauseMenu;
     private boolean paused;
     private Texture pauseTexture = new Texture(Constants.EXIT_MENU_PATH);
@@ -123,7 +125,7 @@ public class GameScreen extends BaseScreen implements Menu {
 
     @Override
     public void render(float delta) {
-        if (!paused) {
+        if (!paused || isMultiPlayer) {
             Gdx.gl.glClearColor(0, 0, 0, 0);
             Gdx.gl.glClear(GL20.GL_COLOR_BUFFER_BIT);
             engine.update(delta);
@@ -157,7 +159,8 @@ public class GameScreen extends BaseScreen implements Menu {
             if (Mappers.BODY.get(player).body.getPosition().x < 0.5 || Mappers.STATE.get(player).get() == StateComponent.STATE_HIT) {
                 goTo(GameOverMenu.class);
             }*/
-        } else {
+        }
+        if (paused) {
             pauseMenu.render(delta);
         }
     }
@@ -347,19 +350,29 @@ public class GameScreen extends BaseScreen implements Menu {
         paused = true;
         pauseMenu = new PauseMenu(this);
         pauseMenu.setInputProcessor();
-        renderingSystem.setProcessing(false);
+        if (!isMultiPlayer)
+            renderingSystem.setProcessing(false);
     }
 
     @Override
     public void resume() {
         paused = false;
         pauseMenu.removeInputProcessor();
-        renderingSystem.setProcessing(true);
+        if (!isMultiPlayer)
+            renderingSystem.setProcessing(true);
     }
 
     public int getScore() {
         // TODO
         return 40;
+    }
+
+    public boolean isMultiPlayer() {
+        return isMultiPlayer;
+    }
+
+    public void setMultiPlayer(boolean isMultiPlayer) {
+        this.isMultiPlayer = isMultiPlayer;
     }
 
 }

@@ -72,6 +72,7 @@ public class GameOverMenu extends PauseMenu {
         stopMusic();
         GameScreen gameScreen = new GameScreen(MainGame.getSingleton());
         gameScreen.startMusic();
+        gameScreen.setMultiPlayer(isMultiPlayer);
         goTo(gameScreen);
     }
 
