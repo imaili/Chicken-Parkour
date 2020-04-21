@@ -21,7 +21,8 @@ public class Constants {
     public static final float GROUND_DENSITY = 0f;
 
     public static final String MUSIC_MENU_PATH = "sounds/bensound-sunny.mp3";
-    public static final String MUSIC_GAME_PATH = "sounds/bensound-scifi.mp3";
+    //public static final String MUSIC_GAME_PATH = "sounds/bensound-scifi.mp3";
+    public static final String MUSIC_GAME_PATH = "sounds/jungle_music.mp3";
 
     public static final String PLATFORM_PATH = "box.png";
     public static final String FLOOR_PATH = "floor.png";

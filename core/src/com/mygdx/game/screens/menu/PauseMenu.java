@@ -31,11 +31,13 @@ public class PauseMenu extends MenuScreen {
     protected List<MenuButton> createButtons() {
 
         int buttonX = Gdx.graphics.getWidth() / 2 - Gdx.graphics.getWidth() / 8;
-        int buttonHeight = Gdx.graphics.getHeight() / 10;
+        int buttonHeight = Gdx.graphics.getHeight() / 15;
         List<MenuButton> list = new LinkedList<>();
         MenuButton resume = DEFAULT_TEXT_BUTTON_FACTORY.createGoBackButton("Resume", new Vector2(buttonX, Gdx.graphics.getHeight()/2 - buttonHeight/2));
         MenuButton goToMainMenu = DEFAULT_TEXT_BUTTON_FACTORY.createGoToButton("Exit", new Vector2(buttonX, Gdx.graphics.getHeight()/2 - 2*buttonHeight), MainMenu.class);
-        Collections.addAll(list, resume, goToMainMenu);
+        MenuButton musicOption = DEFAULT_TEXT_BUTTON_FACTORY.createMusicButton("Music",new Vector2(buttonX, Gdx.graphics.getHeight()/2 - 3*buttonHeight));
+
+        Collections.addAll(list,musicOption, resume, goToMainMenu);
         return list;
     }
 
