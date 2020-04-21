@@ -9,6 +9,7 @@ import com.badlogic.gdx.audio.Music;
 import com.badlogic.gdx.graphics.Texture;
 import com.badlogic.gdx.graphics.g2d.TextureAtlas;
 import com.badlogic.gdx.scenes.scene2d.ui.Skin;
+import com.mygdx.game.screens.GameScreen;
 import com.mygdx.game.screens.menu.MainMenu;
 import com.mygdx.game.screens.Menu;
 import com.mygdx.game.utils.AssetsManager;
@@ -30,15 +31,15 @@ public class MainGame extends Game {
 	@Override
 	public void create() {
 		singleton = this;
-//		MainMenu menu = new MainMenu();
-	//	setMenu(menu);
-	//	Gdx.input.setInputProcessor(new InputMultiplexer());
-	//	menu.setInputProcessor();
+		MainMenu menu = new MainMenu();
+		setMenu(menu);
+		Gdx.input.setInputProcessor(new InputMultiplexer());
+		menu.setInputProcessor();
 		manager = new AssetManager();
 		loadAssetManager();
 		assetsManager = new AssetsManager();
 		music = false;
-	//	menu.startMusic();
+		menu.startMusic();
 		setScreen(new GameScreen(this));
 
 		//setScreen(new GameScreen(this));
