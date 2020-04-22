@@ -35,7 +35,7 @@ public class PauseMenu extends MenuScreen {
         List<MenuButton> list = new LinkedList<>();
         MenuButton resume = DEFAULT_TEXT_BUTTON_FACTORY.createGoBackButton("Resume", new Vector2(buttonX, Gdx.graphics.getHeight()/2 - buttonHeight/2));
         MenuButton goToMainMenu = DEFAULT_TEXT_BUTTON_FACTORY.createGoToButton("Exit", new Vector2(buttonX, Gdx.graphics.getHeight()/2 - 2*buttonHeight), MainMenu.class);
-        MenuButton musicOption = DEFAULT_TEXT_BUTTON_FACTORY.createMusicButton("Music",new Vector2(buttonX, Gdx.graphics.getHeight()/2 - 3*buttonHeight));
+        MenuButton musicOption = DEFAULT_TEXT_BUTTON_FACTORY.createMusicButton(new Vector2(buttonX, Gdx.graphics.getHeight()/2 - 3*buttonHeight));
 
         Collections.addAll(list,musicOption, resume, goToMainMenu);
         return list;
@@ -80,6 +80,11 @@ public class PauseMenu extends MenuScreen {
         goTo(menu);
     }
 
+    public void updateMenu() {
+        previousMenu.resume();
+        previousMenu.pause();
+    }
+
     public void draw() {
         if (!isMultiPlayer) {
             Gdx.gl.glClearColor(1, 1, 1, 1);
@@ -97,6 +102,18 @@ public class PauseMenu extends MenuScreen {
     public void goBack() {
         //super.goBack();
         previousMenu.resume();
+    }
+
+    @Override
+    public void startMusic() {
+        previousMenu.startMusic();
+        updateMenu();
+    }
+
+    @Override
+    public void stopMusic() {
+        previousMenu.stopMusic();
+        updateMenu();
     }
 
 }

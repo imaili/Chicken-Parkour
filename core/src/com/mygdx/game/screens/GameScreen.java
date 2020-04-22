@@ -3,6 +3,7 @@ package com.mygdx.game.screens;
 import com.badlogic.ashley.core.Entity;
 import com.badlogic.ashley.core.PooledEngine;
 import com.badlogic.gdx.Gdx;
+import com.badlogic.gdx.audio.Music;
 import com.badlogic.gdx.graphics.GL20;
 import com.badlogic.gdx.graphics.OrthographicCamera;
 import com.badlogic.gdx.graphics.Pixmap;
@@ -71,6 +72,9 @@ public class GameScreen extends BaseScreen implements Menu {
     private Server server;
     private String game_id;
     private String player_id;
+
+    protected static final String MUSIC_PATH = Constants.MUSIC_GAME_PATH;
+    protected final Music MUSIC = MainGame.getSingleton().getAssetManager().get(MUSIC_PATH, Music.class);
 
     public GameScreen(MainGame game) {
         super(game);
@@ -155,11 +159,11 @@ public class GameScreen extends BaseScreen implements Menu {
 
             if (buttonPressed())
                 pause();
-
-            if (paused) {
-                pauseMenu.render(delta);
-            }
         }
+        if (paused) {
+            pauseMenu.render(delta);
+        }
+
     }
 
     @Override
@@ -170,12 +174,17 @@ public class GameScreen extends BaseScreen implements Menu {
     }
 
     public void startMusic() {
-        if (MainGame.getSingleton().getMusic())
-            MainGame.getSingleton().getMusicManager().play_music(MUSIC_TYPE);
+        if (game.getMusic()) {
+            MUSIC.setLooping(true);
+            if (MUSIC.isPlaying())
+                MUSIC.pause();
+            MUSIC.setVolume(0.75f);
+            MUSIC.play();
+        }
     }
 
     public void stopMusic() {
-        MainGame.getSingleton().getMusicManager().stop_music();
+        MUSIC.stop();
     }
 
 
