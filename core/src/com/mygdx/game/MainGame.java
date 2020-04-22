@@ -19,7 +19,6 @@ public class MainGame extends Game {
 	private static MainGame singleton;
 
 	private AssetManager manager;
-	private AssetsManager assetsManager;
 	public static MainGame getSingleton() {
 		return singleton;
 	}
@@ -31,13 +30,12 @@ public class MainGame extends Game {
 	@Override
 	public void create() {
 		singleton = this;
+		manager = new AssetManager();
+		loadAssetManager();
 		MainMenu menu = new MainMenu();
 		setMenu(menu);
 		Gdx.input.setInputProcessor(new InputMultiplexer());
 		menu.setInputProcessor();
-		manager = new AssetManager();
-		loadAssetManager();
-		assetsManager = new AssetsManager();
 		music = false;
 		menu.startMusic();
 		setScreen(new GameScreen(this));
@@ -66,10 +64,6 @@ public class MainGame extends Game {
 
 	public boolean getMusic() {
 		return music;
-	}
-
-	public AssetsManager getMusicManager() {
-		return assetsManager;
 	}
 
 	@Override
