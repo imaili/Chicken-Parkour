@@ -38,8 +38,6 @@ public class MainGame extends Game {
 		menu.setInputProcessor();
 		music = false;
 		menu.startMusic();
-		setScreen(new GameScreen(this));
-
 		//setScreen(new GameScreen(this));
 
 	}

@@ -159,11 +159,11 @@ public class GameScreen extends BaseScreen implements Menu {
 
             if (buttonPressed())
                 pause();
-
-            if (paused) {
-                pauseMenu.render(delta);
-            }
         }
+        if (paused) {
+            pauseMenu.render(delta);
+        }
+
     }
 
     @Override
