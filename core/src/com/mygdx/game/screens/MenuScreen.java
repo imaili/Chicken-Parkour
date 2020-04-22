@@ -2,6 +2,7 @@ package com.mygdx.game.screens;
 
 import com.badlogic.gdx.Gdx;
 import com.badlogic.gdx.InputMultiplexer;
+import com.badlogic.gdx.audio.Music;
 import com.badlogic.gdx.graphics.Color;
 import com.badlogic.gdx.graphics.GL20;
 import com.badlogic.gdx.graphics.Pixmap;
@@ -16,6 +17,7 @@ import com.mygdx.game.MainGame;
 import com.mygdx.game.screens.menu.button.MenuButton;
 import com.mygdx.game.screens.menu.button.factory.ImageButtonFactory;
 import com.mygdx.game.screens.menu.button.factory.TextButtonFactory;
+import com.mygdx.game.utils.Constants;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -33,7 +35,8 @@ public abstract class MenuScreen extends BaseScreen implements Menu {
     protected static final Texture BACK_GROUND_TEXTURE_EMPTY = new Texture(BACKGROUND_MENU_EMPTY_PATH);
     protected static final Texture BACK_GROUND_TUTORIAL  = new Texture(BACKGROUND_TUTORIAL_PATH);
 
-    protected static final String MUSIC_TYPE = "menu";
+    protected static final String MUSIC_PATH = Constants.MUSIC_MENU_PATH;
+    protected final Music MUSIC = MainGame.getSingleton().getAssetManager().get(MUSIC_PATH, Music.class);
     protected static final ImageButtonFactory IMAGE_BUTTON_FACTORY = ImageButtonFactory.getInstance();
     protected static final TextButtonFactory DEFAULT_TEXT_BUTTON_FACTORY = TextButtonFactory.getDefaultInstance();
     protected Texture backGroundTexture;
@@ -99,12 +102,17 @@ public abstract class MenuScreen extends BaseScreen implements Menu {
     }
 
     public void startMusic() {
-        if (MainGame.getSingleton().getMusic())
-            MainGame.getSingleton().getMusicManager().play_music(MUSIC_TYPE);
+        if (MainGame.getSingleton().getMusic()) {
+            MUSIC.setLooping(true);
+            if (MUSIC.isPlaying())
+                MUSIC.pause();
+            MUSIC.setVolume(0.75f);
+            MUSIC.play();
+        }
     }
 
     public void stopMusic() {
-        MainGame.getSingleton().getMusicManager().stop_music();
+        MUSIC.stop();
     }
 
     // Override from BaseScreen
