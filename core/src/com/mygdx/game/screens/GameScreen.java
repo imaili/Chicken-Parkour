@@ -237,7 +237,7 @@ public class GameScreen extends BaseScreen implements Menu {
         PowerUpComponent powerUp = engine.createComponent(PowerUpComponent.class);
         // set the components data
 
-        texture.region = new TextureRegion((Texture)game.getAssetManager().get(Constants.RUN_2_PATH));
+        texture.region = new TextureRegion((Texture)game.getAssetManager().get(Constants.WALK_1_PATH));
 
         TextureAtlas atlas = new TextureAtlas(Constants.WALK_ATLAS_PATH);
         Animation ani = new Animation<TextureRegion>(0.1f, atlas.getRegions(), Animation.PlayMode.LOOP);
@@ -258,7 +258,7 @@ public class GameScreen extends BaseScreen implements Menu {
 
        // body.body = createBox(10,10,10,10, true); // used to be (1,1,1,1,true) --> Dinosaur outside of the screen??
 
-        body.body = createBox(2,1,1,1, true);
+        body.body = createBox(2,1,0.5f,2.1f, true);
         body.body.setLinearVelocity(5,0);
         // set object position (x,y,z) z used to define draw order 0 first drawn
         position.position.set(2,1,0);
@@ -359,8 +359,10 @@ public class GameScreen extends BaseScreen implements Menu {
         paused = true;
         pauseMenu = new PauseMenu(this);
         pauseMenu.setInputProcessor();
-        if (!isMultiPlayer)
+        if (!isMultiPlayer) {
             renderingSystem.setProcessing(false);
+
+        }
     }
 
     @Override
