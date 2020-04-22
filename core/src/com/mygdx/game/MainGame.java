@@ -100,7 +100,7 @@ public class MainGame extends Game {
 		manager.load(Constants.BACKGROUND_MENU_EMPTY_PATH, Texture.class);
 		manager.load(Constants.MULTIPLAYER_BUTTON_PATH, Texture.class);
 		manager.load(Constants.SINGLEPLAYER_BUTTON_PATH, Texture.class);
-		manager.load(Constants.RUN_2_PATH, Texture.class);
+		manager.load(Constants.WALK_1_PATH, Texture.class);
 		manager.load(Constants.MUSIC_GAME_PATH, Music.class);
 		manager.load(Constants.MUSIC_MENU_PATH, Music.class);
 

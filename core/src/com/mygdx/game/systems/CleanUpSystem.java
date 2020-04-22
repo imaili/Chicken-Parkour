@@ -24,9 +24,8 @@ public class CleanUpSystem extends IteratingSystem {
     @Override
     protected void processEntity(Entity entity, float deltaTime) {
         BodyComponent body = Mappers.BODY.get(entity);
-        if(body.body.getPosition().x+1 < camera.position.x- Gdx.graphics.getWidth()/64){
+        if(body.body != null && body.body.getPosition().x+1 < camera.position.x- Gdx.graphics.getWidth()/64){
             getEngine().removeEntity(entity);
-            world.destroyBody(body.body);
 
         }
 

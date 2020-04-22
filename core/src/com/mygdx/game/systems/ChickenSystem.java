@@ -37,6 +37,10 @@ public class ChickenSystem extends IteratingSystem {
            stateComponent.set(StateComponent.STATE_JUMPING);
            body.applyLinearImpulse(0,60, body.getPosition().x, body.getPosition().y, true);
         }
+
+        if(bodyComponent.body.getLinearVelocity().y == 0)
+            stateComponent.set(StateComponent.STATE_WALKING);
+
         if(bodyComponent.body.getLinearVelocity().y < 0) {
             stateComponent.set(StateComponent.STATE_FALLING);
         }
@@ -46,12 +50,12 @@ public class ChickenSystem extends IteratingSystem {
             powerUp.powerUp.act(entity);
             powerUpUsed = true;
         }
-        if(powerUp.duration < 0) {
+        if(powerUp.duration < 0 && powerUpUsed) {
             powerUp.powerUp.reset(entity);
-            System.out.println("termina powerup");
-            //powerUp.powerUp = null;
+            powerUp.powerUp = null;
             powerUpUsed = false;
         }
+        System.out.println(stateComponent.get() + " " + bodyComponent.body.getLinearVelocity().y);
 
 
 

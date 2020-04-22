@@ -6,6 +6,7 @@ import com.badlogic.ashley.core.Family;
 import com.badlogic.ashley.core.PooledEngine;
 import com.badlogic.ashley.systems.IteratingSystem;
 import com.badlogic.gdx.Gdx;
+import com.badlogic.gdx.audio.Music;
 import com.badlogic.gdx.graphics.Color;
 import com.badlogic.gdx.graphics.Pixmap;
 import com.badlogic.gdx.graphics.Texture;
@@ -50,8 +51,8 @@ public class RandomLevelSystem extends IteratingSystem {
         accumulatedTime+=deltaTime;
         if(accumulatedTime>2){
             accumulatedTime = 0;
-
-            obstaclesFactory.createSpeedPowerUp(Mappers.TRANSFORM.get(player).position.x+20, 3);
+           // obstaclesFactory.createPlatform(Mappers.TRANSFORM.get(player).position.x+20, 1, 1 );
+            //obstaclesFactory.createSpeedPowerUp(Mappers.TRANSFORM.get(player).position.x+20, 3);
            // server.addObstacle(deltaTime, "platform");
            // obstaclesFactory.createSpikes(playerPosition+25, 1);
             //server.addObstacle(deltaTime, "spikes");
@@ -80,7 +81,7 @@ public class RandomLevelSystem extends IteratingSystem {
             this.engine = engine;
             this.world = world;
         }
-        private void createPlatform(float x, int length, int height){
+        private void createPlatform(float x, float y){
             Entity entity = engine.createEntity();
             BodyComponent body = engine.createComponent(BodyComponent.class);
             CollisionComponent collision = engine.createComponent(CollisionComponent.class);
@@ -88,11 +89,10 @@ public class RandomLevelSystem extends IteratingSystem {
             ObstacleComponent obstacle = engine.createComponent(ObstacleComponent.class);
             TransformComponent transform = engine.createComponent(TransformComponent.class);
             CleanUpComponent cleanUp = engine.createComponent(CleanUpComponent.class);
-            body.body = createBox(x,1,length,height,true);
+            body.body = createBox(x,1,1,1,true);
             body.body.setUserData(entity);
-            //texture.region = createTexture(Color.GREEN, false, 32*length, 32*height);
             texture.region = new TextureRegion(new Texture(new Pixmap(Gdx.files.internal(Constants.PLATFORM_PATH))));
-            transform.scale.set(0.5f, 0.5f);
+            transform.scale.set(0.45f, 0.45f);
             obstacle.type = ObstacleComponent.BOX;
             transform.position.set(x, 1, 0);
             entity.add(body);
