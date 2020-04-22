@@ -96,7 +96,6 @@ public class MainGame extends Game {
 		manager.load(Constants.MUSIC_GAME_PATH, Music.class);
 		manager.load(Constants.MUSIC_MENU_PATH, Music.class);
 
-
 		manager.finishLoading();
 
 	}

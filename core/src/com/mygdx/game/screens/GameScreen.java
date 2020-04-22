@@ -64,9 +64,9 @@ public class GameScreen extends BaseScreen implements Menu {
 
     private PauseMenu pauseMenu;
     private boolean paused;
-    private Texture pauseTexture = new Texture(Constants.EXIT_MENU_PATH);
-    private int pauseTextureX = Gdx.graphics.getWidth() - pauseTexture.getWidth();
-    private int pauseTextureY = Gdx.graphics.getHeight() - pauseTexture.getHeight();
+    private Texture pauseTexture;
+    private int pauseTextureX;
+    private int pauseTextureY;
     private RenderingSystem renderingSystem;
 
     private Server server;
@@ -81,6 +81,9 @@ public class GameScreen extends BaseScreen implements Menu {
         this.game = game;
         this.paused = false;
         this.server = Server.getInstance();
+        pauseTexture = game.getAssetManager().get(Constants.EXIT_MENU_PATH);
+        pauseTextureX = Gdx.graphics.getWidth() - pauseTexture.getWidth();
+        pauseTextureY = Gdx.graphics.getHeight() - pauseTexture.getHeight();
     }
 
     @Override
