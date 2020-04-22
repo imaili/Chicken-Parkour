@@ -87,13 +87,17 @@ public class TextButtonFactory implements ButtonFactory {
     }
 
     private static Skin createBasicSkin() {
+        return createBasicSkin(Gdx.graphics.getWidth() / 4, Gdx.graphics.getHeight() / 10);
+    }
+
+    private static Skin createBasicSkin(int width, int height) {
         // Create a font
         BitmapFont font = new BitmapFont();
         Skin skin = new Skin();
         skin.add("default", font);
 
         // Create a texture
-        Pixmap pixmap = new Pixmap(Gdx.graphics.getWidth() / 4, Gdx.graphics.getHeight() / 10, Pixmap.Format.RGB888);
+        Pixmap pixmap = new Pixmap(width, height, Pixmap.Format.RGB888);
         pixmap.setColor(Color.WHITE);
         pixmap.fill();
         skin.add("background", new Texture(pixmap));
