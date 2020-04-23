@@ -70,16 +70,19 @@ public class GameOverMenu extends PauseMenu {
     }
 
     public void goToGameScreen() {
-        /*stopMusic();
-        MainGame main = MainGame.getSingleton();
-        GameScreen gameScreen = new GameScreen(main);
-        main.setGame(gameScreen);
-        gameScreen.startMusic();
-        gameScreen.setMultiPlayer(isMultiPlayer);
-        //gameScreen.setJoinedMultiplayer(false);
-        goTo(gameScreen);*/
-
-        goTo(((GameScreen) previousMenu).getPreviousMenu());
+        if (!isMultiPlayer) {
+            stopMusic();
+            MainGame main = MainGame.getSingleton();
+            GameScreen gameScreen = new GameScreen(main);
+            main.setGame(gameScreen);
+            gameScreen.startMusic();
+            gameScreen.setMultiPlayer(false);
+            gameScreen.setJoinedMultiplayer(false);
+            gameScreen.setPreviousMenu(((GameScreen) previousMenu).getPreviousMenu());
+            goTo(gameScreen);
+        } else {
+            goTo(((GameScreen) previousMenu).getPreviousMenu());
+        }
     }
 
     @Override
