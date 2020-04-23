@@ -70,7 +70,7 @@ public class GameOverMenu extends PauseMenu {
     }
 
     public void goToGameScreen() {
-        if (!isMultiPlayer) {
+        if (!((GameScreen) previousMenu).isMultiPlayer()) {
             stopMusic();
             MainGame main = MainGame.getSingleton();
             GameScreen gameScreen = new GameScreen(main);
