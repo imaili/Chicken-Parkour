@@ -113,7 +113,12 @@ public class MultiPlayerJoinMenu extends MenuScreen {
                             goToGameScreen.updateText("Start");
                             goToGameScreen.enable();
                         } else if (type.equals("start_game")) {
-                            goToGameScreen();
+                            Gdx.app.postRunnable(new Runnable() {
+                                @Override
+                                public void run() {
+                                    goToGameScreen();
+                                }
+                            });
                         }
 
                         server.removeListener("join_game", this);

@@ -48,6 +48,7 @@ public class RandomLevelSystem extends IteratingSystem {
                         String entity = data.getString("entity");
 
                         renderQueue.add(new QueuedEntity(offset, entity));
+                        System.out.println(renderQueue.size());
                     }
 
                 } catch (Exception e) {
@@ -67,6 +68,7 @@ public class RandomLevelSystem extends IteratingSystem {
                         joined = !data.getBoolean("host");
                         startTime = new Date().getTime();
                         System.out.println(joined);
+                        server.removeListener("start_game",this);
                     }
                 } catch (Exception e) {
                     System.out.println(e);
@@ -103,7 +105,7 @@ public class RandomLevelSystem extends IteratingSystem {
                 Iterator<QueuedEntity> i = renderQueue.iterator();
                 while (i.hasNext()) {
                     QueuedEntity qe = i.next(); // must be called before you can call i.remove()
-                    if (qe.offset <= offset + deltaTime * 1000) {
+                    if (qe.offset <= offset) {
                         switch (qe.entity) {
                             case "speed_power_up":
                                 entities.add(SpeedPowerUpFactory.create(Mappers.TRANSFORM.get(player).position.x + 20, 3, engine));
