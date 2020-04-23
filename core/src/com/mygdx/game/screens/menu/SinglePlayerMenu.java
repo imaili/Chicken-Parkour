@@ -77,35 +77,11 @@ public class SinglePlayerMenu extends MenuScreen {
         return list;
     }
 
-    private void updateGameId(String gameId) {
-        this.gameId.setText("GameID: " + gameId);
-    }
-
 
     public SinglePlayerMenu(Menu previousMenu) {
         super(previousMenu);
         backGroundTexture = BACK_GROUND_TEXTURE_EMPTY;
         server = Server.getInstance();
-        String[] data = server.newGame(new Emitter.Listener() {
-            @Override
-            public void call(Object... args) {
-
-            try {
-                    JSONObject message = (JSONObject) args[0];
-                String type = message.getString("type");
-
-                System.out.println(message);
-
-                    JSONObject player = message.getJSONObject("data").getJSONObject("player");
-                    players.add(player);
-                    table.add(String.valueOf(players.size())).padRight(50);
-                    table.add(player.getString("name"));
-                } catch (Exception e) {
-                System.out.println(e);
-            }}
-    });
-
-    updateGameId(data[1]);
     }
 
 
@@ -119,7 +95,9 @@ public class SinglePlayerMenu extends MenuScreen {
 
     public void goToGameScreen() {
                         stopMusic();
-        GameScreen gameScreen = new GameScreen(MainGame.getSingleton());
+        MainGame main = MainGame.getSingleton();
+        GameScreen gameScreen = new GameScreen(main);
+        main.setGame(gameScreen);
         gameScreen.startMusic();
         gameScreen.setMultiPlayer(false);
         goTo(gameScreen);

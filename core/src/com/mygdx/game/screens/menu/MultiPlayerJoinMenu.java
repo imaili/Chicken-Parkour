@@ -43,7 +43,7 @@ public class MultiPlayerJoinMenu extends MenuScreen {
         float buttonHeight = Gdx.graphics.getHeight() / 10;
         List<MenuButton> list = new LinkedList<>();
         MenuButton goBack = IMAGE_BUTTON_FACTORY.createGoBackButton();
-        goToGameScreen = DEFAULT_TEXT_BUTTON_FACTORY.createGoToButton("JOIN", new Vector2(buttonX, Gdx.graphics.getHeight()* (float)0.1 - buttonHeight/2), GameScreen.class);
+        goToGameScreen = DEFAULT_TEXT_BUTTON_FACTORY.createGoToButton("Join game", new Vector2(buttonX, Gdx.graphics.getHeight()* (float)0.1 - buttonHeight/2), GameScreen.class);
         Collections.addAll(list, goBack, goToGameScreen);
         return list;
     }
@@ -84,7 +84,10 @@ public class MultiPlayerJoinMenu extends MenuScreen {
 
     public void goToGameScreen() {
         stopMusic();
-        GameScreen gameScreen = new GameScreen(MainGame.getSingleton());
+        MainGame main = MainGame.getSingleton();
+        GameScreen gameScreen = new GameScreen(main);
+        main.setGame(gameScreen);
+        gameScreen.setMultiPlayer(true);
         gameScreen.startMusic();
         goTo(gameScreen);
     }
@@ -105,6 +108,7 @@ public class MultiPlayerJoinMenu extends MenuScreen {
                         JSONObject server_message = (JSONObject) args[0];
                         String type = server_message.getString("type");
                         if (type.equals("join_game")) {
+                            //this means there was an error joining the game, rest the menu
                             System.out.println(server_message.getJSONObject("data").getString("message"));
                             goToGameScreen.updateText("Start");
                             goToGameScreen.enable();

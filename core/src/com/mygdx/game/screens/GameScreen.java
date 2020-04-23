@@ -4,6 +4,7 @@ import com.badlogic.ashley.core.Entity;
 import com.badlogic.ashley.core.PooledEngine;
 import com.badlogic.gdx.Gdx;
 import com.badlogic.gdx.audio.Music;
+import com.badlogic.gdx.graphics.Color;
 import com.badlogic.gdx.graphics.GL20;
 import com.badlogic.gdx.graphics.OrthographicCamera;
 import com.badlogic.gdx.graphics.Pixmap;
@@ -142,7 +143,7 @@ public class GameScreen extends BaseScreen implements Menu {
             spriteBatch.draw(pauseTexture, pauseTextureX, pauseTextureY);
             spriteBatch.end();
 
-            server.updatePlayerLocation(Mappers.BODY.get(player).body.getPosition().x, Mappers.BODY.get(player).body.getPosition().y);
+            //server.updatePlayerLocation(Mappers.BODY.get(player).body.getPosition().x, Mappers.BODY.get(player).body.getPosition().y);
 
             if (Mappers.STATE.get(player).get() == StateComponent.STATE_HIT) {
                 //game.setScreen(new GameOverScreen(game));
@@ -190,6 +191,72 @@ public class GameScreen extends BaseScreen implements Menu {
         MUSIC.stop();
     }
 
+    public Body createTriangle(float x, float y){
+        BodyDef bodyDef = new BodyDef();
+        bodyDef.position.x = x;
+        bodyDef.position.y = y;
+        bodyDef.fixedRotation = true;
+        bodyDef.type = BodyDef.BodyType.StaticBody;
+        bodyDef.gravityScale = 0.0f;
+
+        Body body = world.createBody(bodyDef);
+        //create the body to attach said definition
+        Vector2[] vertices = {new Vector2(-0.4f, -0.4f), new Vector2(0.4f, -0.4f), new Vector2(0,0.4f)};
+        PolygonShape poly = new PolygonShape();
+        poly.set(vertices);
+
+        FixtureDef fixtureDef = new FixtureDef();
+        fixtureDef.shape = poly;
+        fixtureDef.friction = 0;
+        fixtureDef.isSensor = true;
+
+        body.createFixture(fixtureDef);
+        poly.dispose();
+        return body;
+    }
+
+    public TextureRegion createTexture(Color color, boolean circle, int w, int h){
+        Pixmap pmap = new Pixmap(w,h, Pixmap.Format.RGBA8888);
+        pmap.setColor(color);
+        if(circle){
+            pmap.fillCircle(15,15,15);
+        }else{
+            pmap.fill();
+        }
+        TextureRegion texr = new TextureRegion(new Texture(pmap));
+        pmap.dispose();
+        return texr;
+    }
+
+    public Body createBox(float x, float y, float w, float h, boolean dynamic){
+        // create a definition
+        BodyDef boxBodyDef = new BodyDef();
+        if(dynamic){
+            boxBodyDef.type = BodyDef.BodyType.DynamicBody;
+        }else{
+            boxBodyDef.type = BodyDef.BodyType.StaticBody;
+        }
+
+        boxBodyDef.position.x = x;
+        boxBodyDef.position.y = y;
+        boxBodyDef.fixedRotation = true;
+
+        //create the body to attach said definition
+        Body boxBody = world.createBody(boxBodyDef);
+        PolygonShape poly = new PolygonShape();
+        poly.setAsBox(w/2, h/2);
+
+        FixtureDef fixtureDef = new FixtureDef();
+        fixtureDef.shape = poly;
+        fixtureDef.density = 10f;
+        fixtureDef.friction = 0f;
+        fixtureDef.restitution = 0f;
+
+        boxBody.createFixture(fixtureDef);
+        poly.dispose();
+
+        return boxBody;
+    }
 
     private void createBackground(){
         background = engine.createEntity();
@@ -291,37 +358,6 @@ public class GameScreen extends BaseScreen implements Menu {
         body.body.setUserData(ground);
         ground.add(body);
         return ground;
-    }
-
-    private Body createBox(float x, float y, float w, float h, boolean dynamic){
-        // create a definition
-        BodyDef boxBodyDef = new BodyDef();
-        if(dynamic){
-            boxBodyDef.type = BodyDef.BodyType.DynamicBody;
-        }else{
-            boxBodyDef.type = BodyDef.BodyType.StaticBody;
-        }
-
-        boxBodyDef.position.x = x;
-        boxBodyDef.position.y = y;
-        boxBodyDef.fixedRotation = true;
-
-        //create the body to attach said definition
-        Body boxBody = world.createBody(boxBodyDef);
-        PolygonShape poly = new PolygonShape();
-        poly.setAsBox(w/2, h/2);
-
-        FixtureDef fixtureDef = new FixtureDef();
-        fixtureDef.shape = poly;
-        fixtureDef.density = 10f;
-        fixtureDef.friction = 0f;
-        fixtureDef.restitution = 0f;
-
-        boxBody.createFixture(fixtureDef);
-        poly.dispose();
-
-        return boxBody;
-
     }
 
 

@@ -133,7 +133,10 @@ public class MultiPlayerHostMenu extends MenuScreen {
     public void goToGameScreen() {
         this.server.updatePlayerName(this.nameText.getText());
         stopMusic();
-        GameScreen gameScreen = new GameScreen(MainGame.getSingleton());
+        MainGame main = MainGame.getSingleton();
+        GameScreen gameScreen = new GameScreen(main);
+        main.setGame(gameScreen);
+        gameScreen.setMultiPlayer(true);
         gameScreen.startMusic();
         goTo(gameScreen);
     }

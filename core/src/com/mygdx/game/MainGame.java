@@ -17,11 +17,13 @@ import com.mygdx.game.utils.Constants;
 
 public class MainGame extends Game {
 	private static MainGame singleton;
-
-	private AssetManager manager;
 	public static MainGame getSingleton() {
 		return singleton;
 	}
+
+	private GameScreen game;
+	private AssetManager manager;
+
 
 	private Menu menu;
 	private boolean music;
@@ -54,6 +56,15 @@ public class MainGame extends Game {
 	public void setMenu(Menu menu) {
 		this.menu = menu;
 		setScreen(menu);
+	}
+
+	public void setGame(GameScreen game) {
+		this.game = game;
+	}
+
+
+	public GameScreen getGame() {
+		return this.game;
 	}
 
 	public void setMusic(boolean value) {

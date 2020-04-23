@@ -84,8 +84,9 @@ public class HighscoresMenu extends MenuScreen {
 
                     String y = String.valueOf(i + 1);
                     table.add(y);
-                    table.add(((JSONObject) highscore).getString("name")).center().padLeft(50).padRight(50);
-                    table.add(String.valueOf(((JSONObject) highscore).get("score")));
+                    table.add(highscore.getString("name")).center().padLeft(50).padRight(50);
+                    table.add(String.valueOf(highscore.getInt("score")));
+                    table.row();
 
                 }
             }catch (Exception e){
