@@ -91,10 +91,6 @@ public class GameScreen extends BaseScreen implements Menu {
     public void show() {
         super.show();
 
-        String[] info = this.server.startGame();
-        game_id = info[1];
-        player_id = info[0];
-
         world = new World(new Vector2(0, -13f), true);
         world.setContactListener(new ChickenContactListener());
         spriteBatch = new SpriteBatch();

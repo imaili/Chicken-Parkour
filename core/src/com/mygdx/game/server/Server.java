@@ -190,8 +190,14 @@ public class Server {
         };
     }
 
-    public String[] startGame() {
-        this.send(this.createJSONObject("start_game", null));
+    public String[] startGame(String player_name) {
+        JSONObject data = new JSONObject();
+        try {
+            data.put("player_name", player_name);
+        } catch (Exception e) {
+            System.out.println(e.getMessage());
+        }
+        this.send(this.createJSONObject("start_game", data));
         return new String[]{
                 this.player_id,
                 this.game_id
