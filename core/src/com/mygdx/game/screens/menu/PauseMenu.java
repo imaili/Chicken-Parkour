@@ -81,6 +81,7 @@ public class PauseMenu extends MenuScreen {
     }
 
     public void updateMenu() {
+        removeInputProcessor();
         previousMenu.resume();
         previousMenu.pause();
     }
