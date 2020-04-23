@@ -35,7 +35,7 @@ public class ChickenSystem extends IteratingSystem {
         if((Gdx.input.isTouched() || Gdx.input.justTouched()) && stateComponent.get() == StateComponent.STATE_WALKING){
            Body body = bodyComponent.body;
            stateComponent.set(StateComponent.STATE_JUMPING);
-           body.applyLinearImpulse(0,60, body.getPosition().x, body.getPosition().y, true);
+           body.applyLinearImpulse(0,120, body.getPosition().x, body.getPosition().y, true);
         }
 
         if(bodyComponent.body.getLinearVelocity().y == 0)

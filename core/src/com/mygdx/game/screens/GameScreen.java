@@ -31,6 +31,12 @@ import com.mygdx.game.components.PowerUpComponent;
 import com.mygdx.game.components.StateComponent;
 import com.mygdx.game.components.TextureComponent;
 import com.mygdx.game.components.TransformComponent;
+import com.mygdx.game.factories.BasicBodyFactory;
+import com.mygdx.game.factories.BasicObstaclesFactory;
+import com.mygdx.game.factories.BasicPowerUpFactory;
+import com.mygdx.game.factories.BodyFactory;
+import com.mygdx.game.factories.ObstaclesFactory;
+import com.mygdx.game.factories.PowerUpFactory;
 import com.mygdx.game.systems.CameraSystem;
 import com.mygdx.game.screens.menu.GameOverMenu;
 import com.mygdx.game.screens.menu.PauseMenu;
@@ -69,7 +75,9 @@ public class GameScreen extends BaseScreen implements Menu {
     private int pauseTextureX;
     private int pauseTextureY;
     private RenderingSystem renderingSystem;
-
+    private BodyFactory bodyFactory;
+    private ObstaclesFactory obstaclesFactory;
+    private PowerUpFactory powerUpFactory;
     private Server server;
     private String game_id;
     private String player_id;
@@ -98,12 +106,13 @@ public class GameScreen extends BaseScreen implements Menu {
 
         camera = renderingSystem.getCamera();
         engine = new PooledEngine();
+
         createPlayer();
         engine.addSystem(new PhysicsSystem(world));
         engine.addSystem(new PhysicsDebugSystem(world, camera));
         engine.addSystem(new ChickenSystem());
         engine.addSystem(new CollisionSystem());
-        engine.addSystem(new RandomLevelSystem(world, player));
+        engine.addSystem(new RandomLevelSystem(world, player, engine));
         engine.addSystem(new CleanUpSystem(world, camera));
         engine.addSystem(new AnimationSystem());
         engine.addSystem(renderingSystem);
@@ -321,7 +330,7 @@ public class GameScreen extends BaseScreen implements Menu {
 
        // body.body = createBox(10,10,10,10, true); // used to be (1,1,1,1,true) --> Dinosaur outside of the screen??
 
-        body.body = createBox(2,1,0.5f,2.1f, true);
+        body.body = createBox(2,1,1f,2.1f, true);
         body.body.setLinearVelocity(5,0);
         // set object position (x,y,z) z used to define draw order 0 first drawn
         position.position.set(2,1,0);

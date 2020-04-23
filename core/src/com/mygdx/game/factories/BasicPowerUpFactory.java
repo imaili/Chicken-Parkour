@@ -19,8 +19,17 @@ import com.mygdx.game.utils.Mappers;
 
 import java.util.function.Consumer;
 
-public class SpeedPowerUpFactory {
-    public static Entity create(float x, float _y, PooledEngine engine) {
+public class BasicPowerUpFactory extends PowerUpFactory{
+
+
+    public BasicPowerUpFactory(PooledEngine engine) {
+        super(engine);
+    }
+
+    @Override
+    public Entity createSpeedUp(float x, float _y) {
+        PooledEngine engine = getEngine();
+
         Entity entity = engine.createEntity();
         final PowerUpComponent powerUp = engine.createComponent(PowerUpComponent.class);
         TextureComponent texture = engine.createComponent(TextureComponent.class);
