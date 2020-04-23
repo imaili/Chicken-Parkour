@@ -48,6 +48,7 @@ public class GameOverMenu extends PauseMenu {
 
     public GameOverMenu(GameScreen gameScreen) {
         super(gameScreen, GAME_OVER_BACK_GROUND_TEXTURE);
+        isMultiPlayer = false;
     }
 
     @Override
@@ -69,21 +70,26 @@ public class GameOverMenu extends PauseMenu {
     }
 
     public void goToGameScreen() {
-        stopMusic();
-        GameScreen gameScreen = new GameScreen(MainGame.getSingleton());
+        /*stopMusic();
+        MainGame main = MainGame.getSingleton();
+        GameScreen gameScreen = new GameScreen(main);
+        main.setGame(gameScreen);
         gameScreen.startMusic();
         gameScreen.setMultiPlayer(isMultiPlayer);
-        goTo(gameScreen);
+        //gameScreen.setJoinedMultiplayer(false);
+        goTo(gameScreen);*/
+
+        goTo(((GameScreen) previousMenu).getPreviousMenu());
     }
 
     @Override
     public void startMusic() {
-        previousMenu.startMusic();
+        ((GameScreen) previousMenu).getPreviousMenu().startMusic();
     }
 
     @Override
     public void stopMusic() {
-        previousMenu.stopMusic();
+        ((GameScreen) previousMenu).getPreviousMenu().stopMusic();
     }
 
 }

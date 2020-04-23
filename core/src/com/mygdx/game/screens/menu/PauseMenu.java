@@ -25,7 +25,7 @@ public class PauseMenu extends MenuScreen {
     protected static final int HEIGHT = Gdx.graphics.getHeight()/ 2;
 
     private final Texture pauseTexture;
-    protected final boolean isMultiPlayer;
+    protected boolean isMultiPlayer;
 
     @Override
     protected List<MenuButton> createButtons() {

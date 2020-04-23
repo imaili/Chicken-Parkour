@@ -24,14 +24,14 @@ public class Background {
             texture.draw(batch);
         }
         batch.end();
-        
+
         // update
         for (BackgroundTexture texture : textures) {
             texture.update();
         }
     }
 
-    public static Background createBackground() {
+    public static Background createGameBackground() {
         BackgroundTexture firstLayer = new BackgroundTexture(Constants.GAME_BACKGROUND_1_PATH);
         BackgroundTexture secondLayer = new BackgroundTexture(Constants.GAME_BACKGROUND_2_PATH);
         BackgroundTexture thirdLayer = new BackgroundTexture(Constants.GAME_BACKGROUND_3_PATH);

@@ -140,6 +140,7 @@ public class MultiPlayerHostMenu extends MenuScreen {
         gameScreen.setJoinedMultiplayer(false);
 
         gameScreen.startMusic();
+        gameScreen.setPreviousMenu(this);
         goTo(gameScreen);
     }
 

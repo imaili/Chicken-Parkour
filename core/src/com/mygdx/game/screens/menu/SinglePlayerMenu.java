@@ -92,6 +92,7 @@ public class SinglePlayerMenu extends MenuScreen {
         gameScreen.setMultiPlayer(false);
         gameScreen.setJoinedMultiplayer(false);
 
+        gameScreen.setPreviousMenu(this);
         goTo(gameScreen);
     }
 }

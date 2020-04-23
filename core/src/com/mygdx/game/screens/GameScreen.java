@@ -43,7 +43,6 @@ import com.mygdx.game.systems.PhysicsDebugSystem;
 import com.mygdx.game.systems.PhysicsSystem;
 import com.mygdx.game.systems.RenderingSystem;
 import com.mygdx.game.utils.Background;
-import com.mygdx.game.utils.BackgroundTexture;
 import com.mygdx.game.utils.ChickenContactListener;
 import com.mygdx.game.utils.Constants;
 import com.mygdx.game.utils.Mappers;
@@ -79,7 +78,7 @@ public class GameScreen extends BaseScreen implements Menu {
     private String game_id;
     private String player_id;
 
-    private Background background = Background.createBackground();
+    private Background background = Background.createGameBackground();
 
     protected static final String MUSIC_PATH = Constants.MUSIC_GAME_PATH;
     protected final Music MUSIC = MainGame.getSingleton().getAssetManager().get(MUSIC_PATH, Music.class);
@@ -437,6 +436,16 @@ public class GameScreen extends BaseScreen implements Menu {
 
     public long getStartTime() {
         return  startTime;
+    }
+
+    private Menu previousMenu;
+
+    public void setPreviousMenu(Menu menu) {
+        this.previousMenu = menu;
+    }
+
+    public Menu getPreviousMenu() {
+        return previousMenu;
     }
 
 }
