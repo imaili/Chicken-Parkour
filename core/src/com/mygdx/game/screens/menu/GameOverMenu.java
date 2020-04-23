@@ -76,4 +76,14 @@ public class GameOverMenu extends PauseMenu {
         goTo(gameScreen);
     }
 
+    @Override
+    public void startMusic() {
+        previousMenu.startMusic();
+    }
+
+    @Override
+    public void stopMusic() {
+        previousMenu.stopMusic();
+    }
+
 }
