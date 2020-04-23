@@ -26,7 +26,6 @@ import com.mygdx.game.components.BodyComponent;
 import com.mygdx.game.components.CameraComponent;
 import com.mygdx.game.components.ChickenComponent;
 import com.mygdx.game.components.CollisionComponent;
-import com.mygdx.game.components.PowerUp;
 import com.mygdx.game.components.PowerUpComponent;
 import com.mygdx.game.components.StateComponent;
 import com.mygdx.game.components.TextureComponent;
@@ -43,6 +42,8 @@ import com.mygdx.game.systems.RandomLevelSystem;
 import com.mygdx.game.systems.PhysicsDebugSystem;
 import com.mygdx.game.systems.PhysicsSystem;
 import com.mygdx.game.systems.RenderingSystem;
+import com.mygdx.game.utils.Background;
+import com.mygdx.game.utils.BackgroundTexture;
 import com.mygdx.game.utils.ChickenContactListener;
 import com.mygdx.game.utils.Constants;
 import com.mygdx.game.utils.Mappers;
@@ -60,7 +61,7 @@ public class GameScreen extends BaseScreen implements Menu {
     private Entity ground2;
     private int ground1end = 100;
     private int ground2end = 200;
-    private Entity background;
+    //private Entity background;
     private MainGame game;
 
     private boolean isMultiPlayer = true;
@@ -77,6 +78,8 @@ public class GameScreen extends BaseScreen implements Menu {
     private Server server;
     private String game_id;
     private String player_id;
+
+    private Background background = Background.createBackground();
 
     protected static final String MUSIC_PATH = Constants.MUSIC_GAME_PATH;
     protected final Music MUSIC = MainGame.getSingleton().getAssetManager().get(MUSIC_PATH, Music.class);
@@ -138,6 +141,7 @@ public class GameScreen extends BaseScreen implements Menu {
         if (!paused || isMultiPlayer) {
             Gdx.gl.glClearColor(0, 0, 0, 0);
             Gdx.gl.glClear(GL20.GL_COLOR_BUFFER_BIT);
+            background.render();
             engine.update(delta);
             spriteBatch = new SpriteBatch();
             spriteBatch.begin();
@@ -260,7 +264,7 @@ public class GameScreen extends BaseScreen implements Menu {
     }
 
     private void createBackground(){
-        background = engine.createEntity();
+        Entity background = engine.createEntity();
         TransformComponent position = engine.createComponent(TransformComponent.class);
         TextureComponent textureRegion = engine.createComponent(TextureComponent.class);
 
