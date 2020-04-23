@@ -47,6 +47,8 @@ import com.mygdx.game.utils.ChickenContactListener;
 import com.mygdx.game.utils.Constants;
 import com.mygdx.game.utils.Mappers;
 
+import java.util.Date;
+
 public class GameScreen extends BaseScreen implements Menu {
     private static final String MUSIC_TYPE = "game";
     private World world;
@@ -62,6 +64,8 @@ public class GameScreen extends BaseScreen implements Menu {
     private MainGame game;
 
     private boolean isMultiPlayer = true;
+    private boolean isJoinedMultiplayer = true;
+    private long startTime = 0;
 
     private PauseMenu pauseMenu;
     private boolean paused;
@@ -82,6 +86,7 @@ public class GameScreen extends BaseScreen implements Menu {
         this.game = game;
         this.paused = false;
         this.server = Server.getInstance();
+        this.startTime = new Date().getTime();
         pauseTexture = game.getAssetManager().get(Constants.EXIT_MENU_PATH);
         pauseTextureX = Gdx.graphics.getWidth() - pauseTexture.getWidth();
         pauseTextureY = Gdx.graphics.getHeight() - pauseTexture.getHeight();
@@ -416,6 +421,18 @@ public class GameScreen extends BaseScreen implements Menu {
 
     public void setMultiPlayer(boolean isMultiPlayer) {
         this.isMultiPlayer = isMultiPlayer;
+    }
+
+    public boolean isJoinedMultiplayer() {
+        return isJoinedMultiplayer;
+    }
+
+    public void setJoinedMultiplayer(boolean isJoinedMultiPlayer) {
+        this.isJoinedMultiplayer = isJoinedMultiPlayer;
+    }
+
+    public long getStartTime() {
+        return  startTime;
     }
 
 }
