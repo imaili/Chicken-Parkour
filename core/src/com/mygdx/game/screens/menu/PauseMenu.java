@@ -21,7 +21,7 @@ import java.util.List;
 
 public class PauseMenu extends MenuScreen {
 
-    protected static final TextButtonFactory PAUSE_TEXT_BUTTON_FACTORY = new TextButtonFactory(TextButtonFactory.createBasicSkin(Gdx.graphics.getWidth() / 6, Gdx.graphics.getHeight() / 15));
+    protected static final TextButtonFactory PAUSE_TEXT_BUTTON_FACTORY = new TextButtonFactory(TextButtonFactory.createBasicSkin(Gdx.graphics.getWidth() / 6, Gdx.graphics.getHeight() / 8));
 
     protected static final Texture DEFAULT_PAUSE_TEXTURE = MainGame.getSingleton().getAssetManager().get(Constants.PAUSE_MENU_PATH, Texture.class);
     protected static final int X = Gdx.graphics.getWidth() / 4;
@@ -34,13 +34,13 @@ public class PauseMenu extends MenuScreen {
 
     @Override
     protected List<MenuButton> createButtons() {
-
-        int buttonX = Gdx.graphics.getWidth() / 2 - Gdx.graphics.getWidth() / 12;
-        int buttonHeight = Gdx.graphics.getHeight() / 15;
+        int buttonWidth = Gdx.graphics.getWidth() / 6;
+        int buttonX = Gdx.graphics.getWidth() / 2 - buttonWidth/2;
+        int buttonHeight = Gdx.graphics.getHeight() / 8;
         List<MenuButton> list = new LinkedList<>();
-        MenuButton resume = PAUSE_TEXT_BUTTON_FACTORY.createGoBackButton("Resume", new Vector2(buttonX, Gdx.graphics.getHeight()/2 + buttonHeight/2));
-        MenuButton goToMainMenu = PAUSE_TEXT_BUTTON_FACTORY.createGoToButton("Exit", new Vector2(buttonX, Gdx.graphics.getHeight()/2 - buttonHeight), MainMenu.class);
-        MenuButton musicOption = PAUSE_TEXT_BUTTON_FACTORY.createMusicButton(new Vector2(buttonX, Gdx.graphics.getHeight()/2 - 5*buttonHeight/2));
+        MenuButton resume = PAUSE_TEXT_BUTTON_FACTORY.createGoBackButton("Resume", new Vector2(3*Gdx.graphics.getWidth()/8 - buttonWidth/2 , Gdx.graphics.getHeight()/2 - 3*buttonHeight/2));
+        MenuButton goToMainMenu = PAUSE_TEXT_BUTTON_FACTORY.createGoToButton("Exit", new Vector2(5*Gdx.graphics.getWidth()/8 - buttonWidth/2, Gdx.graphics.getHeight()/2 - 3*buttonHeight/2), MainMenu.class);
+        MenuButton musicOption = PAUSE_TEXT_BUTTON_FACTORY.createMusicButton(new Vector2(buttonX, Gdx.graphics.getHeight()/2 - buttonHeight/4));
 
         Collections.addAll(list,musicOption, resume, goToMainMenu);
         return list;

@@ -87,7 +87,7 @@ public class TextButtonFactory implements ButtonFactory {
     }
 
     private static Skin createBasicSkin() {
-        return createBasicSkin(Gdx.graphics.getWidth() / 4, Gdx.graphics.getHeight() / 10);
+        return createBasicSkin(Gdx.graphics.getWidth() / 4, Gdx.graphics.getHeight() / 8);
     }
 
     public static Skin createBasicSkin(int width, int height) {
