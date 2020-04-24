@@ -31,9 +31,9 @@ public abstract class MenuScreen extends BaseScreen implements Menu {
     private final Stage stage;
     private final List<MenuButton> buttons;
     private final List<Actor> actors;
-    protected static final Texture DEFAULT_BACK_GROUND_TEXTURE = new Texture(BACKGROUND_MENU_PATH);
-    protected static final Texture BACK_GROUND_TEXTURE_EMPTY = new Texture(BACKGROUND_MENU_EMPTY_PATH);
-    protected static final Texture BACK_GROUND_TUTORIAL  = new Texture(BACKGROUND_TUTORIAL_PATH);
+    protected static final Texture DEFAULT_BACK_GROUND_TEXTURE = MainGame.getSingleton().getAssetManager().get(BACKGROUND_MENU_PATH, Texture.class);
+    protected static final Texture BACK_GROUND_TEXTURE_EMPTY = MainGame.getSingleton().getAssetManager().get(BACKGROUND_MENU_EMPTY_PATH, Texture.class);
+    protected static final Texture BACK_GROUND_TUTORIAL  = MainGame.getSingleton().getAssetManager().get(BACKGROUND_TUTORIAL_PATH, Texture.class);
 
     protected static final String MUSIC_PATH = Constants.MUSIC_MENU_PATH;
     protected final Music MUSIC = MainGame.getSingleton().getAssetManager().get(MUSIC_PATH, Music.class);
@@ -140,7 +140,5 @@ public abstract class MenuScreen extends BaseScreen implements Menu {
     @Override
     public void dispose() {
         stage.dispose();
-        if (backGroundTexture != DEFAULT_BACK_GROUND_TEXTURE)
-            backGroundTexture.dispose();
     }
 }
