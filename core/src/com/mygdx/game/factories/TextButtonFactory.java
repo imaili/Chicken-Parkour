@@ -1,4 +1,4 @@
-package com.mygdx.game.screens.menu.button.factory;
+package com.mygdx.game.factories;
 
 import com.badlogic.gdx.Gdx;
 import com.badlogic.gdx.graphics.Color;

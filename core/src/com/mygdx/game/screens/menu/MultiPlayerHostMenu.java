@@ -10,6 +10,9 @@ import com.badlogic.gdx.scenes.scene2d.ui.Table;
 import com.badlogic.gdx.scenes.scene2d.ui.TextField;
 import com.badlogic.gdx.utils.Array;
 import com.mygdx.game.MainGame;
+import com.mygdx.game.factories.LabelFactory;
+import com.mygdx.game.factories.TableFactory;
+import com.mygdx.game.factories.TextFieldFactory;
 import com.mygdx.game.screens.MenuScreen;
 import com.mygdx.game.screens.menu.button.GoToButton;
 import com.mygdx.game.screens.menu.button.MenuButton;
@@ -75,10 +78,6 @@ public class MultiPlayerHostMenu extends MenuScreen {
                 }
             }
         });
-        updateGameId(data[1]);
-    }
-
-    private void updateGameId(String gameId) {
         this.gameId.setText("GameID: " + gameId);
     }
 
@@ -93,23 +92,13 @@ public class MultiPlayerHostMenu extends MenuScreen {
         return list;
     }
 
-    private Label createLabel(Skin skin) {
-        Label title = new Label("GameId", skin);
-        return title;
-    }
-
-    private Table createTable(Skin skin) {
-        return new Table(skin);
-    }
-
 
     @Override
     public List<Actor> getActors() {
         List<Actor> list = new LinkedList<>();
-        Skin skin = MainGame.getSingleton().getAssetManager().get(Constants.TABLE_SKIN);
-        nameText = new TextField("", skin);
-        table = createTable(skin);
-        gameId = this.createLabel(skin);
+        nameText = TextFieldFactory.create("");
+        table = TableFactory.create();
+        gameId = LabelFactory.create("Game ID");
         list.add(table);
 
         table.add(gameId).colspan(2);

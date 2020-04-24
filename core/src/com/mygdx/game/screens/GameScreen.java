@@ -317,9 +317,9 @@ public class GameScreen extends BaseScreen implements Menu {
             renderingSystem.setProcessing(true);
     }
 
-    public int getScore() {
-        // TODO
-        return 40;
+    public float getScore() {
+        int coinCount = 0;
+        return Mappers.BODY.get(player).body.getPosition().x + coinCount * 1000;
     }
 
     public boolean isMultiPlayer() {

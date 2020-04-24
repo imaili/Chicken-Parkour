@@ -3,11 +3,12 @@ package com.mygdx.game.screens.menu;
 import com.badlogic.gdx.Gdx;
 import com.badlogic.gdx.math.Vector2;
 import com.badlogic.gdx.scenes.scene2d.Actor;
-import com.badlogic.gdx.scenes.scene2d.ui.Label;
 import com.badlogic.gdx.scenes.scene2d.ui.Skin;
 import com.badlogic.gdx.scenes.scene2d.ui.Table;
 import com.badlogic.gdx.scenes.scene2d.ui.TextField;
 import com.mygdx.game.MainGame;
+import com.mygdx.game.factories.TableFactory;
+import com.mygdx.game.factories.TextFieldFactory;
 import com.mygdx.game.screens.GameScreen;
 import com.mygdx.game.screens.Menu;
 import com.mygdx.game.screens.MenuScreen;
@@ -43,28 +44,18 @@ public class MultiPlayerJoinMenu extends MenuScreen {
         float buttonHeight = Gdx.graphics.getHeight() / 10;
         List<MenuButton> list = new LinkedList<>();
         MenuButton goBack = IMAGE_BUTTON_FACTORY.createGoBackButton();
-        goToGameScreen = DEFAULT_TEXT_BUTTON_FACTORY.createGoToButton("Join game", new Vector2(buttonX, Gdx.graphics.getHeight()* (float)0.1 - buttonHeight/2), GameScreen.class);
+        goToGameScreen = DEFAULT_TEXT_BUTTON_FACTORY.createGoToButton("Join game", new Vector2(buttonX, Gdx.graphics.getHeight() * (float) 0.1 - buttonHeight / 2), GameScreen.class);
         Collections.addAll(list, goBack, goToGameScreen);
         return list;
-    }
-
-    private Label createLabel(Skin skin) {
-        Label title = new Label("GameId", skin);
-        return title;
-    }
-
-    private Table createTable(Skin skin) {
-        return new Table(skin);
     }
 
 
     @Override
     public List<Actor> getActors() {
         List<Actor> list = new LinkedList<>();
-        Skin skin = MainGame.getSingleton().getAssetManager().get(Constants.TABLE_SKIN);
-        playerName = new TextField("", skin);
-        gameId = new TextField("", skin);
-        table = createTable(skin);
+        playerName = TextFieldFactory.create("");
+        gameId = TextFieldFactory.create("");
+        table = TableFactory.create();
         list.add(table);
 
         table.add("Player name");
@@ -97,7 +88,7 @@ public class MultiPlayerJoinMenu extends MenuScreen {
 
     @Override
     public void goBack() {
-            goTo(previousMenu);
+        goTo(previousMenu);
         server.leaveGame();
     }
 
@@ -127,8 +118,7 @@ public class MultiPlayerJoinMenu extends MenuScreen {
                         server.removeListener("join_game", this);
                         server.removeListener("start_game", this);
 
-                    }
-                    catch (Exception e){
+                    } catch (Exception e) {
                         System.out.println(e);
                     }
                 }
