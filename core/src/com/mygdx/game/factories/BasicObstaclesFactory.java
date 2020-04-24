@@ -7,7 +7,6 @@ import com.badlogic.gdx.Gdx;
 import com.badlogic.gdx.graphics.Pixmap;
 import com.badlogic.gdx.graphics.Texture;
 import com.badlogic.gdx.graphics.g2d.TextureRegion;
-import com.mygdx.game.MainGame;
 import com.mygdx.game.components.BodyComponent;
 import com.mygdx.game.components.CleanUpComponent;
 import com.mygdx.game.components.CollisionComponent;
@@ -25,7 +24,7 @@ public class BasicObstaclesFactory extends ObstaclesFactory {
     }
 
     @Override
-    public Entity createPlatform(float x, float y) {
+    public void createPlatform(float x, float y) {
         PooledEngine engine = getEngine();
         Entity entity = engine.createEntity();
         BodyComponent body = engine.createComponent(BodyComponent.class);
@@ -47,11 +46,10 @@ public class BasicObstaclesFactory extends ObstaclesFactory {
         entity.add(transform);
         entity.add(cleanUp);
         engine.addEntity(entity);
-        return entity;
     }
 
     @Override
-    public Entity createSpike(float x, float y) {
+    public void createSpike(float x, float y) {
         PooledEngine engine = getEngine();
         Entity entity = engine.createEntity();
         BodyComponent body = engine.createComponent(BodyComponent.class);
@@ -75,8 +73,8 @@ public class BasicObstaclesFactory extends ObstaclesFactory {
         entity.add(obstacle);
         entity.add(transform);
         entity.add(cleanUp);
-        return entity;
 
+        engine.addEntity(entity);
 
     }
 

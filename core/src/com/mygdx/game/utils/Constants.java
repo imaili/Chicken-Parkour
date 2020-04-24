@@ -2,11 +2,9 @@ package com.mygdx.game.utils;
 
 import com.badlogic.gdx.graphics.Texture;
 import com.badlogic.gdx.math.Vector2;
-//import com.sun.xml.internal.bind.v2.TODO;
 
 public class Constants {
 
-    public static final String GAME_NAME = "Dinosaur Run!";
 
     public static final int APP_WIDTH = 800;
     public static final int APP_HEIGHT = 480;
@@ -193,6 +191,8 @@ public class Constants {
 
     public static final String TABLE_SKIN_ATLAS = "table-skin/uiskin.atlas";
     public static final String TABLE_SKIN = "table-skin/uiskin.json";
+
+    public static final String SPEED_UP_PATH = "PowerUps/PowerUp_Bone.png";
 
 
     //public static final String = "key" running (1)

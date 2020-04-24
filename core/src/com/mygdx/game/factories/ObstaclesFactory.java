@@ -19,25 +19,21 @@ public abstract class ObstaclesFactory {
         this.bodyFactory = bodyFactory;
     }
 
-    public abstract Entity createPlatform(float x, float y);
-    public abstract Entity createSpike(float x, float y);
+    public abstract void createPlatform(float x, float y);
+    public abstract void createSpike(float x, float y);
 
-    public List<Entity> createSpikes(float x, float y, int length){
-        List<Entity> list = new LinkedList<>();
-        for(int i = 0; i<length; i++){
-            list.add(createSpike(x+i, y));
-        }
-        return list;
+    public void createSpikes(float x, float y, int length){
+        for(int i = 0; i<length; i++)
+            createSpike(x+i, y);
     }
 
-    public List<Entity> createPlatform(float x, float y, int width, int height){
+    public void createPlatform(float x, float y, int width, int height){
         List<Entity> list = new LinkedList<>();
 
         for(int i = 0; i<height; i++)
             for(int j = 0; j < width; j++)
-                list.add(createPlatform(x+j, y+i));
+                createPlatform(x+j, y+i);
 
-            return list;
 
     }
 

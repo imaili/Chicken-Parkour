@@ -2,6 +2,7 @@ package com.mygdx.game.factories;
 
 import com.badlogic.ashley.core.Entity;
 import com.badlogic.ashley.core.PooledEngine;
+import com.badlogic.gdx.Gdx;
 import com.badlogic.gdx.graphics.Color;
 import com.badlogic.gdx.graphics.Pixmap;
 import com.badlogic.gdx.graphics.Texture;
@@ -15,6 +16,7 @@ import com.mygdx.game.components.PowerUpComponent;
 import com.mygdx.game.components.StateComponent;
 import com.mygdx.game.components.TextureComponent;
 import com.mygdx.game.components.TransformComponent;
+import com.mygdx.game.utils.Constants;
 import com.mygdx.game.utils.Mappers;
 
 import java.util.function.Consumer;
@@ -22,12 +24,12 @@ import java.util.function.Consumer;
 public class BasicPowerUpFactory extends PowerUpFactory{
 
 
-    public BasicPowerUpFactory(PooledEngine engine) {
-        super(engine);
+    public BasicPowerUpFactory(PooledEngine engine, BodyFactory bodyFactory) {
+        super(engine, bodyFactory);
     }
 
     @Override
-    public Entity createSpeedUp(float x, float _y) {
+    public Entity createSpeedUp(float x, float y) {
         PooledEngine engine = getEngine();
 
         Entity entity = engine.createEntity();
@@ -37,23 +39,10 @@ public class BasicPowerUpFactory extends PowerUpFactory{
         BodyComponent body = engine.createComponent(BodyComponent.class);
         TransformComponent transform = engine.createComponent(TransformComponent.class);
 
-        body.body = MainGame.getSingleton().getGame().createTriangle(x, _y);
+        body.body = getBodyFactory().createTriangle(x, y, true);
         body.body.setUserData(entity);
-        Pixmap pmap = new Pixmap(32,32, Pixmap.Format.RGBA8888);
-        pmap.setColor(Color.GRAY);
-        pmap.fillTriangle(32,0,32,32 ,0,16 );
-        final int width = pmap.getWidth();
-        final int height = pmap.getHeight();
-        Pixmap rotatedPmap = new Pixmap(height, width, pmap.getFormat());
 
-        for (int x2 = 0; x2 < height; x2++) {
-            for (int y = 0; y < width; y++) {
-                rotatedPmap.drawPixel(x2, y, pmap.getPixel(y, x2));
-            }
-        }
-        texture.region = new TextureRegion(new Texture(rotatedPmap));
-        rotatedPmap.dispose();
-        pmap.dispose();
+        texture.region =  new TextureRegion(new Texture(new Pixmap(Gdx.files.internal(Constants.SPEED_UP_PATH))));
         Consumer<Entity> action = new Consumer<Entity>() {
             @Override
             public void accept(Entity entity) {

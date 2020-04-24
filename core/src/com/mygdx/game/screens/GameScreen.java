@@ -53,6 +53,8 @@ import com.mygdx.game.utils.ChickenContactListener;
 import com.mygdx.game.utils.Constants;
 import com.mygdx.game.utils.Mappers;
 
+import java.util.Date;
+
 public class GameScreen extends BaseScreen implements Menu {
     private static final String MUSIC_TYPE = "game";
     private World world;
@@ -68,6 +70,8 @@ public class GameScreen extends BaseScreen implements Menu {
     private MainGame game;
 
     private boolean isMultiPlayer = true;
+    private boolean isJoinedMultiplayer = true;
+    private long startTime = 0;
 
     private PauseMenu pauseMenu;
     private boolean paused;
@@ -82,6 +86,7 @@ public class GameScreen extends BaseScreen implements Menu {
     private String game_id;
     private String player_id;
 
+
     protected static final String MUSIC_PATH = Constants.MUSIC_GAME_PATH;
     protected final Music MUSIC = MainGame.getSingleton().getAssetManager().get(MUSIC_PATH, Music.class);
 
@@ -90,6 +95,7 @@ public class GameScreen extends BaseScreen implements Menu {
         this.game = game;
         this.paused = false;
         this.server = Server.getInstance();
+        this.startTime = new Date().getTime();
         pauseTexture = game.getAssetManager().get(Constants.EXIT_MENU_PATH);
         pauseTextureX = Gdx.graphics.getWidth() - pauseTexture.getWidth();
         pauseTextureY = Gdx.graphics.getHeight() - pauseTexture.getHeight();
@@ -107,12 +113,16 @@ public class GameScreen extends BaseScreen implements Menu {
         camera = renderingSystem.getCamera();
         engine = new PooledEngine();
 
+        bodyFactory = new BasicBodyFactory(world);
+        obstaclesFactory = new BasicObstaclesFactory(engine, bodyFactory);
+        powerUpFactory = new BasicPowerUpFactory(engine, bodyFactory);
+
         createPlayer();
         engine.addSystem(new PhysicsSystem(world));
         engine.addSystem(new PhysicsDebugSystem(world, camera));
         engine.addSystem(new ChickenSystem());
         engine.addSystem(new CollisionSystem());
-        engine.addSystem(new RandomLevelSystem(world, player, engine));
+        engine.addSystem(new RandomLevelSystem(player,obstaclesFactory, powerUpFactory));
         engine.addSystem(new CleanUpSystem(world, camera));
         engine.addSystem(new AnimationSystem());
         engine.addSystem(renderingSystem);
@@ -158,11 +168,11 @@ public class GameScreen extends BaseScreen implements Menu {
             }
             if (Mappers.BODY.get(player).body.getPosition().x > ground1end) {
 
-                Mappers.BODY.get(ground1).body = createBox(ground2end + 50, 0.5f, 100, 0, false);
+                Mappers.BODY.get(ground1).body = bodyFactory.createRectangle(ground2end + 50, 0.5f, 100, 0, false);
                 ground1end += 200;
             } else if (Mappers.BODY.get(player).body.getPosition().x > ground2end) {
 
-                Mappers.BODY.get(ground2).body = createBox(ground1end + 50, 0.5f, 100, 0, false);
+                Mappers.BODY.get(ground2).body = bodyFactory.createRectangle(ground1end + 50, 0.5f, 100, 0, false);
                 ground2end += 200;
             }
 
@@ -196,72 +206,6 @@ public class GameScreen extends BaseScreen implements Menu {
         MUSIC.stop();
     }
 
-    public Body createTriangle(float x, float y){
-        BodyDef bodyDef = new BodyDef();
-        bodyDef.position.x = x;
-        bodyDef.position.y = y;
-        bodyDef.fixedRotation = true;
-        bodyDef.type = BodyDef.BodyType.StaticBody;
-        bodyDef.gravityScale = 0.0f;
-
-        Body body = world.createBody(bodyDef);
-        //create the body to attach said definition
-        Vector2[] vertices = {new Vector2(-0.4f, -0.4f), new Vector2(0.4f, -0.4f), new Vector2(0,0.4f)};
-        PolygonShape poly = new PolygonShape();
-        poly.set(vertices);
-
-        FixtureDef fixtureDef = new FixtureDef();
-        fixtureDef.shape = poly;
-        fixtureDef.friction = 0;
-        fixtureDef.isSensor = true;
-
-        body.createFixture(fixtureDef);
-        poly.dispose();
-        return body;
-    }
-
-    public TextureRegion createTexture(Color color, boolean circle, int w, int h){
-        Pixmap pmap = new Pixmap(w,h, Pixmap.Format.RGBA8888);
-        pmap.setColor(color);
-        if(circle){
-            pmap.fillCircle(15,15,15);
-        }else{
-            pmap.fill();
-        }
-        TextureRegion texr = new TextureRegion(new Texture(pmap));
-        pmap.dispose();
-        return texr;
-    }
-
-    public Body createBox(float x, float y, float w, float h, boolean dynamic){
-        // create a definition
-        BodyDef boxBodyDef = new BodyDef();
-        if(dynamic){
-            boxBodyDef.type = BodyDef.BodyType.DynamicBody;
-        }else{
-            boxBodyDef.type = BodyDef.BodyType.StaticBody;
-        }
-
-        boxBodyDef.position.x = x;
-        boxBodyDef.position.y = y;
-        boxBodyDef.fixedRotation = true;
-
-        //create the body to attach said definition
-        Body boxBody = world.createBody(boxBodyDef);
-        PolygonShape poly = new PolygonShape();
-        poly.setAsBox(w/2, h/2);
-
-        FixtureDef fixtureDef = new FixtureDef();
-        fixtureDef.shape = poly;
-        fixtureDef.density = 10f;
-        fixtureDef.friction = 0f;
-        fixtureDef.restitution = 0f;
-
-        boxBody.createFixture(fixtureDef);
-        poly.dispose();
-
-        return boxBody;
-    }
 
     private void createBackground(){
         background = engine.createEntity();
@@ -307,8 +251,8 @@ public class GameScreen extends BaseScreen implements Menu {
         CollisionComponent collision = engine.createComponent(CollisionComponent.class);
         AnimationComponent animation = engine.createComponent(AnimationComponent.class);
         PowerUpComponent powerUp = engine.createComponent(PowerUpComponent.class);
-        // set the components data
 
+        // set the components data
         texture.region = new TextureRegion((Texture)game.getAssetManager().get(Constants.WALK_1_PATH));
 
         TextureAtlas atlas = new TextureAtlas(Constants.WALK_ATLAS_PATH);
@@ -330,11 +274,11 @@ public class GameScreen extends BaseScreen implements Menu {
 
        // body.body = createBox(10,10,10,10, true); // used to be (1,1,1,1,true) --> Dinosaur outside of the screen??
 
-        body.body = createBox(2,1,1f,2.1f, true);
+        body.body = bodyFactory.createRectangle(2,1,1f,2.1f, true);
         body.body.setLinearVelocity(5,0);
         // set object position (x,y,z) z used to define draw order 0 first drawn
         position.position.set(2,1,0);
-        position.scale.set(0.2f,0.2f);     // this line resizes the Dinosaur... but brings some more wrong behaviour..
+        position.scale.set(0.2f,0.2f);
 
         state.set(StateComponent.STATE_WALKING);
 
@@ -359,7 +303,7 @@ public class GameScreen extends BaseScreen implements Menu {
     private Entity createGround(int x){
         Entity ground = engine.createEntity();
         BodyComponent body = engine.createComponent(BodyComponent.class);
-        body.body = createBox(x,0.5f,100,0,false);
+        body.body = bodyFactory.createRectangle(x,0.5f,100,0,false);
         body.body.setUserData(ground);
         ground.add(body);
         return ground;
@@ -425,6 +369,18 @@ public class GameScreen extends BaseScreen implements Menu {
 
     public void setMultiPlayer(boolean isMultiPlayer) {
         this.isMultiPlayer = isMultiPlayer;
+    }
+
+    public boolean isJoinedMultiplayer() {
+        return isJoinedMultiplayer;
+    }
+
+    public void setJoinedMultiplayer(boolean isJoinedMultiPlayer) {
+        this.isJoinedMultiplayer = isJoinedMultiPlayer;
+    }
+
+    public long getStartTime() {
+        return  startTime;
     }
 
 }

@@ -6,9 +6,11 @@ import com.badlogic.ashley.core.PooledEngine;
 public abstract class PowerUpFactory {
 
     private PooledEngine engine;
+    private BodyFactory bodyFactory;
 
-    public PowerUpFactory(PooledEngine engine) {
+    public PowerUpFactory(PooledEngine engine, BodyFactory bodyFactory) {
         this.engine = engine;
+        this.bodyFactory = bodyFactory;
     }
 
     public abstract Entity createSpeedUp(float x, float y);
@@ -16,5 +18,9 @@ public abstract class PowerUpFactory {
 
     protected PooledEngine getEngine() {
         return engine;
+    }
+
+    protected BodyFactory getBodyFactory() {
+        return bodyFactory;
     }
 }
