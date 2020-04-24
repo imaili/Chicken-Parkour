@@ -1,75 +1,75 @@
 Walk.png
-size: 1800, 1350
+size: 1829, 866
 format: RGBA8888
 filter: Linear,Linear
 repeat: none
 Walk (1)
   rotate: false
-  xy: 0, 0
-  size: 450, 450
-  orig: 450, 450
+  xy: 1, 1
+  size: 377, 392
+  orig: 377, 392
   offset: 0, 0
   index: -1
 Walk (2)
   rotate: false
-  xy: 450, 0
-  size: 450, 450
-  orig: 450, 450
+  xy: 1120, 1
+  size: 361, 412
+  orig: 361, 412
   offset: 0, 0
   index: -1
 Walk (3)
   rotate: false
-  xy: 900, 0
-  size: 450, 450
-  orig: 450, 450
+  xy: 725, 425
+  size: 360, 429
+  orig: 360, 429
   offset: 0, 0
   index: -1
 Walk (4)
   rotate: false
-  xy: 1350, 0
-  size: 450, 450
-  orig: 450, 450
+  xy: 1434, 425
+  size: 362, 440
+  orig: 362, 440
   offset: 0, 0
   index: -1
 Walk (5)
   rotate: false
-  xy: 0, 450
-  size: 450, 450
-  orig: 450, 450
+  xy: 364, 425
+  size: 359, 428
+  orig: 359, 428
   offset: 0, 0
   index: -1
 Walk (6)
   rotate: false
-  xy: 450, 450
-  size: 450, 450
-  orig: 450, 450
+  xy: 380, 1
+  size: 375, 402
+  orig: 375, 402
   offset: 0, 0
   index: -1
 Walk (7)
   rotate: false
-  xy: 900, 450
-  size: 450, 450
-  orig: 450, 450
+  xy: 757, 1
+  size: 361, 406
+  orig: 361, 406
   offset: 0, 0
   index: -1
 Walk (8)
   rotate: false
-  xy: 1350, 450
-  size: 450, 450
-  orig: 450, 450
+  xy: 1483, 1
+  size: 345, 422
+  orig: 345, 422
   offset: 0, 0
   index: -1
 Walk (9)
   rotate: false
-  xy: 0, 900
-  size: 450, 450
-  orig: 450, 450
+  xy: 1087, 425
+  size: 345, 434
+  orig: 345, 434
   offset: 0, 0
   index: -1
 Walk (10)
   rotate: false
-  xy: 450, 900
-  size: 450, 450
-  orig: 450, 450
+  xy: 1, 425
+  size: 361, 426
+  orig: 361, 426
   offset: 0, 0
   index: -1

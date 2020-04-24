@@ -55,7 +55,6 @@ public class ChickenSystem extends IteratingSystem {
             powerUp.powerUp = null;
             powerUpUsed = false;
         }
-        //System.out.println(stateComponent.get() + " " + bodyComponent.body.getLinearVelocity().y);
 
 
 

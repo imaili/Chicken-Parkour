@@ -17,7 +17,8 @@ public class PhysicsDebugSystem extends IteratingSystem {
     public PhysicsDebugSystem(World world, OrthographicCamera camera){
         super(Family.all().get());
         debugRenderer = new Box2DDebugRenderer();
-        //debugRenderer.setDrawBodies(false);
+
+        debugRenderer.setDrawBodies(false);
         this.world = world;
         this.camera = camera;
 

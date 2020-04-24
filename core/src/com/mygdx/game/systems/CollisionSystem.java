@@ -4,19 +4,13 @@ import com.badlogic.ashley.core.ComponentMapper;
 import com.badlogic.ashley.core.Entity;
 import com.badlogic.ashley.core.Family;
 import com.badlogic.ashley.systems.IteratingSystem;
-import com.badlogic.gdx.physics.box2d.Body;
 import com.mygdx.game.components.BodyComponent;
 import com.mygdx.game.components.ChickenComponent;
-import com.mygdx.game.components.CoinComponent;
 import com.mygdx.game.components.CollisionComponent;
 import com.mygdx.game.components.ObstacleComponent;
 import com.mygdx.game.components.PowerUpComponent;
 import com.mygdx.game.components.StateComponent;
 import com.mygdx.game.utils.Mappers;
-
-import java.util.Map;
-
-import javax.swing.plaf.nimbus.State;
 
 
 public class CollisionSystem  extends IteratingSystem {
@@ -38,7 +32,6 @@ public class CollisionSystem  extends IteratingSystem {
         Entity collidedEntity = collisionCom.collisionEntity;
         if (collidedEntity != null) {
             ObstacleComponent obstacle = Mappers.OBSTACLE.get(collidedEntity);
-            CoinComponent coin = Mappers.COIN.get(collidedEntity);
             PowerUpComponent powerUp = Mappers.POWERUP.get(collidedEntity);
 
             if (obstacle != null) {
@@ -58,9 +51,6 @@ public class CollisionSystem  extends IteratingSystem {
                         break;
                     default:
                 }
-
-            } else if (coin != null) {
-                //TODO increment coin counter and delete coin entity
 
             } else if (powerUp != null) {
                 PowerUpComponent playerPowerUp = Mappers.POWERUP.get(entity);
@@ -84,9 +74,7 @@ public class CollisionSystem  extends IteratingSystem {
         BodyComponent chickenBody = Mappers.BODY.get(chickenEntity);
         StateComponent state = Mappers.STATE.get(chickenEntity);
         BodyComponent collidedBody = Mappers.BODY.get(collidedEntity);
-        System.out.println(chickenBody.body.getLinearVelocity().x);
         if(chickenBody.body.getLinearVelocity().x < 5) {
-            System.out.println("choca");
             state.set(StateComponent.STATE_HIT);
         }
         else

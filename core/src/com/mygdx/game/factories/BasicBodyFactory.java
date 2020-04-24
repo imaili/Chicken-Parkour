@@ -15,6 +15,7 @@ public class BasicBodyFactory extends BodyFactory{
     }
 
     public Body createRectangle(float x, float y, float width, float height, boolean dynamic) {
+        World world = getWorld();
         BodyDef bodyDef = new BodyDef();
         if(dynamic){
             bodyDef.type = BodyDef.BodyType.DynamicBody;
@@ -48,6 +49,7 @@ public class BasicBodyFactory extends BodyFactory{
 
 
     public Body createTriangle(float x, float y, boolean floating) {
+        World world = getWorld();
         BodyDef bodyDef = new BodyDef();
         bodyDef.position.x = x;
         bodyDef.position.y = y;
@@ -58,7 +60,7 @@ public class BasicBodyFactory extends BodyFactory{
 
         Body body = world.createBody(bodyDef);
         //create the body to attach said definition
-        Vector2[] vertices = {new Vector2(-0.5f, -0.5f), new Vector2(0.5f, -0.5f), new Vector2(0,0.5f)};
+        Vector2[] vertices = {new Vector2(-0.5f, -0.5f), new Vector2(0.5f, -0.5f), new Vector2(0,0.3f)};
         PolygonShape poly = new PolygonShape();
         poly.set(vertices);
 

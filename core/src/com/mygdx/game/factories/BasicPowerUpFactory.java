@@ -11,6 +11,7 @@ import com.badlogic.gdx.graphics.g2d.TextureRegion;
 import com.mygdx.game.MainGame;
 import com.mygdx.game.components.AnimationComponent;
 import com.mygdx.game.components.BodyComponent;
+import com.mygdx.game.components.ChickenComponent;
 import com.mygdx.game.components.CollisionComponent;
 import com.mygdx.game.components.PowerUp;
 import com.mygdx.game.components.PowerUpComponent;
@@ -30,7 +31,7 @@ public class BasicPowerUpFactory extends PowerUpFactory{
     }
 
     @Override
-    public Entity createSpeedUp(float x, float y) {
+    public void createSpeedUp(float x, float y) {
         PooledEngine engine = getEngine();
 
         Entity entity = engine.createEntity();
@@ -66,7 +67,7 @@ public class BasicPowerUpFactory extends PowerUpFactory{
         };
         powerUp.powerUp = new PowerUp(action, reset);
         powerUp.duration = 5;
-        transform.scale.set(0.2f, 0.2f);
+        transform.scale.set(0.1f, 0.1f);
         transform.position.set(x, y, 0);
 
         entity.add(texture);
@@ -74,6 +75,45 @@ public class BasicPowerUpFactory extends PowerUpFactory{
         entity.add(body);
         entity.add(powerUp);
         entity.add(collision);
-        return entity;
+        engine.addEntity(entity);
+
+    }
+
+    public void createLeaf(float x, float y){
+        PooledEngine engine = getEngine();
+
+        Entity entity = engine.createEntity();
+        final PowerUpComponent powerUp = engine.createComponent(PowerUpComponent.class);
+        TextureComponent texture = engine.createComponent(TextureComponent.class);
+        CollisionComponent collision = engine.createComponent(CollisionComponent.class);
+        BodyComponent body = engine.createComponent(BodyComponent.class);
+        TransformComponent transform = engine.createComponent(TransformComponent.class);
+
+        body.body = getBodyFactory().createTriangle(x, y, true);
+        body.body.setUserData(entity);
+
+        texture.region = new TextureRegion((Texture) MainGame.getSingleton().getAssetManager().get(Constants.SPEED_UP_LEAF_PATH));
+
+        Consumer<Entity> action = ent -> {
+            ChickenComponent chickenComponent = Mappers.CHICKEN.get(ent);
+            chickenComponent.leaves++;
+        };
+        Consumer<Entity> reset = (ent) -> {};
+
+        powerUp.powerUp = new PowerUp(action, reset);
+        powerUp.duration = 0.1f;
+        transform.scale.set(0.085f, 0.085f);
+        transform.position.set(x, y, 0);
+
+        entity.add(texture);
+        entity.add(transform);
+        entity.add(body);
+        entity.add(powerUp);
+        entity.add(collision);
+        engine.addEntity(entity);
+
+
+
+
     }
 }

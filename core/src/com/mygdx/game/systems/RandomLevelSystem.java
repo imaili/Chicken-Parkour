@@ -21,6 +21,7 @@ import org.json.JSONObject;
 import java.util.ArrayList;
 import java.util.Date;
 import java.util.Iterator;
+import java.util.Random;
 
 
 import io.socket.emitter.Emitter;
@@ -34,12 +35,19 @@ public class RandomLevelSystem extends IteratingSystem {
     private ArrayList<QueuedEntity> renderQueue = new ArrayList<>();
     private ObstaclesFactory obstaclesFactory;
     private PowerUpFactory powerUpFactory;
+    boolean multiplayer;
+    boolean joined;
+    long startTime;
 
-    public RandomLevelSystem(Entity player, ObstaclesFactory obstaclesFactory, PowerUpFactory powerUpFactory) {
+    public RandomLevelSystem(Entity player, ObstaclesFactory obstaclesFactory, PowerUpFactory powerUpFactory,
+                             boolean multiplayer, boolean joined, long startTime) {
+
         super(Family.all().get());
         this.obstaclesFactory = obstaclesFactory;
         this.powerUpFactory = powerUpFactory;
-
+        this.multiplayer = multiplayer;
+        this.joined = joined;
+        this.startTime = startTime;
         server = Server.getInstance();
         this.player = player;
         server.listenForObstacles(new Emitter.Listener() {
@@ -70,23 +78,13 @@ public class RandomLevelSystem extends IteratingSystem {
     public void update(float deltaTime) {
         super.update(deltaTime);
         accumulatedTime += deltaTime;
-        ArrayList<Entity> entities = new ArrayList<>();
-        ArrayList<String> entityTypes = new ArrayList<>();
-        GameScreen game = MainGame.getSingleton().getGame();
-        boolean multiplayer =game.isMultiPlayer();
-        boolean joined = game.isJoinedMultiplayer();
-        long startTime = game.getStartTime();
+        String generatedObstacle = "";
+
         if (!joined && accumulatedTime > 2) {
             accumulatedTime = 0;
             //generate the to be added entities here...
 
-            ObstaclesGenerator.create(Obstacles.SPEED_UP, this);
-            entityTypes.add(Integer.toString(Obstacles.SPEED_UP));
-            obstaclesFactory.createPlatform(Mappers.TRANSFORM.get(player).position.x+25, 1);
-
-
-//            entities.add(SpikesFactory.create(Mappers.TRANSFORM.get(player).position.x + 25, engine));
-            //      entityTypes.add("spikes");
+            generatedObstacle = ObstaclesGenerator.createRandom(this);
         }
 
         if (multiplayer) {
@@ -106,12 +104,11 @@ public class RandomLevelSystem extends IteratingSystem {
                     }
                 }
             } else {
-                for (String type : entityTypes) {
-                    server.addObstacle(offset, type);
-                }
+                server.addObstacle(offset, generatedObstacle);
+            }
             }
         }
-    }
+
 
     @Override
     public void addedToEngine(Engine engine) {
@@ -131,10 +128,16 @@ public class RandomLevelSystem extends IteratingSystem {
     private static class ObstaclesGenerator {
 
 
-
+        private static String createRandom(RandomLevelSystem system) {
+            int obstacle = (int) (Math.random() * Obstacles.OBSTACLE_NUMBER);
+            create(obstacle, system);
+            return Integer.toString(obstacle);
+        }
 
         private static void create(int obstacle, RandomLevelSystem system) {
             switch (obstacle) {
+                case Obstacles.SINGLE_PLATFORM:
+                    system.obstaclesFactory.createPlatform(Mappers.TRANSFORM.get(system.player).position.x + 20, 2.2f);
                 case Obstacles.DOUBLE_STAIRS:
                     createStairs(2, system);
                     break;
@@ -142,14 +145,16 @@ public class RandomLevelSystem extends IteratingSystem {
                     createStairs(3, system);
                     break;
                 case Obstacles.SINGLE_SPIKE:
-                    system.obstaclesFactory.createSpikes(Mappers.TRANSFORM.get(system.player).position.x + 20, 1, 1);
+                    system.obstaclesFactory.createSpikes(Mappers.TRANSFORM.get(system.player).position.x + 20, 2.2F, 1);
                     break;
                 case Obstacles.DOUBLE_SPIKE:
-                    system.obstaclesFactory.createSpikes(Mappers.TRANSFORM.get(system.player).position.x + 20, 1, 2);
+                    system.obstaclesFactory.createSpikes(Mappers.TRANSFORM.get(system.player).position.x + 20, 2.2f, 2);
                     break;
                 case Obstacles.SPEED_UP:
-                    system.powerUpFactory.createSpeedUp(Mappers.TRANSFORM.get(system.player).position.x + 20, 3);
+                    system.powerUpFactory.createSpeedUp(Mappers.TRANSFORM.get(system.player).position.x + 20, 5f);
                     break;
+                case Obstacles.LEAF:
+                    system.powerUpFactory.createLeaf(Mappers.TRANSFORM.get(system.player).position.x + 20, 5f);
                 default:
             }
         }
@@ -158,10 +163,12 @@ public class RandomLevelSystem extends IteratingSystem {
 
             for (int i = 1; i <= stairs; i++) {
                 TransformComponent playerPosition = Mappers.TRANSFORM.get(system.player);
-                system.obstaclesFactory.createPlatform(playerPosition.position.x + 20 + i * 3, 1, 1, i);
+                system.obstaclesFactory.createPlatform(playerPosition.position.x + 20 + i * 3, 2.2f, 1, i);
             }
 
 
         }
+
+
     }
 }

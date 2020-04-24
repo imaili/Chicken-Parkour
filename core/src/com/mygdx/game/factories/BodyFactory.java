@@ -5,7 +5,7 @@ import com.badlogic.gdx.physics.box2d.World;
 
 public abstract class BodyFactory {
 
-    World world;
+    private World world;
     public BodyFactory(World world) {
 
         this.world = world;

@@ -16,6 +16,8 @@ import com.mygdx.game.components.TextureComponent;
 import com.mygdx.game.components.TransformComponent;
 import com.mygdx.game.utils.Constants;
 
+import sun.applet.Main;
+
 public class BasicObstaclesFactory extends ObstaclesFactory {
 
 
@@ -63,7 +65,7 @@ public class BasicObstaclesFactory extends ObstaclesFactory {
         body.body = getBodyFactory().createTriangle(x, y, false);
         body.body.setUserData(entity);
 
-        texture.region = new TextureRegion(new Texture(new Pixmap(Gdx.files.internal(Constants.SPIKE_PATH))));
+        texture.region = new TextureRegion((Texture) MainGame.getSingleton().getAssetManager().get(Constants.SPIKE_PATH));
         transform.scale.set(0.15f, 0.15f);
 
         obstacle.type = ObstacleComponent.SPIKES;

@@ -124,7 +124,7 @@ public class GameScreen extends BaseScreen implements Menu {
         engine.addSystem(new PhysicsDebugSystem(world, camera));
         engine.addSystem(new ChickenSystem());
         engine.addSystem(new CollisionSystem());
-        engine.addSystem(new RandomLevelSystem(player,obstaclesFactory, powerUpFactory));
+        engine.addSystem(new RandomLevelSystem(player,obstaclesFactory, powerUpFactory, isMultiPlayer, isJoinedMultiplayer, startTime));
         engine.addSystem(new CleanUpSystem(world, camera));
         engine.addSystem(new AnimationSystem());
         engine.addSystem(renderingSystem);
@@ -169,11 +169,11 @@ public class GameScreen extends BaseScreen implements Menu {
             }
             if (Mappers.BODY.get(player).body.getPosition().x > ground1end) {
 
-                Mappers.BODY.get(ground1).body = bodyFactory.createRectangle(ground2end + 50, 0.5f, 100, 0, false);
+                Mappers.BODY.get(ground1).body = bodyFactory.createRectangle(ground2end+50,1,100,1.8f,false);
                 ground1end += 200;
             } else if (Mappers.BODY.get(player).body.getPosition().x > ground2end) {
 
-                Mappers.BODY.get(ground2).body = bodyFactory.createRectangle(ground1end + 50, 0.5f, 100, 0, false);
+                Mappers.BODY.get(ground2).body = bodyFactory.createRectangle(ground1end+50,1,100,1.8f,false);
                 ground2end += 200;
             }
 
@@ -236,7 +236,7 @@ public class GameScreen extends BaseScreen implements Menu {
         ani = new Animation<TextureRegion>(0.1f, atlas.getRegions());
         animation.animationsMap.put(StateComponent.STATE_HIT, ani );
 
-        body.body = bodyFactory.createRectangle(2,1,1f,2.1f, true);
+        body.body = bodyFactory.createRectangle(2,3,1f,2.1f, true);
         body.body.setLinearVelocity(5,0);
         // set object position (x,y,z) z used to define draw order 0 first drawn
         position.position.set(2,1,0);
@@ -260,12 +260,20 @@ public class GameScreen extends BaseScreen implements Menu {
 
 
     private Entity createGround(int x){
-        Entity ground = engine.createEntity();
+        Entity entity = engine.createEntity();
         BodyComponent body = engine.createComponent(BodyComponent.class);
-        body.body = bodyFactory.createRectangle(x,0.5f,100,0,false);
-        body.body.setUserData(ground);
-        ground.add(body);
-        return ground;
+        TextureComponent texture = engine.createComponent(TextureComponent.class);
+        TransformComponent transform = engine.createComponent(TransformComponent.class);
+
+        texture.region = new TextureRegion((Texture) game.getAssetManager().get(Constants.FLOOR_PATH));
+        body.body = bodyFactory.createRectangle(x,1,100,1.8f,false);
+        body.body.setUserData(entity);
+        transform.position.set(x, 1, 0);
+        transform.scale.set(30, 1.8f);
+        entity.add(transform);
+        entity.add(texture);
+        entity.add(body);
+        return entity;
     }
 
 

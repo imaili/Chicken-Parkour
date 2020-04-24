@@ -114,6 +114,7 @@ public class MainGame extends Game {
 
 		manager.load(Constants.SPEED_UP_BONE_PATH, Texture.class);
 		manager.load(Constants.SPEED_UP_LEAF_PATH, Texture.class);
+		manager.load(Constants.FLOOR_PATH, Texture.class);
 		manager.finishLoading();
 
 	}

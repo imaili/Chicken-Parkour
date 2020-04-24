@@ -13,7 +13,8 @@ public abstract class PowerUpFactory {
         this.bodyFactory = bodyFactory;
     }
 
-    public abstract Entity createSpeedUp(float x, float y);
+    public abstract void createSpeedUp(float x, float y);
+    public abstract void createLeaf(float x, float y);
 
 
     protected PooledEngine getEngine() {
