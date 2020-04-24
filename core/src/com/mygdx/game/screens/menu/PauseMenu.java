@@ -7,10 +7,13 @@ import com.badlogic.gdx.graphics.Texture;
 import com.badlogic.gdx.math.Vector2;
 import com.badlogic.gdx.utils.BufferUtils;
 import com.badlogic.gdx.utils.ScreenUtils;
+import com.mygdx.game.MainGame;
 import com.mygdx.game.screens.GameScreen;
 import com.mygdx.game.screens.Menu;
 import com.mygdx.game.screens.MenuScreen;
 import com.mygdx.game.screens.menu.button.MenuButton;
+import com.mygdx.game.screens.menu.button.factory.TextButtonFactory;
+import com.mygdx.game.utils.Constants;
 
 import java.util.Collections;
 import java.util.LinkedList;
@@ -18,7 +21,9 @@ import java.util.List;
 
 public class PauseMenu extends MenuScreen {
 
-    protected static final Texture DEFAULT_PAUSE_TEXTURE = new Texture("pause.png");
+    protected static final TextButtonFactory PAUSE_TEXT_BUTTON_FACTORY = new TextButtonFactory(TextButtonFactory.createBasicSkin(Gdx.graphics.getWidth() / 6, Gdx.graphics.getHeight() / 15));
+
+    protected static final Texture DEFAULT_PAUSE_TEXTURE = MainGame.getSingleton().getAssetManager().get(Constants.PAUSE_MENU_PATH, Texture.class);
     protected static final int X = Gdx.graphics.getWidth() / 4;
     protected static final int Y = Gdx.graphics.getHeight() / 4;
     protected static final int WIDTH = Gdx.graphics.getWidth() / 2;
@@ -30,12 +35,12 @@ public class PauseMenu extends MenuScreen {
     @Override
     protected List<MenuButton> createButtons() {
 
-        int buttonX = Gdx.graphics.getWidth() / 2 - Gdx.graphics.getWidth() / 8;
+        int buttonX = Gdx.graphics.getWidth() / 2 - Gdx.graphics.getWidth() / 12;
         int buttonHeight = Gdx.graphics.getHeight() / 15;
         List<MenuButton> list = new LinkedList<>();
-        MenuButton resume = DEFAULT_TEXT_BUTTON_FACTORY.createGoBackButton("Resume", new Vector2(buttonX, Gdx.graphics.getHeight()/2 - buttonHeight/2));
-        MenuButton goToMainMenu = DEFAULT_TEXT_BUTTON_FACTORY.createGoToButton("Exit", new Vector2(buttonX, Gdx.graphics.getHeight()/2 - 2*buttonHeight), MainMenu.class);
-        MenuButton musicOption = DEFAULT_TEXT_BUTTON_FACTORY.createMusicButton(new Vector2(buttonX, Gdx.graphics.getHeight()/2 - 3*buttonHeight));
+        MenuButton resume = PAUSE_TEXT_BUTTON_FACTORY.createGoBackButton("Resume", new Vector2(buttonX, Gdx.graphics.getHeight()/2 + buttonHeight/2));
+        MenuButton goToMainMenu = PAUSE_TEXT_BUTTON_FACTORY.createGoToButton("Exit", new Vector2(buttonX, Gdx.graphics.getHeight()/2 - buttonHeight), MainMenu.class);
+        MenuButton musicOption = PAUSE_TEXT_BUTTON_FACTORY.createMusicButton(new Vector2(buttonX, Gdx.graphics.getHeight()/2 - 5*buttonHeight/2));
 
         Collections.addAll(list,musicOption, resume, goToMainMenu);
         return list;
