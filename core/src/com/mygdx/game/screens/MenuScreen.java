@@ -3,23 +3,16 @@ package com.mygdx.game.screens;
 import com.badlogic.gdx.Gdx;
 import com.badlogic.gdx.InputMultiplexer;
 import com.badlogic.gdx.audio.Music;
-import com.badlogic.gdx.graphics.Color;
 import com.badlogic.gdx.graphics.GL20;
-import com.badlogic.gdx.graphics.Pixmap;
 import com.badlogic.gdx.graphics.Texture;
-import com.badlogic.gdx.graphics.g2d.BitmapFont;
 import com.badlogic.gdx.scenes.scene2d.Actor;
 import com.badlogic.gdx.scenes.scene2d.Stage;
-import com.badlogic.gdx.scenes.scene2d.ui.Skin;
-import com.badlogic.gdx.scenes.scene2d.ui.Table;
-import com.badlogic.gdx.scenes.scene2d.ui.TextButton;
 import com.mygdx.game.MainGame;
 import com.mygdx.game.screens.menu.button.MenuButton;
-import com.mygdx.game.screens.menu.button.factory.ImageButtonFactory;
-import com.mygdx.game.screens.menu.button.factory.TextButtonFactory;
+import com.mygdx.game.factories.ImageButtonFactory;
+import com.mygdx.game.factories.TextButtonFactory;
 import com.mygdx.game.utils.Constants;
 
-import java.util.ArrayList;
 import java.util.List;
 
 import static com.mygdx.game.utils.Constants.BACKGROUND_MENU_EMPTY_PATH;
@@ -31,9 +24,9 @@ public abstract class MenuScreen extends BaseScreen implements Menu {
     private final Stage stage;
     private final List<MenuButton> buttons;
     private final List<Actor> actors;
-    protected static final Texture DEFAULT_BACK_GROUND_TEXTURE = new Texture(BACKGROUND_MENU_PATH);
-    protected static final Texture BACK_GROUND_TEXTURE_EMPTY = new Texture(BACKGROUND_MENU_EMPTY_PATH);
-    protected static final Texture BACK_GROUND_TUTORIAL  = new Texture(BACKGROUND_TUTORIAL_PATH);
+    protected static final Texture DEFAULT_BACK_GROUND_TEXTURE = MainGame.getSingleton().getAssetManager().get(BACKGROUND_MENU_PATH, Texture.class);
+    protected static final Texture BACK_GROUND_TEXTURE_EMPTY = MainGame.getSingleton().getAssetManager().get(BACKGROUND_MENU_EMPTY_PATH, Texture.class);
+    protected static final Texture BACK_GROUND_TUTORIAL  = MainGame.getSingleton().getAssetManager().get(BACKGROUND_TUTORIAL_PATH, Texture.class);
 
     protected static final String MUSIC_PATH = Constants.MUSIC_MENU_PATH;
     protected final Music MUSIC = MainGame.getSingleton().getAssetManager().get(MUSIC_PATH, Music.class);
@@ -140,7 +133,5 @@ public abstract class MenuScreen extends BaseScreen implements Menu {
     @Override
     public void dispose() {
         stage.dispose();
-        if (backGroundTexture != DEFAULT_BACK_GROUND_TEXTURE)
-            backGroundTexture.dispose();
     }
 }

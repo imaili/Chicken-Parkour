@@ -18,7 +18,7 @@ import java.util.List;
 
 public class GameOverMenu extends PauseMenu {
 
-    protected static final Texture GAME_OVER_BACK_GROUND_TEXTURE = new Texture("background_gameover.png");
+    protected static final Texture GAME_OVER_BACK_GROUND_TEXTURE = MainGame.getSingleton().getAssetManager().get(Constants.BACKGROUND_GAME_OVER_PATH, Texture.class);
 
     @Override
     protected List<MenuButton> createButtons() {

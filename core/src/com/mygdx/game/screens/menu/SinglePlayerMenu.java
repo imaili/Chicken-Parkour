@@ -8,6 +8,8 @@ import com.badlogic.gdx.scenes.scene2d.ui.Skin;
 import com.badlogic.gdx.scenes.scene2d.ui.Table;
 import com.badlogic.gdx.scenes.scene2d.ui.TextField;
 import com.mygdx.game.MainGame;
+import com.mygdx.game.factories.TableFactory;
+import com.mygdx.game.factories.TextFieldFactory;
 import com.mygdx.game.screens.GameScreen;
 import com.mygdx.game.screens.Menu;
 import com.mygdx.game.screens.MenuScreen;
@@ -27,9 +29,7 @@ public class SinglePlayerMenu extends MenuScreen {
 
     Table table;
     Server server;
-    Label gameId;
     TextField nameText;
-    ArrayList<JSONObject> players = new ArrayList<>();
 
     public SinglePlayerMenu(Menu previousMenu) {
         super(previousMenu);
@@ -48,20 +48,11 @@ public class SinglePlayerMenu extends MenuScreen {
         return list;
     }
 
-    private Label createLabel(Skin skin) {
-        Label title = new Label("GameId", skin);
-        return title;
-    }
-
-    private Table createTable(Skin skin) {
-        return new Table(skin);
-    }
-
     public List<Actor> getActors() {
         List<Actor> list = new LinkedList<>();
         Skin skin = MainGame.getSingleton().getAssetManager().get(Constants.TABLE_SKIN);
-        nameText = new TextField("", skin);
-        table = createTable(skin);
+        nameText = TextFieldFactory.create("");
+        table = TableFactory.create();
         list.add(table);
 
         table.add("Player name").colspan(2).padTop(50);

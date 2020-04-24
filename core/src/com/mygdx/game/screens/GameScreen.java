@@ -148,6 +148,14 @@ public class GameScreen extends BaseScreen implements Menu {
         return false;
     }
 
+    private final SpriteBatch buttonBatch = new SpriteBatch();
+
+    private void drawButton() {
+        buttonBatch.begin();
+        buttonBatch.draw(pauseTexture, pauseTextureX, pauseTextureY);
+        buttonBatch.end();
+    }
+
     @Override
     public void render(float delta) {
         if (!paused || isMultiPlayer) {
@@ -155,9 +163,7 @@ public class GameScreen extends BaseScreen implements Menu {
             Gdx.gl.glClear(GL20.GL_COLOR_BUFFER_BIT);
             background.render();
             engine.update(delta);
-            spriteBatch.begin();
-            spriteBatch.draw(pauseTexture, pauseTextureX, pauseTextureY);
-            spriteBatch.end();
+            drawButton();
 
             //server.updatePlayerLocation(Mappers.BODY.get(player).body.getPosition().x, Mappers.BODY.get(player).body.getPosition().y);
 
@@ -325,9 +331,9 @@ public class GameScreen extends BaseScreen implements Menu {
             renderingSystem.setProcessing(true);
     }
 
-    public int getScore() {
-        // TODO
-        return 40;
+    public float getScore() {
+        int coinCount = 0;
+        return Mappers.BODY.get(player).body.getPosition().x + coinCount * 1000;
     }
 
     public boolean isMultiPlayer() {
