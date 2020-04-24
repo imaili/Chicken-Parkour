@@ -8,11 +8,11 @@ import com.badlogic.gdx.math.Vector2;
 import com.badlogic.gdx.utils.BufferUtils;
 import com.badlogic.gdx.utils.ScreenUtils;
 import com.mygdx.game.MainGame;
+import com.mygdx.game.factories.TextButtonFactory;
 import com.mygdx.game.screens.GameScreen;
 import com.mygdx.game.screens.Menu;
 import com.mygdx.game.screens.MenuScreen;
 import com.mygdx.game.screens.menu.button.MenuButton;
-import com.mygdx.game.screens.menu.button.factory.TextButtonFactory;
 import com.mygdx.game.utils.Constants;
 
 import java.util.Collections;
