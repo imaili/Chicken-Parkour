@@ -80,8 +80,9 @@ public class RandomLevelSystem extends IteratingSystem {
             accumulatedTime = 0;
             //generate the to be added entities here...
 
-            ObstaclesGenerator.create(Obstacles.TRIPLE_STAIRS, this);
-            entityTypes.add("speed_power_up");
+            ObstaclesGenerator.create(Obstacles.SPEED_UP, this);
+            entityTypes.add(Integer.toString(Obstacles.SPEED_UP));
+            obstaclesFactory.createPlatform(Mappers.TRANSFORM.get(player).position.x+25, 1);
 
 
 //            entities.add(SpikesFactory.create(Mappers.TRANSFORM.get(player).position.x + 25, engine));
@@ -90,7 +91,8 @@ public class RandomLevelSystem extends IteratingSystem {
 
         if (multiplayer) {
             long offset = new Date().getTime() - startTime;
-            if (joined) { Iterator<QueuedEntity> i = renderQueue.iterator();
+            if (joined) {
+                Iterator<QueuedEntity> i = renderQueue.iterator();
                 while (i.hasNext()) {
                     QueuedEntity qe = i.next(); // must be called before you can call i.remove()
                     if (qe.offset <= offset) {
@@ -135,14 +137,19 @@ public class RandomLevelSystem extends IteratingSystem {
             switch (obstacle) {
                 case Obstacles.DOUBLE_STAIRS:
                     createStairs(2, system);
+                    break;
                 case Obstacles.TRIPLE_STAIRS:
                     createStairs(3, system);
+                    break;
                 case Obstacles.SINGLE_SPIKE:
                     system.obstaclesFactory.createSpikes(Mappers.TRANSFORM.get(system.player).position.x + 20, 1, 1);
+                    break;
                 case Obstacles.DOUBLE_SPIKE:
                     system.obstaclesFactory.createSpikes(Mappers.TRANSFORM.get(system.player).position.x + 20, 1, 2);
+                    break;
                 case Obstacles.SPEED_UP:
                     system.powerUpFactory.createSpeedUp(Mappers.TRANSFORM.get(system.player).position.x + 20, 3);
+                    break;
                 default:
             }
         }

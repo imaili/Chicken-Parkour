@@ -15,6 +15,7 @@ import com.badlogic.gdx.math.MathUtils;
 import com.badlogic.gdx.utils.Array;
 import com.mygdx.game.components.BodyComponent;
 import com.mygdx.game.components.ChickenComponent;
+import com.mygdx.game.components.PowerUpComponent;
 import com.mygdx.game.components.TextureComponent;
 import com.mygdx.game.components.TransformComponent;
 import com.mygdx.game.utils.AssetsManager;
@@ -77,14 +78,16 @@ public class RenderingSystem extends IteratingSystem {
             }
 
             TransformComponent t = transformM.get(entity);
-            ChickenComponent c = Mappers.CHICKEN.get(entity);
+            PowerUpComponent p = Mappers.POWERUP.get(entity);
 
             float width = tex.region.getRegionWidth()*t.scale.x*PIXELS_TO_METRES;
             float height = tex.region.getRegionHeight()*t.scale.y*PIXELS_TO_METRES;
             float originX = width * 0.5f;
             float originY = height * 0.5f;
 
+
             batch.draw(tex.region, t.position.x-originX, t.position.y-originY, width, height);
+
 
         }
 

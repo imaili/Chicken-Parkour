@@ -26,7 +26,6 @@ import com.mygdx.game.components.BodyComponent;
 import com.mygdx.game.components.CameraComponent;
 import com.mygdx.game.components.ChickenComponent;
 import com.mygdx.game.components.CollisionComponent;
-import com.mygdx.game.components.PowerUp;
 import com.mygdx.game.components.PowerUpComponent;
 import com.mygdx.game.components.StateComponent;
 import com.mygdx.game.components.TextureComponent;
@@ -49,6 +48,7 @@ import com.mygdx.game.systems.RandomLevelSystem;
 import com.mygdx.game.systems.PhysicsDebugSystem;
 import com.mygdx.game.systems.PhysicsSystem;
 import com.mygdx.game.systems.RenderingSystem;
+import com.mygdx.game.utils.Background;
 import com.mygdx.game.utils.ChickenContactListener;
 import com.mygdx.game.utils.Constants;
 import com.mygdx.game.utils.Mappers;
@@ -66,7 +66,7 @@ public class GameScreen extends BaseScreen implements Menu {
     private Entity ground2;
     private int ground1end = 100;
     private int ground2end = 200;
-    private Entity background;
+    //private Entity background;
     private MainGame game;
 
     private boolean isMultiPlayer = true;
@@ -86,6 +86,8 @@ public class GameScreen extends BaseScreen implements Menu {
     private String game_id;
     private String player_id;
 
+
+    private Background background = Background.createGameBackground();
 
     protected static final String MUSIC_PATH = Constants.MUSIC_GAME_PATH;
     protected final Music MUSIC = MainGame.getSingleton().getAssetManager().get(MUSIC_PATH, Music.class);
@@ -133,7 +135,6 @@ public class GameScreen extends BaseScreen implements Menu {
         engine.addEntity(ground2);
 
         createCameraEntity();
-       // createBackground();
 
 
     }
@@ -152,8 +153,8 @@ public class GameScreen extends BaseScreen implements Menu {
         if (!paused || isMultiPlayer) {
             Gdx.gl.glClearColor(0, 0, 0, 0);
             Gdx.gl.glClear(GL20.GL_COLOR_BUFFER_BIT);
+            background.render();
             engine.update(delta);
-            spriteBatch = new SpriteBatch();
             spriteBatch.begin();
             spriteBatch.draw(pauseTexture, pauseTextureX, pauseTextureY);
             spriteBatch.end();
@@ -207,38 +208,6 @@ public class GameScreen extends BaseScreen implements Menu {
     }
 
 
-    private void createBackground(){
-        background = engine.createEntity();
-        TransformComponent position = engine.createComponent(TransformComponent.class);
-        TextureComponent textureRegion = engine.createComponent(TextureComponent.class);
-
-        Pixmap pixmapOriginal = new Pixmap(Gdx.files.internal(Constants.GAME_BACKGROUND_5_PATH));
-        Pixmap pixmapScreenSize = new Pixmap(Gdx.graphics.getWidth(), Gdx.graphics.getHeight(), pixmapOriginal.getFormat());
-        pixmapScreenSize.drawPixmap(pixmapOriginal,
-                0, 0, pixmapOriginal.getWidth(), pixmapOriginal.getHeight(),
-                0, 0, pixmapScreenSize.getWidth(), pixmapScreenSize.getHeight()
-        );
-        Texture texture = new Texture(pixmapScreenSize);
-        pixmapOriginal.dispose();
-        pixmapScreenSize.dispose();
-
-        //texture.setWrap(Texture.TextureWrap.Repeat, Texture.TextureWrap.Repeat);
-
-        textureRegion.region = new TextureRegion(texture);
-        position.scale.set(1,1);
-        float x = camera.position.x;
-        float y = camera.position.y;
-        position.position.set(x,y,2);
-
-        background.add(textureRegion);
-        background.add(position);
-
-        engine.addEntity(background);
-
-    }
-
-
-
     private void createPlayer(){
         //create an empty entity
         player = engine.createEntity();
@@ -266,13 +235,6 @@ public class GameScreen extends BaseScreen implements Menu {
         atlas = new TextureAtlas(Constants.DEAD_ATLAS_PATH);
         ani = new Animation<TextureRegion>(0.1f, atlas.getRegions());
         animation.animationsMap.put(StateComponent.STATE_HIT, ani );
-        /*
-        atlas = new TextureAtlas(Constants.SLIDE_ATLAS_PATH);
-        ani = new Animation<TextureRegion>(0.1f, atlas.getRegions());
-        animation.animationsMap.put(StateComponent.STATE_FALLING, ani );*/
-
-
-       // body.body = createBox(10,10,10,10, true); // used to be (1,1,1,1,true) --> Dinosaur outside of the screen??
 
         body.body = bodyFactory.createRectangle(2,1,1f,2.1f, true);
         body.body.setLinearVelocity(5,0);
@@ -293,9 +255,6 @@ public class GameScreen extends BaseScreen implements Menu {
         player.add(collision);
         player.add(powerUp);
         engine.addEntity(player);
-
-
-
 
     }
 
@@ -381,6 +340,16 @@ public class GameScreen extends BaseScreen implements Menu {
 
     public long getStartTime() {
         return  startTime;
+    }
+
+    private Menu previousMenu;
+
+    public void setPreviousMenu(Menu menu) {
+        this.previousMenu = menu;
+    }
+
+    public Menu getPreviousMenu() {
+        return previousMenu;
     }
 
 }

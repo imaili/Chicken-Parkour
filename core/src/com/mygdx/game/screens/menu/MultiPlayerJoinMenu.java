@@ -90,6 +90,8 @@ public class MultiPlayerJoinMenu extends MenuScreen {
         gameScreen.setMultiPlayer(true);
         gameScreen.setJoinedMultiplayer(true);
         gameScreen.startMusic();
+
+        gameScreen.setPreviousMenu(this);
         goTo(gameScreen);
     }
 

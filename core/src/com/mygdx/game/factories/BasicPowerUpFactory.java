@@ -3,6 +3,7 @@ package com.mygdx.game.factories;
 import com.badlogic.ashley.core.Entity;
 import com.badlogic.ashley.core.PooledEngine;
 import com.badlogic.gdx.Gdx;
+import com.badlogic.gdx.assets.AssetManager;
 import com.badlogic.gdx.graphics.Color;
 import com.badlogic.gdx.graphics.Pixmap;
 import com.badlogic.gdx.graphics.Texture;
@@ -42,7 +43,7 @@ public class BasicPowerUpFactory extends PowerUpFactory{
         body.body = getBodyFactory().createTriangle(x, y, true);
         body.body.setUserData(entity);
 
-        texture.region =  new TextureRegion(new Texture(new Pixmap(Gdx.files.internal(Constants.SPEED_UP_PATH))));
+        texture.region =  new TextureRegion((Texture) MainGame.getSingleton().getAssetManager().get(Constants.SPEED_UP_BONE_PATH));
         Consumer<Entity> action = new Consumer<Entity>() {
             @Override
             public void accept(Entity entity) {
@@ -65,6 +66,8 @@ public class BasicPowerUpFactory extends PowerUpFactory{
         };
         powerUp.powerUp = new PowerUp(action, reset);
         powerUp.duration = 5;
+        transform.scale.set(0.2f, 0.2f);
+        transform.position.set(x, y, 0);
 
         entity.add(texture);
         entity.add(transform);

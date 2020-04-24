@@ -33,9 +33,12 @@ public class BasicBodyFactory extends BodyFactory{
         FixtureDef fixtureDef = new FixtureDef();
         fixtureDef.shape = poly;
         fixtureDef.density = 10f;
+        if(!dynamic){
+            fixtureDef.density = 1000000f;
+            System.out.println(fixtureDef.density);
+        }
         fixtureDef.friction = 0f;
         fixtureDef.restitution = 0f;
-
         boxBody.createFixture(fixtureDef);
         poly.dispose();
 

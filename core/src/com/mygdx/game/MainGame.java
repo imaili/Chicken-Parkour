@@ -101,12 +101,19 @@ public class MainGame extends Game {
 		manager.load(Constants.EXIT_MENU_PATH, Texture.class);
 		manager.load(Constants.BACKGROUND_MENU_PATH, Texture.class);
 		manager.load(Constants.BACKGROUND_MENU_EMPTY_PATH, Texture.class);
+		manager.load(Constants.GAME_BACKGROUND_1_PATH, Texture.class);
+		manager.load(Constants.GAME_BACKGROUND_2_PATH, Texture.class);
+		manager.load(Constants.GAME_BACKGROUND_3_PATH, Texture.class);
+		manager.load(Constants.GAME_BACKGROUND_4_PATH, Texture.class);
+		manager.load(Constants.GAME_BACKGROUND_5_PATH, Texture.class);
 		manager.load(Constants.MULTIPLAYER_BUTTON_PATH, Texture.class);
 		manager.load(Constants.SINGLEPLAYER_BUTTON_PATH, Texture.class);
 		manager.load(Constants.WALK_1_PATH, Texture.class);
 		manager.load(Constants.MUSIC_GAME_PATH, Music.class);
 		manager.load(Constants.MUSIC_MENU_PATH, Music.class);
 
+		manager.load(Constants.SPEED_UP_BONE_PATH, Texture.class);
+		manager.load(Constants.SPEED_UP_LEAF_PATH, Texture.class);
 		manager.finishLoading();
 
 	}

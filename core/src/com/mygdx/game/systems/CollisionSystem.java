@@ -46,7 +46,7 @@ public class CollisionSystem  extends IteratingSystem {
                 switch (obstacle.type) {
                     case ObstacleComponent.BOX:
                         //check if chicken is jumping on box, or crashing into it
-                        collisionWithBox(entity);
+                        collisionWithBox(entity, collidedEntity);
 
                         break;
                     case ObstacleComponent.SPIKES:
@@ -79,13 +79,16 @@ public class CollisionSystem  extends IteratingSystem {
 
     }
 
-    private void collisionWithBox(Entity chickenEntity) {
+    private void collisionWithBox(Entity chickenEntity, Entity collidedEntity) {
 
         BodyComponent chickenBody = Mappers.BODY.get(chickenEntity);
         StateComponent state = Mappers.STATE.get(chickenEntity);
-
-        if(chickenBody.body.getLinearVelocity().x < 5)
+        BodyComponent collidedBody = Mappers.BODY.get(collidedEntity);
+        System.out.println(chickenBody.body.getLinearVelocity().x);
+        if(chickenBody.body.getLinearVelocity().x < 5) {
+            System.out.println("choca");
             state.set(StateComponent.STATE_HIT);
+        }
         else
             state.set(StateComponent.STATE_WALKING);
 
