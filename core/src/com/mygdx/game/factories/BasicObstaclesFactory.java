@@ -39,7 +39,7 @@ public class BasicObstaclesFactory extends ObstaclesFactory {
         body.body = getBodyFactory().createRectangle(x,y,1,1,false);
         body.body.setUserData(entity);
         texture.region = new TextureRegion((Texture) MainGame.getSingleton().getAssetManager().get(Constants.PLATFORM_PATH));
-        transform.scale.set(0.45f, 0.45f);
+        transform.scale.set(1.5f, 1.5f);
         obstacle.type = ObstacleComponent.BOX;
         transform.position.set(x, 1, 0);
         entity.add(body);
@@ -66,7 +66,7 @@ public class BasicObstaclesFactory extends ObstaclesFactory {
         body.body.setUserData(entity);
 
         texture.region = new TextureRegion((Texture) MainGame.getSingleton().getAssetManager().get(Constants.SPIKE_PATH));
-        transform.scale.set(0.15f, 0.15f);
+        transform.scale.set(0.4f, 0.4f);
 
         obstacle.type = ObstacleComponent.SPIKES;
 

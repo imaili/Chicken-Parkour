@@ -6,6 +6,7 @@ import com.badlogic.gdx.physics.box2d.BodyDef;
 import com.badlogic.gdx.physics.box2d.FixtureDef;
 import com.badlogic.gdx.physics.box2d.PolygonShape;
 import com.badlogic.gdx.physics.box2d.World;
+import com.mygdx.game.utils.Constants;
 
 public class BasicBodyFactory extends BodyFactory{
 
@@ -29,7 +30,7 @@ public class BasicBodyFactory extends BodyFactory{
         //create the body to attach said definition
         Body boxBody = world.createBody(bodyDef);
         PolygonShape poly = new PolygonShape();
-        poly.setAsBox(width/2, height/2);
+        poly.setAsBox(width*3/2, height*3/2);
 
         FixtureDef fixtureDef = new FixtureDef();
         fixtureDef.shape = poly;
@@ -60,7 +61,7 @@ public class BasicBodyFactory extends BodyFactory{
 
         Body body = world.createBody(bodyDef);
         //create the body to attach said definition
-        Vector2[] vertices = {new Vector2(-0.5f, -0.5f), new Vector2(0.5f, -0.5f), new Vector2(0,0.3f)};
+        Vector2[] vertices = {new Vector2(-1.3f, -1.3f), new Vector2(1.3f, -1.3f), new Vector2(0,0.8f)};
         PolygonShape poly = new PolygonShape();
         poly.set(vertices);
 

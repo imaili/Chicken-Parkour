@@ -80,7 +80,7 @@ public class RandomLevelSystem extends IteratingSystem {
         accumulatedTime += deltaTime;
         String generatedObstacle = "";
 
-        if (!joined && accumulatedTime > 2) {
+        if (!joined && accumulatedTime > 3) {
             accumulatedTime = 0;
             //generate the to be added entities here...
 
@@ -137,7 +137,7 @@ public class RandomLevelSystem extends IteratingSystem {
         private static void create(int obstacle, RandomLevelSystem system) {
             switch (obstacle) {
                 case Obstacles.SINGLE_PLATFORM:
-                    system.obstaclesFactory.createPlatform(Mappers.TRANSFORM.get(system.player).position.x + 20, 2.2f);
+                    system.obstaclesFactory.createPlatform(Mappers.TRANSFORM.get(system.player).position.x + 60, 4.3f);
                 case Obstacles.DOUBLE_STAIRS:
                     createStairs(2, system);
                     break;
@@ -145,16 +145,16 @@ public class RandomLevelSystem extends IteratingSystem {
                     createStairs(3, system);
                     break;
                 case Obstacles.SINGLE_SPIKE:
-                    system.obstaclesFactory.createSpikes(Mappers.TRANSFORM.get(system.player).position.x + 20, 2.2F, 1);
+                    system.obstaclesFactory.createSpikes(Mappers.TRANSFORM.get(system.player).position.x + 60, 3.5f, 1);
                     break;
                 case Obstacles.DOUBLE_SPIKE:
-                    system.obstaclesFactory.createSpikes(Mappers.TRANSFORM.get(system.player).position.x + 20, 2.2f, 2);
+                    system.obstaclesFactory.createSpikes(Mappers.TRANSFORM.get(system.player).position.x + 60, 3.5f, 2);
                     break;
                 case Obstacles.SPEED_UP:
-                    system.powerUpFactory.createSpeedUp(Mappers.TRANSFORM.get(system.player).position.x + 20, 5f);
+                    system.powerUpFactory.createSpeedUp(Mappers.TRANSFORM.get(system.player).position.x + 60, 9);
                     break;
                 case Obstacles.LEAF:
-                    system.powerUpFactory.createLeaf(Mappers.TRANSFORM.get(system.player).position.x + 20, 5f);
+                    system.powerUpFactory.createLeaf(Mappers.TRANSFORM.get(system.player).position.x + 60, 9f);
                 default:
             }
         }
@@ -163,7 +163,7 @@ public class RandomLevelSystem extends IteratingSystem {
 
             for (int i = 1; i <= stairs; i++) {
                 TransformComponent playerPosition = Mappers.TRANSFORM.get(system.player);
-                system.obstaclesFactory.createPlatform(playerPosition.position.x + 20 + i * 3, 2.2f, 1, i);
+                system.obstaclesFactory.createPlatform(playerPosition.position.x + 60 + i * 10, 4.3f, 1, i);
             }
 
 

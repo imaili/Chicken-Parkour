@@ -22,7 +22,7 @@ public class CameraSystem extends IteratingSystem {
         BodyComponent body =  Mappers.BODY.get(camera.target);
 
         TransformComponent position = Mappers.TRANSFORM.get(camera.target);
-        if(camera.camera.position.x < position.position.x+7)
+        if(camera.camera.position.x < position.position.x+21)
             camera.camera.translate(deltaTime*body.body.getLinearVelocity().x, 0);
 
     }

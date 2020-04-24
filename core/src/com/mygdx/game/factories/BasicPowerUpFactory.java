@@ -49,7 +49,7 @@ public class BasicPowerUpFactory extends PowerUpFactory{
             @Override
             public void accept(Entity entity) {
                 BodyComponent body = Mappers.BODY.get(entity);
-                body.body.setLinearVelocity(8, body.body.getLinearVelocity().y);
+                body.body.setLinearVelocity(20, body.body.getLinearVelocity().y);
                 AnimationComponent animation = Mappers.ANIMATION.get(entity);
                 animation.animationsMap.get(StateComponent.STATE_WALKING).setFrameDuration(0.07f);
 
@@ -59,7 +59,7 @@ public class BasicPowerUpFactory extends PowerUpFactory{
             @Override
             public void accept(Entity entity) {
                 BodyComponent body = Mappers.BODY.get(entity);
-                body.body.setLinearVelocity(5, body.body.getLinearVelocity().y);
+                body.body.setLinearVelocity(15, body.body.getLinearVelocity().y);
                 AnimationComponent animation = Mappers.ANIMATION.get(entity);
                 animation.animationsMap.get(StateComponent.STATE_WALKING).setFrameDuration(0.1f);
 
@@ -67,7 +67,7 @@ public class BasicPowerUpFactory extends PowerUpFactory{
         };
         powerUp.powerUp = new PowerUp(action, reset);
         powerUp.duration = 5;
-        transform.scale.set(0.1f, 0.1f);
+        transform.scale.set(0.25f, 0.25f);
         transform.position.set(x, y, 0);
 
         entity.add(texture);
@@ -102,7 +102,7 @@ public class BasicPowerUpFactory extends PowerUpFactory{
 
         powerUp.powerUp = new PowerUp(action, reset);
         powerUp.duration = 0.1f;
-        transform.scale.set(0.085f, 0.085f);
+        transform.scale.set(0.25f, 0.25f);
         transform.position.set(x, y, 0);
 
         entity.add(texture);

@@ -24,7 +24,7 @@ public abstract class ObstaclesFactory {
 
     public void createSpikes(float x, float y, int length){
         for(int i = 0; i<length; i++)
-            createSpike(x+i, y);
+            createSpike(x+i*3, y);
     }
 
     public void createPlatform(float x, float y, int width, int height){
@@ -32,7 +32,7 @@ public abstract class ObstaclesFactory {
 
         for(int i = 0; i<height; i++)
             for(int j = 0; j < width; j++)
-                createPlatform(x+j, y+i);
+                createPlatform(x+j*3, y+i*3);
 
 
     }

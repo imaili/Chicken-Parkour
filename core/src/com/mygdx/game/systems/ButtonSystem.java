@@ -34,7 +34,6 @@ public class ButtonSystem extends IteratingSystem {
         renderQueue = new Array<>();
 
         stage = new Stage();
-
         InputMultiplexer multiplexer = (InputMultiplexer) Gdx.input.getInputProcessor();
         if (!multiplexer.getProcessors().contains(stage, true))
             multiplexer.addProcessor(stage);

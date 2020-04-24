@@ -14,7 +14,9 @@ import com.mygdx.game.utils.Mappers;
 
 import java.util.Map;
 
-public class PhysicsSystem extends IteratingSystem {
+public class
+
+PhysicsSystem extends IteratingSystem {
     // create variables to stabilize speed
     private static final float MAX_STEP_TIME = 1/60f;
     private static float accumulator = 0f;

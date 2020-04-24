@@ -64,8 +64,8 @@ public class GameScreen extends BaseScreen implements Menu {
     private Entity player;
     private Entity ground1;
     private Entity ground2;
-    private int ground1end = 100;
-    private int ground2end = 200;
+    private int ground1end = 50;
+    private int ground2end = 150;
     //private Entity background;
     private MainGame game;
 
@@ -87,7 +87,7 @@ public class GameScreen extends BaseScreen implements Menu {
     private String player_id;
 
 
-    private Background background = Background.createGameBackground();
+    private Background background;
 
     protected static final String MUSIC_PATH = Constants.MUSIC_GAME_PATH;
     protected final Music MUSIC = MainGame.getSingleton().getAssetManager().get(MUSIC_PATH, Music.class);
@@ -107,7 +107,7 @@ public class GameScreen extends BaseScreen implements Menu {
     public void show() {
         super.show();
 
-        world = new World(new Vector2(0, -13f), true);
+        world = new World(new Vector2(0, -36f), true);
         world.setContactListener(new ChickenContactListener());
         spriteBatch = new SpriteBatch();
         renderingSystem = new RenderingSystem(spriteBatch, 2);
@@ -120,6 +120,7 @@ public class GameScreen extends BaseScreen implements Menu {
         powerUpFactory = new BasicPowerUpFactory(engine, bodyFactory);
 
         createPlayer();
+        background = Background.createGameBackground();
         engine.addSystem(new PhysicsSystem(world));
         engine.addSystem(new PhysicsDebugSystem(world, camera));
         engine.addSystem(new ChickenSystem());
@@ -129,8 +130,8 @@ public class GameScreen extends BaseScreen implements Menu {
         engine.addSystem(new AnimationSystem());
         engine.addSystem(renderingSystem);
         engine.addSystem(new CameraSystem());
-        ground1 = createGround(50);
-        ground2 = createGround(150);
+        ground1 = createGround(0);
+        ground2 = createGround(100);
         engine.addEntity(ground1);
         engine.addEntity(ground2);
 
@@ -158,6 +159,7 @@ public class GameScreen extends BaseScreen implements Menu {
 
     @Override
     public void render(float delta) {
+        System.out.println(Mappers.BODY.get(player).body.getLinearVelocity());
         if (!paused || isMultiPlayer) {
             Gdx.gl.glClearColor(0, 0, 0, 0);
             Gdx.gl.glClear(GL20.GL_COLOR_BUFFER_BIT);
@@ -175,11 +177,11 @@ public class GameScreen extends BaseScreen implements Menu {
             }
             if (Mappers.BODY.get(player).body.getPosition().x > ground1end) {
 
-                Mappers.BODY.get(ground1).body = bodyFactory.createRectangle(ground2end+50,1,100,1.8f,false);
+                Mappers.BODY.get(ground1).body = bodyFactory.createRectangle(ground2end+50,1,100,1,false);
                 ground1end += 200;
             } else if (Mappers.BODY.get(player).body.getPosition().x > ground2end) {
 
-                Mappers.BODY.get(ground2).body = bodyFactory.createRectangle(ground1end+50,1,100,1.8f,false);
+                Mappers.BODY.get(ground2).body = bodyFactory.createRectangle(ground1end+50,1,100,1,false);
                 ground2end += 200;
             }
 
@@ -242,11 +244,11 @@ public class GameScreen extends BaseScreen implements Menu {
         ani = new Animation<TextureRegion>(0.1f, atlas.getRegions());
         animation.animationsMap.put(StateComponent.STATE_HIT, ani );
 
-        body.body = bodyFactory.createRectangle(2,3,1f,2.1f, true);
-        body.body.setLinearVelocity(5,0);
+        body.body = bodyFactory.createRectangle(2,3,1.3f,3, true);
+        body.body.setLinearVelocity(15,0);
         // set object position (x,y,z) z used to define draw order 0 first drawn
         position.position.set(2,1,0);
-        position.scale.set(0.2f,0.2f);
+        position.scale.set(0.7f,0.7f);
 
         state.set(StateComponent.STATE_WALKING);
 
@@ -272,10 +274,10 @@ public class GameScreen extends BaseScreen implements Menu {
         TransformComponent transform = engine.createComponent(TransformComponent.class);
 
         texture.region = new TextureRegion((Texture) game.getAssetManager().get(Constants.FLOOR_PATH));
-        body.body = bodyFactory.createRectangle(x,1,100,1.8f,false);
+        body.body = bodyFactory.createRectangle(x,1,100,1,false);
         body.body.setUserData(entity);
         transform.position.set(x, 1, 0);
-        transform.scale.set(30, 1.8f);
+        transform.scale.set(30, 4.3f);
         entity.add(transform);
         entity.add(texture);
         entity.add(body);

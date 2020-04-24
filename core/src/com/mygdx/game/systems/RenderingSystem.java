@@ -24,12 +24,6 @@ import com.mygdx.game.utils.Mappers;
 
 
 public class RenderingSystem extends IteratingSystem {
-    static final float PIXELS_PER_METER = 32.0f;
-
-    static final float WORLD_WIDTH = Gdx.graphics.getWidth()/PIXELS_PER_METER;
-    static final float WORLD_HEIGHT = Gdx.graphics.getHeight()/PIXELS_PER_METER;
-
-    static final float PIXELS_TO_METRES = 1.0f / 32.0f;
 
     private SpriteBatch batch;
     private Array<Entity> renderQueue;
@@ -56,8 +50,8 @@ public class RenderingSystem extends IteratingSystem {
         };
 
         this.batch = batch;
-        cam = new OrthographicCamera(WORLD_WIDTH, WORLD_HEIGHT);
-        cam.position.set(9, WORLD_HEIGHT / 2, 0);
+        cam = new OrthographicCamera(Constants.WORLD_WIDTH, Constants.WORLD_HEIGHT);
+        cam.position.set(9, Constants.WORLD_HEIGHT / 2, 0);
     }
 
     @Override
@@ -80,8 +74,8 @@ public class RenderingSystem extends IteratingSystem {
             TransformComponent t = transformM.get(entity);
             PowerUpComponent p = Mappers.POWERUP.get(entity);
 
-            float width = tex.region.getRegionWidth()*t.scale.x*PIXELS_TO_METRES;
-            float height = tex.region.getRegionHeight()*t.scale.y*PIXELS_TO_METRES;
+            float width = tex.region.getRegionWidth()*t.scale.x*Constants.PIXELS_TO_METRES;
+            float height = tex.region.getRegionHeight()*t.scale.y*Constants.PIXELS_TO_METRES;
             float originX = width * 0.5f;
             float originY = height * 0.5f;
 
