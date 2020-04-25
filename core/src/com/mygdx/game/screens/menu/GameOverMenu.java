@@ -63,8 +63,6 @@ public class GameOverMenu extends PauseMenu {
 
         GameScreen game = ((GameScreen) previousMenu);
 
-        System.out.println(game.isMultiPlayer());
-
         if (game.isMultiPlayer()) {
             Table t = TableFactory.create();
             scores = new HashMap<>();
@@ -133,13 +131,15 @@ public class GameOverMenu extends PauseMenu {
                 });
             }
         }
+        else {
+            Label title = LabelFactory.create("Score: " + game.getScore());
+            //int screenSize = Gdx.graphics.getWidth() /2;
+            //float screenHight = Gdx.graphics.getHeight() * (float)0.85;
+            float labelSize = title.getWidth() / 2;
+            title.setPosition(Gdx.graphics.getWidth() / 2 - labelSize, Gdx.graphics.getHeight() / 2 + Gdx.graphics.getHeight() / 10);
+            list.add(title);
+        }
 
-        Label title = LabelFactory.create("Score: " + game.getScore());
-        //int screenSize = Gdx.graphics.getWidth() /2;
-        //float screenHight = Gdx.graphics.getHeight() * (float)0.85;
-        float labelSize = title.getWidth() / 2;
-        title.setPosition(Gdx.graphics.getWidth() / 2 - labelSize, Gdx.graphics.getHeight() / 2 + Gdx.graphics.getHeight() / 10);
-        list.add(title);
         return list;
     }
 
