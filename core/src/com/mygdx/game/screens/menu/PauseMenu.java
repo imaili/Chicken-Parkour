@@ -13,6 +13,7 @@ import com.mygdx.game.screens.GameScreen;
 import com.mygdx.game.screens.Menu;
 import com.mygdx.game.screens.MenuScreen;
 import com.mygdx.game.screens.menu.button.MenuButton;
+import com.mygdx.game.server.Server;
 import com.mygdx.game.utils.Constants;
 
 import java.util.Collections;
@@ -31,6 +32,7 @@ public class PauseMenu extends MenuScreen {
 
     private final Texture pauseTexture;
     protected boolean isMultiPlayer;
+    private Server server;
 
     @Override
     protected List<MenuButton> createButtons() {
@@ -48,6 +50,7 @@ public class PauseMenu extends MenuScreen {
 
     protected PauseMenu(GameScreen gameScreen, Texture pauseTexture) {
         super(gameScreen);
+        server = Server.getInstance();
         //backGroundTexture = GAME_OVER_BACK_GROUND_TEXTURE;
         backGroundTexture = getCurrentBackGroundTexture();
         this.pauseTexture = pauseTexture;
@@ -74,8 +77,11 @@ public class PauseMenu extends MenuScreen {
 
     @Override
     public void goTo(Class<? extends Menu> menu) {
-        if (menu.equals(MainMenu.class))
+        if (menu.equals(MainMenu.class)){
+            server.leaveGame();
             goToMainMenu();
+        }
+
     }
 
     public void goToMainMenu() {

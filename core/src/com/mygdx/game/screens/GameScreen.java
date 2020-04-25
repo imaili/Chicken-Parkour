@@ -90,6 +90,7 @@ public class GameScreen extends BaseScreen implements Menu {
     private BodyFactory bodyFactory;
     private ObstaclesFactory obstaclesFactory;
     private PowerUpFactory powerUpFactory;
+    private RandomLevelSystem randomLevelSystem;
     private Server server;
     private String game_id;
     private String player_id;
@@ -114,7 +115,7 @@ public class GameScreen extends BaseScreen implements Menu {
         pauseTexture = game.getAssetManager().get(Constants.EXIT_MENU_PATH);
         pauseTextureX = Gdx.graphics.getWidth() - pauseTexture.getWidth();
         pauseTextureY = Gdx.graphics.getHeight() - pauseTexture.getHeight();
-        endGameListener = args -> {
+        this.server.listenForEndGame(args -> {
             JSONObject message = (JSONObject) args[0];
             for (int i = 0; i < players.length(); i++) {
                 try {
@@ -129,8 +130,14 @@ public class GameScreen extends BaseScreen implements Menu {
                 }
 
             }
-        };
-        this.server.listenForEndGame(endGameListener);
+        });
+        this.server.listenForLeaveGame(new Emitter.Listener() {
+            @Override
+            public void call(Object... args) {
+                //host left, migrate to own game
+                randomLevelSystem.disabledJoined();
+            }
+        });
     }
 
     @Override
@@ -150,12 +157,13 @@ public class GameScreen extends BaseScreen implements Menu {
         powerUpFactory = new BasicPowerUpFactory(engine, bodyFactory);
 
         createPlayer();
+        randomLevelSystem = new RandomLevelSystem(player, obstaclesFactory, powerUpFactory, isMultiPlayer, isJoinedMultiplayer, startTime);
         background = Background.createGameBackground();
         engine.addSystem(new PhysicsSystem(world));
         engine.addSystem(new PhysicsDebugSystem(world, camera));
         engine.addSystem(new ChickenSystem());
         engine.addSystem(new CollisionSystem());
-        engine.addSystem(new RandomLevelSystem(player, obstaclesFactory, powerUpFactory, isMultiPlayer, isJoinedMultiplayer, startTime));
+        engine.addSystem(randomLevelSystem);
         engine.addSystem(new CleanUpSystem(world, camera));
         engine.addSystem(new AnimationSystem());
         engine.addSystem(renderingSystem);
@@ -170,7 +178,6 @@ public class GameScreen extends BaseScreen implements Menu {
     }
 
     private void createScoreLabel() {
-        Entity e = engine.createEntity();
         score = LabelFactory.create("Score: 0");
         score.setPosition(0, Gdx.graphics.getHeight() - score.getHeight());
     }

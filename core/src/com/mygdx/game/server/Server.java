@@ -105,6 +105,10 @@ public class Server {
         this.addListener("add_obstacle", listener);
     }
 
+    public void listenForLeaveGame(Emitter.Listener listener) {
+        this.addListener("leave_game", listener);
+    }
+
     private void addListener(String type, Emitter.Listener listener) {
         if (!listeners.containsKey(type)) {
             listeners.put(type, new ArrayList<>());
@@ -195,6 +199,10 @@ public class Server {
     public void getHighscores(Emitter.Listener listener) {
         this.addListener("get_highscores", listener);
         this.send(this.createJSONObject("get_highscores", null));
+    }
+
+    public void leaveGame() {
+        this.send(this.createJSONObject("leave_game", null));
     }
 
     public void updatePlayerLocation(float x, float y) {

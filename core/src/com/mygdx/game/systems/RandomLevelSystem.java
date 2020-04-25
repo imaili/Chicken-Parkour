@@ -118,6 +118,10 @@ public class RandomLevelSystem extends IteratingSystem {
         }
     }
 
+    public void disabledJoined() {
+        joined = false;
+    }
+
 
     @Override
     public void addedToEngine(Engine engine) {

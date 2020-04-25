@@ -45,14 +45,8 @@ public class GameOverMenu extends PauseMenu {
         if (!((GameScreen) previousMenu).isMultiPlayer()) {
             list.add(DEFAULT_TEXT_BUTTON_FACTORY.createGoBackButton("Play again", new Vector2(buttonX, Gdx.graphics.getHeight() / 2 - buttonHeight / 2)));
         }
-        exit = DEFAULT_TEXT_BUTTON_FACTORY.createGoToButton("Exit", new Vector2(buttonX, Gdx.graphics.getHeight() / 2 - 2 * buttonHeight), MainMenu.class);
 
-        if (((GameScreen) previousMenu).isMultiPlayer() && !((GameScreen) previousMenu).isJoinedMultiplayer()) {
-            exit.updateText("Waiting for other players...");
-            exit.disable();
-        }
-
-        list.add(exit);
+        list.add(DEFAULT_TEXT_BUTTON_FACTORY.createGoToButton("Exit", new Vector2(buttonX, Gdx.graphics.getHeight() / 2 - 2 * buttonHeight), MainMenu.class));
         return list;
     }
 
@@ -100,10 +94,7 @@ public class GameOverMenu extends PauseMenu {
                 }
             }
 
-            if (allPlayersDone()) {
-                exit.updateText("Exit");
-                exit.enable();
-            } else {
+            if (!allPlayersDone()) {
                 this.server = Server.getInstance();
 
                 this.server.listenForEndGame(new Emitter.Listener() {
@@ -118,8 +109,6 @@ public class GameOverMenu extends PauseMenu {
                             l.setText(data.getString("score"));
 
                             if (GameOverMenu.this.allPlayersDone()) {
-                                exit.updateText("Exit");
-                                exit.enable();
                                 server.removeListener("end_game",this);
                             }
                         } catch (JSONException e) {
@@ -170,10 +159,17 @@ public class GameOverMenu extends PauseMenu {
 
     @Override
     public void goTo(Class<? extends Menu> menu) {
-        //previousMenu.dispose();
         super.goTo(menu);
-        if (menu.equals(GameScreen.class))
+        if (menu.equals(GameScreen.class)) {
+            server.leaveGame();
             goToGameScreen();
+        }
+
+    }
+
+    @Override
+    public void render(float delta) {
+        super.render(delta);
     }
 
     @Override
