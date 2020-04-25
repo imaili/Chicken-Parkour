@@ -7,6 +7,7 @@ import com.badlogic.ashley.systems.IteratingSystem;
 import com.mygdx.game.components.BodyComponent;
 import com.mygdx.game.components.ChickenComponent;
 import com.mygdx.game.components.CollisionComponent;
+import com.mygdx.game.components.LeafComponent;
 import com.mygdx.game.components.ObstacleComponent;
 import com.mygdx.game.components.PowerUpComponent;
 import com.mygdx.game.components.StateComponent;
@@ -33,6 +34,7 @@ public class CollisionSystem  extends IteratingSystem {
         if (collidedEntity != null) {
             ObstacleComponent obstacle = Mappers.OBSTACLE.get(collidedEntity);
             PowerUpComponent powerUp = Mappers.POWERUP.get(collidedEntity);
+            LeafComponent leaf = Mappers.LEAF.get(collidedEntity);
 
             if (obstacle != null) {
 
@@ -51,6 +53,10 @@ public class CollisionSystem  extends IteratingSystem {
                         break;
                     default:
                 }
+            } else if(leaf != null) {
+                ChickenComponent chicken = Mappers.CHICKEN.get(entity);
+                chicken.leaves++;
+                getEngine().removeEntity(collidedEntity);
 
             } else if (powerUp != null) {
                 PowerUpComponent playerPowerUp = Mappers.POWERUP.get(entity);

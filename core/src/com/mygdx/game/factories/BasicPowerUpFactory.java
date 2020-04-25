@@ -12,7 +12,9 @@ import com.mygdx.game.MainGame;
 import com.mygdx.game.components.AnimationComponent;
 import com.mygdx.game.components.BodyComponent;
 import com.mygdx.game.components.ChickenComponent;
+import com.mygdx.game.components.CleanUpComponent;
 import com.mygdx.game.components.CollisionComponent;
+import com.mygdx.game.components.LeafComponent;
 import com.mygdx.game.components.PowerUp;
 import com.mygdx.game.components.PowerUpComponent;
 import com.mygdx.game.components.StateComponent;
@@ -40,7 +42,7 @@ public class BasicPowerUpFactory extends PowerUpFactory{
         CollisionComponent collision = engine.createComponent(CollisionComponent.class);
         BodyComponent body = engine.createComponent(BodyComponent.class);
         TransformComponent transform = engine.createComponent(TransformComponent.class);
-
+        CleanUpComponent cleanUpComponent = engine.createComponent(CleanUpComponent.class);
         body.body = getBodyFactory().createTriangle(x, y, true);
         body.body.setUserData(entity);
 
@@ -75,6 +77,7 @@ public class BasicPowerUpFactory extends PowerUpFactory{
         entity.add(body);
         entity.add(powerUp);
         entity.add(collision);
+        entity.add(cleanUpComponent);
         engine.addEntity(entity);
 
     }
@@ -83,33 +86,26 @@ public class BasicPowerUpFactory extends PowerUpFactory{
         PooledEngine engine = getEngine();
 
         Entity entity = engine.createEntity();
-        final PowerUpComponent powerUp = engine.createComponent(PowerUpComponent.class);
         TextureComponent texture = engine.createComponent(TextureComponent.class);
         CollisionComponent collision = engine.createComponent(CollisionComponent.class);
         BodyComponent body = engine.createComponent(BodyComponent.class);
         TransformComponent transform = engine.createComponent(TransformComponent.class);
-
+        CleanUpComponent cleanUpComponent = engine.createComponent(CleanUpComponent.class);
+        LeafComponent leaf = engine.createComponent(LeafComponent.class);
         body.body = getBodyFactory().createTriangle(x, y, true);
         body.body.setUserData(entity);
 
         texture.region = new TextureRegion((Texture) MainGame.getSingleton().getAssetManager().get(Constants.SPEED_UP_LEAF_PATH));
 
-        Consumer<Entity> action = ent -> {
-            ChickenComponent chickenComponent = Mappers.CHICKEN.get(ent);
-            chickenComponent.leaves++;
-        };
-        Consumer<Entity> reset = (ent) -> {};
-
-        powerUp.powerUp = new PowerUp(action, reset);
-        powerUp.duration = 0.1f;
         transform.scale.set(0.25f, 0.25f);
         transform.position.set(x, y, 0);
 
         entity.add(texture);
         entity.add(transform);
         entity.add(body);
-        entity.add(powerUp);
+        entity.add(leaf);
         entity.add(collision);
+        entity.add(cleanUpComponent);
         engine.addEntity(entity);
 
 

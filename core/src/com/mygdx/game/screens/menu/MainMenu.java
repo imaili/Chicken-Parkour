@@ -25,7 +25,7 @@ public class MainMenu extends MenuScreen {
         MenuButton goToSettings = DEFAULT_TEXT_BUTTON_FACTORY.createGoToButton("Settings", new Vector2(buttonX, buttonOffset + (buttonHeight+buttonOffset)), Settings.class);
         MenuButton exitGame = DEFAULT_TEXT_BUTTON_FACTORY.createGoToButton("Exit", new Vector2(buttonX, buttonOffset), ExitMenu.class);
       //  Collections.addAll(list, goToSinglePlayerMenu, goToMultiPlayerMenu, goToSettings, goToHighscores, exitGame);
-       Collections.addAll(list,goToPlayerMenu , goToSettings, goToHighscores, exitGame);
+        Collections.addAll(list,goToPlayerMenu , goToSettings, goToHighscores, exitGame);
         return list;
     }
 

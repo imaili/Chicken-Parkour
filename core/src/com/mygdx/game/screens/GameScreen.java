@@ -159,7 +159,6 @@ public class GameScreen extends BaseScreen implements Menu {
 
     @Override
     public void render(float delta) {
-        System.out.println(Mappers.BODY.get(player).body.getLinearVelocity());
         if (!paused || isMultiPlayer) {
             Gdx.gl.glClearColor(0, 0, 0, 0);
             Gdx.gl.glClear(GL20.GL_COLOR_BUFFER_BIT);
