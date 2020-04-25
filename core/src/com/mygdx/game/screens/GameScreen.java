@@ -4,21 +4,16 @@ import com.badlogic.ashley.core.Entity;
 import com.badlogic.ashley.core.PooledEngine;
 import com.badlogic.gdx.Gdx;
 import com.badlogic.gdx.audio.Music;
-import com.badlogic.gdx.graphics.Color;
 import com.badlogic.gdx.graphics.GL20;
 import com.badlogic.gdx.graphics.OrthographicCamera;
-import com.badlogic.gdx.graphics.Pixmap;
 import com.badlogic.gdx.graphics.Texture;
 import com.badlogic.gdx.graphics.g2d.Animation;
+import com.badlogic.gdx.graphics.g2d.BitmapFont;
 import com.badlogic.gdx.graphics.g2d.SpriteBatch;
 import com.badlogic.gdx.graphics.g2d.TextureAtlas;
 import com.badlogic.gdx.graphics.g2d.TextureRegion;
 import com.badlogic.gdx.math.Rectangle;
 import com.badlogic.gdx.math.Vector2;
-import com.badlogic.gdx.physics.box2d.Body;
-import com.badlogic.gdx.physics.box2d.BodyDef;
-import com.badlogic.gdx.physics.box2d.FixtureDef;
-import com.badlogic.gdx.physics.box2d.PolygonShape;
 import com.badlogic.gdx.physics.box2d.World;
 import com.mygdx.game.MainGame;
 import com.mygdx.game.components.AnimationComponent;
@@ -51,6 +46,7 @@ import com.mygdx.game.systems.RenderingSystem;
 import com.mygdx.game.utils.Background;
 import com.mygdx.game.utils.ChickenContactListener;
 import com.mygdx.game.utils.Constants;
+import com.mygdx.game.utils.Font;
 import com.mygdx.game.utils.Mappers;
 
 import java.util.Date;
@@ -151,9 +147,13 @@ public class GameScreen extends BaseScreen implements Menu {
 
     private final SpriteBatch buttonBatch = new SpriteBatch();
 
-    private void drawButton() {
+    private final static int SCORE_HEIGHT = 32;
+    private final BitmapFont font = Font.createFont(SCORE_HEIGHT);
+
+    private void drawButtonAndScore() {
         buttonBatch.begin();
         buttonBatch.draw(pauseTexture, pauseTextureX, pauseTextureY);
+        font.draw(buttonBatch, "Score: " + getScore(), 0, Gdx.graphics.getHeight() - SCORE_HEIGHT/2);
         buttonBatch.end();
     }
 
@@ -164,7 +164,7 @@ public class GameScreen extends BaseScreen implements Menu {
             Gdx.gl.glClear(GL20.GL_COLOR_BUFFER_BIT);
             background.render();
             engine.update(delta);
-            drawButton();
+            drawButtonAndScore();
 
             //server.updatePlayerLocation(Mappers.BODY.get(player).body.getPosition().x, Mappers.BODY.get(player).body.getPosition().y);
 
