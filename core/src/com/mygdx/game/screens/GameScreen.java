@@ -159,6 +159,7 @@ public class GameScreen extends BaseScreen implements Menu {
 
     @Override
     public void render(float delta) {
+        System.out.println(Mappers.BODY.get(player).body.getLinearVelocity());
         if (!paused || isMultiPlayer) {
             Gdx.gl.glClearColor(0, 0, 0, 0);
             Gdx.gl.glClear(GL20.GL_COLOR_BUFFER_BIT);
@@ -332,9 +333,9 @@ public class GameScreen extends BaseScreen implements Menu {
             renderingSystem.setProcessing(true);
     }
 
-    public int getScore() {
+    public float getScore() {
         int coinCount = 0;
-        return (int) (Mappers.BODY.get(player).body.getPosition().x + coinCount * 1000);
+        return Mappers.BODY.get(player).body.getPosition().x + coinCount * 1000;
     }
 
     public boolean isMultiPlayer() {

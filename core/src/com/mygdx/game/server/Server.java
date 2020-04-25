@@ -208,7 +208,7 @@ public class Server {
         this.send(this.createJSONObject("update_location", dataObj));
     }
 
-    public void addObstacle(long offset, String type) {
+    public void addObstacle(long offset, int type) {
         JSONObject dataObj = new JSONObject();
         try {
             dataObj.put("offset", offset);

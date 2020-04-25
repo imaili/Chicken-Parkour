@@ -78,7 +78,7 @@ public class MultiPlayerHostMenu extends MenuScreen {
                 }
             }
         });
-        this.gameId.setText("GameID: " + gameId);
+        this.gameId.setText("GameID: " + data[1]);
     }
 
     protected List<MenuButton> createButtons() {
