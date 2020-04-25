@@ -6,6 +6,7 @@ import com.badlogic.gdx.scenes.scene2d.Actor;
 import com.badlogic.gdx.scenes.scene2d.ui.Skin;
 import com.badlogic.gdx.scenes.scene2d.ui.Table;
 import com.badlogic.gdx.scenes.scene2d.ui.TextField;
+import com.badlogic.gdx.utils.Array;
 import com.mygdx.game.MainGame;
 import com.mygdx.game.factories.TableFactory;
 import com.mygdx.game.factories.TextFieldFactory;
@@ -17,6 +18,8 @@ import com.mygdx.game.screens.menu.button.MenuButton;
 import com.mygdx.game.server.Server;
 import com.mygdx.game.utils.Constants;
 
+import org.json.JSONArray;
+import org.json.JSONException;
 import org.json.JSONObject;
 
 import java.util.Collections;
@@ -31,6 +34,7 @@ public class MultiPlayerJoinMenu extends MenuScreen {
     GoToButton goToGameScreen;
     TextField playerName;
     TextField gameId;
+    String[] gameData;
 
     public MultiPlayerJoinMenu(Menu previousMenu) {
         super(previousMenu);
@@ -73,16 +77,18 @@ public class MultiPlayerJoinMenu extends MenuScreen {
         return list;
     }
 
-    public void goToGameScreen() {
+    public void goToGameScreen(JSONArray players) {
         stopMusic();
         MainGame main = MainGame.getSingleton();
         GameScreen gameScreen = new GameScreen(main);
         main.setGame(gameScreen);
         gameScreen.setMultiPlayer(true);
         gameScreen.setJoinedMultiplayer(true);
+        gameScreen.setPlayers(players);
         gameScreen.startMusic();
 
         gameScreen.setPreviousMenu(this);
+        gameScreen.setGameData(gameData[0], gameData[1]);
         goTo(gameScreen);
     }
 
@@ -95,7 +101,7 @@ public class MultiPlayerJoinMenu extends MenuScreen {
     @Override
     public void goTo(Class<? extends Menu> menu) {
         if (menu.equals(GameScreen.class)) {
-            server.joinGame(gameId.getText(), playerName.getText(), new Emitter.Listener() {
+            gameData = server.joinGame(gameId.getText(), playerName.getText(), new Emitter.Listener() {
                 @Override
                 public void call(Object... args) {
                     try {
@@ -107,10 +113,14 @@ public class MultiPlayerJoinMenu extends MenuScreen {
                             goToGameScreen.updateText("Start");
                             goToGameScreen.enable();
                         } else if (type.equals("start_game")) {
-                            Gdx.app.postRunnable(new Runnable() {
-                                @Override
-                                public void run() {
-                                    goToGameScreen();
+                            Gdx.app.postRunnable(() -> {
+                                try {
+                                    JSONObject data = ((JSONObject) args[0]).getJSONObject("data");
+
+                                    JSONArray players = data.getJSONArray("players");
+                                    goToGameScreen(players);
+                                } catch (JSONException e) {
+                                    e.printStackTrace();
                                 }
                             });
                         }

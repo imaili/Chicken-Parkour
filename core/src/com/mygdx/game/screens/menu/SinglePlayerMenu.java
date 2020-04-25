@@ -75,7 +75,7 @@ public class SinglePlayerMenu extends MenuScreen {
 
     public void goToGameScreen() {
         stopMusic();
-        server.startGame(this.nameText.getText());
+        server.startGame(this.nameText.getText(), null);
         MainGame main = MainGame.getSingleton();
         GameScreen gameScreen = new GameScreen(main);
         main.setGame(gameScreen);

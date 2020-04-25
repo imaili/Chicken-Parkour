@@ -53,7 +53,13 @@ import com.mygdx.game.utils.ChickenContactListener;
 import com.mygdx.game.utils.Constants;
 import com.mygdx.game.utils.Mappers;
 
+import org.json.JSONArray;
+import org.json.JSONException;
+import org.json.JSONObject;
+
 import java.util.Date;
+
+import io.socket.emitter.Emitter;
 
 public class GameScreen extends BaseScreen implements Menu {
     private static final String MUSIC_TYPE = "game";
@@ -85,12 +91,14 @@ public class GameScreen extends BaseScreen implements Menu {
     private Server server;
     private String game_id;
     private String player_id;
+    Emitter.Listener endGameListener;
 
 
     private Background background;
 
     protected static final String MUSIC_PATH = Constants.MUSIC_GAME_PATH;
     protected final Music MUSIC = MainGame.getSingleton().getAssetManager().get(MUSIC_PATH, Music.class);
+    private JSONArray players;
 
     public GameScreen(MainGame game) {
         super(game);
@@ -101,6 +109,22 @@ public class GameScreen extends BaseScreen implements Menu {
         pauseTexture = game.getAssetManager().get(Constants.EXIT_MENU_PATH);
         pauseTextureX = Gdx.graphics.getWidth() - pauseTexture.getWidth();
         pauseTextureY = Gdx.graphics.getHeight() - pauseTexture.getHeight();
+        endGameListener = args -> {
+            JSONObject message = (JSONObject)args[0];
+            for (int i =0; i< players.length(); i++) {
+                try {
+                    JSONObject player = players.getJSONObject(i);
+                    if (player.getString("id").equals(message.getString("player_id"))) {
+                        JSONObject data = message.getJSONObject("data");
+                        player.put("score", data.getString("score"));
+                    }
+                } catch (JSONException e) {
+                    e.printStackTrace();
+                }
+
+            }
+        };
+        this.server.listenForEndGame(endGameListener);
     }
 
     @Override
@@ -157,6 +181,23 @@ public class GameScreen extends BaseScreen implements Menu {
         buttonBatch.end();
     }
 
+    public String getPlayerId() {
+        return player_id;
+    }
+
+    public void setGameData(String player_id, String game_id) {
+        this.player_id = player_id;
+        this.game_id = game_id;
+    }
+
+    public void setPlayers(JSONArray players) {
+        this.players = players;
+    }
+
+    public JSONArray getPlayers() {
+        return this.players;
+    }
+
     @Override
     public void render(float delta) {
         System.out.println(Mappers.BODY.get(player).body.getLinearVelocity());
@@ -172,8 +213,7 @@ public class GameScreen extends BaseScreen implements Menu {
             if (Mappers.STATE.get(player).get() == StateComponent.STATE_HIT) {
                 //game.setScreen(new GameOverScreen(game));
                 goTo(GameOverMenu.class);
-                int score = 50000000;
-                server.endGame(score);
+                server.endGame(getScore());
             }
             if (Mappers.BODY.get(player).body.getPosition().x > ground1end) {
 
@@ -199,6 +239,10 @@ public class GameScreen extends BaseScreen implements Menu {
         world.dispose();
         spriteBatch.dispose();
 
+    }
+
+    public void removeEndGameListener() {
+        server.removeListener("end_game", endGameListener);
     }
 
     public void startMusic() {
@@ -333,9 +377,8 @@ public class GameScreen extends BaseScreen implements Menu {
             renderingSystem.setProcessing(true);
     }
 
-    public float getScore() {
-        int coinCount = 0;
-        return Mappers.BODY.get(player).body.getPosition().x + coinCount * 1000;
+    public int getScore() {
+        return (int)Mappers.BODY.get(player).body.getPosition().x + Mappers.CHICKEN.get(player).leaves * 1000;
     }
 
     public boolean isMultiPlayer() {

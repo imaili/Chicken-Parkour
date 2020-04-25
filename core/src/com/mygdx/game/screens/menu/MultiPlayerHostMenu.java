@@ -21,6 +21,8 @@ import com.mygdx.game.screens.Menu;
 import com.mygdx.game.server.Server;
 import com.mygdx.game.utils.Constants;
 
+import org.json.JSONArray;
+import org.json.JSONException;
 import org.json.JSONObject;
 
 import java.util.ArrayList;
@@ -33,8 +35,11 @@ import io.socket.emitter.Emitter;
 public class MultiPlayerHostMenu extends MenuScreen {
     Table table;
     Server server;
-    Label gameId;TextField nameText;
+    Label gameId;
+    TextField nameText;
     ArrayList<JSONObject> players = new ArrayList<>();
+    GoToButton goToGameScreen;
+    String[] gameData;
 
     public MultiPlayerHostMenu(Menu previousMenu) {
         super(previousMenu);
@@ -87,7 +92,7 @@ public class MultiPlayerHostMenu extends MenuScreen {
         float buttonHeight = Gdx.graphics.getHeight() / 10;
         List<MenuButton> list = new LinkedList<>();
         MenuButton goBack = IMAGE_BUTTON_FACTORY.createGoBackButton();
-        GoToButton goToGameScreen = DEFAULT_TEXT_BUTTON_FACTORY.createGoToButton("START", new Vector2(buttonX, Gdx.graphics.getHeight()* (float)0.1 - buttonHeight/2), GameScreen.class);
+        goToGameScreen = DEFAULT_TEXT_BUTTON_FACTORY.createGoToButton("START", new Vector2(buttonX, Gdx.graphics.getHeight() * (float) 0.1 - buttonHeight / 2), GameScreen.class);
         Collections.addAll(list, goBack, goToGameScreen);
         return list;
     }
@@ -119,24 +124,40 @@ public class MultiPlayerHostMenu extends MenuScreen {
         return list;
     }
 
-    public void goToGameScreen() {
-        this.server.startGame(this.nameText.getText());
+    public void goToGameScreen(JSONArray players) {
         stopMusic();
         MainGame main = MainGame.getSingleton();
         GameScreen gameScreen = new GameScreen(main);
         main.setGame(gameScreen);
         gameScreen.setMultiPlayer(true);
         gameScreen.setJoinedMultiplayer(false);
-
+        gameScreen.setPlayers(players);
+        gameScreen.setGameData(gameData[0], gameData[1]);
         gameScreen.startMusic();
         gameScreen.setPreviousMenu(this);
         goTo(gameScreen);
+
+
     }
 
     @Override
     public void goTo(Class<? extends Menu> menu) {
-        if (menu.equals(GameScreen.class))
-            goToGameScreen();
+        if (menu.equals(GameScreen.class)) {
+            goToGameScreen.updateText("Waiting...");
+            gameData = this.server.startGame(this.nameText.getText(), args -> {
+                Gdx.app.postRunnable(() -> {
+                    try {
+                        JSONObject data = ((JSONObject) args[0]).getJSONObject("data");
+
+                        JSONArray players = data.getJSONArray("players");
+                        goToGameScreen(players);
+                    } catch (JSONException e) {
+                        e.printStackTrace();
+                    }
+                });
+
+            });
+        }
     }
 
 }

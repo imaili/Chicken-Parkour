@@ -164,13 +164,18 @@ public class Server {
         };
     }
 
-    public String[] startGame(String player_name) {
+    public String[] startGame(String player_name, Emitter.Listener listener) {
         JSONObject data = new JSONObject();
         try {
             data.put("player_name", player_name);
         } catch (Exception e) {
             System.out.println(e.getMessage());
         }
+
+        if (listener != null) {
+            this.addListener("start_game", listener);
+        }
+
         this.send(this.createJSONObject("start_game", data));
         return new String[]{
                 this.player_id,
@@ -239,5 +244,9 @@ public class Server {
             System.out.println(e.getMessage());
         }
 
+    }
+
+    public void listenForEndGame(Emitter.Listener endGameListener) {
+        this.addListener("end_game", endGameListener);
     }
 }

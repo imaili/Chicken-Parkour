@@ -98,7 +98,9 @@ public class RandomLevelSystem extends IteratingSystem {
                     }
                 }
             } else {
-                server.addObstacle(offset, generatedObstacle);
+                if (generatedObstacle != 0) {
+                    server.addObstacle(offset, generatedObstacle);
+                }
             }
         }
     }
