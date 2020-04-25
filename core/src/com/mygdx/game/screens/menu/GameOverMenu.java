@@ -1,7 +1,9 @@
 package com.mygdx.game.screens.menu;
 
 import com.badlogic.gdx.Gdx;
+import com.badlogic.gdx.graphics.Color;
 import com.badlogic.gdx.graphics.Texture;
+import com.badlogic.gdx.graphics.g2d.BitmapFont;
 import com.badlogic.gdx.math.Vector2;
 import com.badlogic.gdx.scenes.scene2d.Actor;
 import com.badlogic.gdx.scenes.scene2d.ui.Label;
@@ -11,6 +13,7 @@ import com.mygdx.game.screens.GameScreen;
 import com.mygdx.game.screens.Menu;
 import com.mygdx.game.screens.menu.button.MenuButton;
 import com.mygdx.game.utils.Constants;
+import com.mygdx.game.utils.Font;
 
 import java.util.Collections;
 import java.util.LinkedList;
@@ -35,7 +38,10 @@ public class GameOverMenu extends PauseMenu {
     @Override
     public List<Actor> getActors() {
         List<Actor> list = new LinkedList<>();
-        Skin skin = MainGame.getSingleton().getAssetManager().get(Constants.TABLE_SKIN);
+        //Skin skin = MainGame.getSingleton().getAssetManager().get(Constants.TABLE_SKIN);
+
+        Skin skin = Font.createLabelSkin(48);
+
         String score = "Score: " + ((GameScreen) previousMenu).getScore();
         Label title = new Label(score, skin);
         //int screenSize = Gdx.graphics.getWidth() /2;
