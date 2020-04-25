@@ -85,7 +85,7 @@ public class GameScreen extends BaseScreen implements Menu {
     private Server server;
     private String game_id;
     private String player_id;
-    private ChickenComponent chicken;
+
 
     private Background background;
 
@@ -172,7 +172,8 @@ public class GameScreen extends BaseScreen implements Menu {
             if (Mappers.STATE.get(player).get() == StateComponent.STATE_HIT) {
                 //game.setScreen(new GameOverScreen(game));
                 goTo(GameOverMenu.class);
-                server.endGame((int) this.getScore());
+                int score = 50000000;
+                server.endGame(score);
             }
             if (Mappers.BODY.get(player).body.getPosition().x > ground1end) {
 
@@ -332,8 +333,9 @@ public class GameScreen extends BaseScreen implements Menu {
             renderingSystem.setProcessing(true);
     }
 
-    public int getScore() {
-        return (int) (Mappers.BODY.get(player).body.getPosition().x + Mappers.CHICKEN.get(player).leaves * 1000);
+    public float getScore() {
+        int coinCount = 0;
+        return Mappers.BODY.get(player).body.getPosition().x + coinCount * 1000;
     }
 
     public boolean isMultiPlayer() {

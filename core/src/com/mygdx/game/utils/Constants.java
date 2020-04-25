@@ -198,6 +198,8 @@ public class Constants {
     public static final String SPEED_UP_BONE_PATH = "PowerUps/PowerUp_Bone.png";
     public static final String SPEED_UP_LEAF_PATH = "PowerUps/PowerUp_Leaf.png";
 
+    public static final String MY_FONT_PATH = "data/myfont.fnt";
+
 
     //public static final String = "key" running (1)
 }

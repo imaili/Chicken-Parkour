@@ -7,6 +7,7 @@ import com.mygdx.game.components.ButtonComponent;
 import com.mygdx.game.components.CameraComponent;
 import com.mygdx.game.components.CollisionComponent;
 import com.mygdx.game.components.ChickenComponent;
+import com.mygdx.game.components.LeafComponent;
 import com.mygdx.game.components.ObstacleComponent;
 import com.mygdx.game.components.PowerUpComponent;
 import com.mygdx.game.components.StateComponent;
@@ -26,4 +27,5 @@ public class Mappers {
     public static final ComponentMapper<PowerUpComponent> POWERUP = ComponentMapper.getFor(PowerUpComponent.class);
     public static final ComponentMapper<CameraComponent> CAMERA = ComponentMapper.getFor(CameraComponent.class);
     public static final ComponentMapper<AnimationComponent> ANIMATION = ComponentMapper.getFor(AnimationComponent.class);
+    public static final ComponentMapper<LeafComponent> LEAF = ComponentMapper.getFor(LeafComponent.class);
 }

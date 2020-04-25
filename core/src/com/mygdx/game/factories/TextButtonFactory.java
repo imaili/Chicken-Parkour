@@ -18,6 +18,7 @@ import com.mygdx.game.screens.menu.button.GoToButton;
 import com.mygdx.game.screens.menu.button.MenuButton;
 import com.mygdx.game.screens.menu.button.MusicButton;
 import com.mygdx.game.screens.menu.button.PauseButton;
+import com.mygdx.game.utils.Constants;
 
 public class TextButtonFactory implements ButtonFactory {
     private final static TextButtonFactory DEFAULT_TEXT_BUTTON_FACTORY = new TextButtonFactory();
@@ -87,12 +88,17 @@ public class TextButtonFactory implements ButtonFactory {
     }
 
     private static Skin createBasicSkin() {
-        return createBasicSkin(Gdx.graphics.getWidth() / 4, Gdx.graphics.getHeight() / 10);
+        return createBasicSkin(Gdx.graphics.getWidth() / 4, Gdx.graphics.getHeight() / 8);
     }
+
+    private static final int LETTER_SIZE = 64;
+
+    private static final float FONT_SCALE = 0.75f;
 
     public static Skin createBasicSkin(int width, int height) {
         // Create a font
-        BitmapFont font = new BitmapFont();
+        BitmapFont font = new BitmapFont(Gdx.files.internal(Constants.MY_FONT_PATH));
+        font.getData().setScale(FONT_SCALE * LETTER_SIZE / height);
         Skin skin = new Skin();
         skin.add("default", font);
 
@@ -115,7 +121,8 @@ public class TextButtonFactory implements ButtonFactory {
 
     public static Skin createSkin(int width, int height, Texture up, Texture down) {
         // Create a font
-        BitmapFont font = new BitmapFont();
+        BitmapFont font = new BitmapFont(Gdx.files.internal(Constants.MY_FONT_PATH));
+        font.getData().setScale(FONT_SCALE * LETTER_SIZE / height);
         Skin skin = new Skin();
         skin.add("default", font);
 
