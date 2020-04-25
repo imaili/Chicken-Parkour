@@ -5,13 +5,10 @@ import com.badlogic.ashley.core.Entity;
 import com.badlogic.ashley.core.Family;
 import com.badlogic.ashley.core.PooledEngine;
 import com.badlogic.ashley.systems.IteratingSystem;
-import com.mygdx.game.MainGame;
 import com.mygdx.game.components.TransformComponent;
 import com.mygdx.game.factories.ObstaclesFactory;
 import com.mygdx.game.factories.PowerUpFactory;
-import com.mygdx.game.screens.GameScreen;
 import com.mygdx.game.server.Server;
-import com.mygdx.game.utils.Constants;
 import com.mygdx.game.utils.Mappers;
 import com.mygdx.game.utils.Obstacles;
 import com.mygdx.game.utils.QueuedEntity;
@@ -21,23 +18,21 @@ import org.json.JSONObject;
 import java.util.ArrayList;
 import java.util.Date;
 import java.util.Iterator;
-import java.util.Random;
-
 
 import io.socket.emitter.Emitter;
 
 public class RandomLevelSystem extends IteratingSystem {
 
     PooledEngine engine;
+    boolean multiplayer;
+    boolean joined;
+    long startTime;
     private float accumulatedTime = 0;
     private Server server;
     private Entity player;
     private ArrayList<QueuedEntity> renderQueue = new ArrayList<>();
     private ObstaclesFactory obstaclesFactory;
     private PowerUpFactory powerUpFactory;
-    boolean multiplayer;
-    boolean joined;
-    long startTime;
 
     public RandomLevelSystem(Entity player, ObstaclesFactory obstaclesFactory, PowerUpFactory powerUpFactory,
                              boolean multiplayer, boolean joined, long startTime) {
@@ -59,7 +54,7 @@ public class RandomLevelSystem extends IteratingSystem {
                     if (type.equals("add_obstacle")) {
                         JSONObject data = server_message.getJSONObject("data");
                         long offset = data.getLong("offset");
-                        String entity = data.getString("entity");
+                        int entity = data.getInt("entity");
 
                         renderQueue.add(new QueuedEntity(offset, entity));
                         System.out.println(renderQueue.size());
@@ -78,7 +73,7 @@ public class RandomLevelSystem extends IteratingSystem {
     public void update(float deltaTime) {
         super.update(deltaTime);
         accumulatedTime += deltaTime;
-        String generatedObstacle = "";
+        int generatedObstacle = 0;
 
         if (!joined && accumulatedTime > 3) {
             accumulatedTime = 0;
@@ -95,19 +90,18 @@ public class RandomLevelSystem extends IteratingSystem {
                     QueuedEntity qe = i.next(); // must be called before you can call i.remove()
                     if (qe.offset <= offset) {
 
-                        ObstaclesGenerator.create(Integer.parseInt(qe.entity), this);
+                        ObstaclesGenerator.create(qe.entity, this);
 
-                        i.remove();
-                    }
-                    else {
+                        renderQueue.remove(qe);
+                    } else {
                         break;
                     }
                 }
             } else {
                 server.addObstacle(offset, generatedObstacle);
             }
-            }
         }
+    }
 
 
     @Override
@@ -122,16 +116,13 @@ public class RandomLevelSystem extends IteratingSystem {
     }
 
 
-
-
-
     private static class ObstaclesGenerator {
 
 
-        private static String createRandom(RandomLevelSystem system) {
+        private static int createRandom(RandomLevelSystem system) {
             int obstacle = (int) (Math.random() * Obstacles.OBSTACLE_NUMBER);
             create(obstacle, system);
-            return Integer.toString(obstacle);
+            return obstacle;
         }
 
         private static void create(int obstacle, RandomLevelSystem system) {
