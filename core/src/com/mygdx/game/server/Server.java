@@ -102,7 +102,7 @@ public class Server {
 
     private void addListener(String type, Emitter.Listener listener) {
         if (!listeners.containsKey(type)) {
-            listeners.put(type, new ArrayList<Emitter.Listener>());
+            listeners.put(type, new ArrayList<>());
         }
 
         listeners.get(type).add(listener);
@@ -129,17 +129,11 @@ public class Server {
         this.send(this.createJSONObject("new_game", null));
 
         this.addListener("join_game", listener);
-        this.addListener("leave_game", listener);
 
         return new String[]{
                 this.player_id,
                 this.game_id
         };
-    }
-
-    public void leaveGame() {
-        System.out.println("leave!");
-        this.send(this.createJSONObject("leave_game", null));
     }
 
     public String[] joinGame(String game_id, String player_name, Emitter.Listener listener) {

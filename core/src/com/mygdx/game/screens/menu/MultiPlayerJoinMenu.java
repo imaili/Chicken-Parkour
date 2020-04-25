@@ -92,7 +92,6 @@ public class MultiPlayerJoinMenu extends MenuScreen {
     @Override
     public void goBack() {
         goTo(previousMenu);
-        server.leaveGame();
     }
 
     @Override

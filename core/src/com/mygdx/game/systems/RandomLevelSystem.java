@@ -34,6 +34,8 @@ public class RandomLevelSystem extends IteratingSystem {
     private ObstaclesFactory obstaclesFactory;
     private PowerUpFactory powerUpFactory;
 
+    private final Emitter.Listener obstacleListener;
+
     public RandomLevelSystem(Entity player, ObstaclesFactory obstaclesFactory, PowerUpFactory powerUpFactory,
                              boolean multiplayer, boolean joined, long startTime) {
 
@@ -45,7 +47,8 @@ public class RandomLevelSystem extends IteratingSystem {
         this.startTime = startTime;
         server = Server.getInstance();
         this.player = player;
-        server.listenForObstacles(new Emitter.Listener() {
+
+        obstacleListener = new Emitter.Listener() {
             @Override
             public void call(Object... args) {
                 try {
@@ -64,8 +67,9 @@ public class RandomLevelSystem extends IteratingSystem {
                 }
 
             }
-        });
+        };
 
+        server.listenForObstacles(obstacleListener);
     }
 
     @Override
@@ -153,7 +157,7 @@ public class RandomLevelSystem extends IteratingSystem {
         }
 
         private static void createStairs(int stairs, RandomLevelSystem system) {
-            
+
             for (int i = 1; i <= stairs; i++) {
                 TransformComponent playerPosition = Mappers.TRANSFORM.get(system.player);
                 system.obstaclesFactory.createPlatform(playerPosition.position.x + 60 + i * 11, 4.3f, 1, i);
@@ -161,7 +165,6 @@ public class RandomLevelSystem extends IteratingSystem {
 
 
         }
-
 
 
     }

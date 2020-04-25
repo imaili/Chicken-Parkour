@@ -23,15 +23,11 @@ import com.mygdx.game.utils.Font;
 import org.json.JSONArray;
 import org.json.JSONException;
 import org.json.JSONObject;
-
-import java.util.Collections;
-import java.util.Dictionary;
 import java.util.HashMap;
 import java.util.LinkedList;
 import java.util.List;
 
 import io.socket.emitter.Emitter;
-import sun.applet.Main;
 
 public class GameOverMenu extends PauseMenu {
     private HashMap<String, Label> scores;
@@ -114,21 +110,25 @@ public class GameOverMenu extends PauseMenu {
 
                 game.removeEndGameListener();
 
-                this.server.listenForEndGame(args -> {
-                    JSONObject message = (JSONObject) args[0];
-                    String player_id = null;
-                    try {
-                        player_id = message.getString("player_id");
-                        JSONObject data = message.getJSONObject("data");
-                        Label l = scores.get(player_id);
-                        l.setText(data.getString("score"));
+                this.server.listenForEndGame(new Emitter.Listener() {
+                    @Override
+                    public void call(Object... args) {
+                        JSONObject message = (JSONObject) args[0];
+                        String player_id = null;
+                        try {
+                            player_id = message.getString("player_id");
+                            JSONObject data = message.getJSONObject("data");
+                            Label l = scores.get(player_id);
+                            l.setText(data.getString("score"));
 
-                        if (allPlayersDone()) {
-                            exit.updateText("Exit");
-                            exit.enable();
+                            if (GameOverMenu.this.allPlayersDone()) {
+                                exit.updateText("Exit");
+                                exit.enable();
+                                server.removeListener("end_game",this);
+                            }
+                        } catch (JSONException e) {
+                            e.printStackTrace();
                         }
-                    } catch (JSONException e) {
-                        e.printStackTrace();
                     }
                 });
             }
