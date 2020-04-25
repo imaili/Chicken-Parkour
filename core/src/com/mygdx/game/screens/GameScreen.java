@@ -115,22 +115,27 @@ public class GameScreen extends BaseScreen implements Menu {
         pauseTexture = game.getAssetManager().get(Constants.EXIT_MENU_PATH);
         pauseTextureX = Gdx.graphics.getWidth() - pauseTexture.getWidth();
         pauseTextureY = Gdx.graphics.getHeight() - pauseTexture.getHeight();
-        this.server.listenForEndGame(args -> {
-            JSONObject message = (JSONObject) args[0];
-            for (int i = 0; i < players.length(); i++) {
-                try {
-                    JSONObject player = players.getJSONObject(i);
-                    if (player.getString("id").equals(message.getString("player_id"))) {
-                        JSONObject data = message.getJSONObject("data");
-                        player.put("score", data.getString("score"));
-                        break;
-                    }
-                } catch (JSONException e) {
-                    e.printStackTrace();
-                }
 
+        this.server.listenForEndGame(new Emitter.Listener() {
+            @Override
+            public void call(Object... args) {
+                JSONObject message = (JSONObject) args[0];
+                for (int i = 0; i < players.length(); i++) {
+                    try {
+                        JSONObject player = players.getJSONObject(i);
+                        if (player.getString("id").equals(message.getString("player_id"))) {
+                            JSONObject data = message.getJSONObject("data");
+                            player.put("score", data.getString("score"));
+                            break;
+                        }
+                    } catch (JSONException e) {
+                        e.printStackTrace();
+                    }
+
+                }
             }
         });
+
         this.server.listenForLeaveGame(new Emitter.Listener() {
             @Override
             public void call(Object... args) {
@@ -198,6 +203,10 @@ public class GameScreen extends BaseScreen implements Menu {
         buttonBatch.begin();
         buttonBatch.draw(pauseTexture, pauseTextureX, pauseTextureY);
         buttonBatch.end();
+    }
+
+    public Entity getPlayer() {
+        return player;
     }
 
     private void drawScore() {

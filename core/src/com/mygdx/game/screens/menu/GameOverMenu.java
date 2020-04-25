@@ -1,5 +1,6 @@
 package com.mygdx.game.screens.menu;
 
+import com.badlogic.gdx.Game;
 import com.badlogic.gdx.Gdx;
 import com.badlogic.gdx.graphics.Color;
 import com.badlogic.gdx.graphics.Texture;
@@ -17,8 +18,11 @@ import com.mygdx.game.screens.Menu;
 import com.mygdx.game.screens.menu.button.GoToButton;
 import com.mygdx.game.screens.menu.button.MenuButton;
 import com.mygdx.game.server.Server;
+import com.mygdx.game.systems.RandomLevelSystem;
 import com.mygdx.game.utils.Constants;
 import com.mygdx.game.utils.Font;
+import com.mygdx.game.utils.Mappers;
+import com.mygdx.game.utils.Obstacles;
 
 import org.json.JSONArray;
 import org.json.JSONException;
@@ -34,6 +38,9 @@ public class GameOverMenu extends PauseMenu {
     protected static final Texture GAME_OVER_BACK_GROUND_TEXTURE = MainGame.getSingleton().getAssetManager().get(Constants.BACKGROUND_GAME_OVER_PATH, Texture.class);
     private Server server;
     GoToButton exit;
+    private float accumulatedTime = 0;
+    private int simulationStep = 0;
+    private boolean allDone = false;
 
     @Override
     protected List<MenuButton> createButtons() {
@@ -109,6 +116,7 @@ public class GameOverMenu extends PauseMenu {
                             l.setText(data.getString("score"));
 
                             if (GameOverMenu.this.allPlayersDone()) {
+                                allDone = true;
                                 server.removeListener("end_game",this);
                             }
                         } catch (JSONException e) {
@@ -116,6 +124,9 @@ public class GameOverMenu extends PauseMenu {
                         }
                     }
                 });
+            }
+            else  {
+                allDone = true;
             }
         }
         else {
@@ -170,6 +181,17 @@ public class GameOverMenu extends PauseMenu {
     @Override
     public void render(float delta) {
         super.render(delta);
+
+        if (!allDone) {
+            accumulatedTime += delta;
+
+            if (accumulatedTime > 3) {
+                accumulatedTime = 0;
+                simulationStep++;
+                //generate the to be added entities here...
+                server.addObstacle((int) (Mappers.BODY.get(((GameScreen)previousMenu).getPlayer()).body.getPosition().x + simulationStep * 30), (int) (Math.random() * Obstacles.OBSTACLE_NUMBER));
+            }
+        }
     }
 
     @Override
