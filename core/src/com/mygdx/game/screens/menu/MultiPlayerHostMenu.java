@@ -77,6 +77,12 @@ public class MultiPlayerHostMenu extends MenuScreen {
         return list;
     }
 
+    @Override
+    public void goBack() {
+        goTo(previousMenu);
+        this.server.clearListeners();
+    }
+
 
     @Override
     public List<Actor> getActors() {

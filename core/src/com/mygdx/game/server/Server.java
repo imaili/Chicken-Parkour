@@ -92,6 +92,11 @@ public class Server {
         listeners.get(type).remove(listener);
     }
 
+    public void clearListeners() {
+        this.listeners.clear();
+        System.out.println("cleared");
+    }
+
     public void listenForStartGame(Emitter.Listener listener) {
         this.addListener("start_game", listener);
     }
@@ -207,7 +212,7 @@ public class Server {
         this.send(this.createJSONObject("update_location", dataObj));
     }
 
-    public void addObstacle(float offset, int type) {
+    public void addObstacle(int offset, int type) {
         JSONObject dataObj = new JSONObject();
         try {
             dataObj.put("offset", offset);
@@ -227,6 +232,7 @@ public class Server {
             System.out.println(e.getMessage());
         }
         this.send(this.createJSONObject("end_game", dataObj));
+        this.listeners.clear();
     }
 
     private void send(JSONObject message) {

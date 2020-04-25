@@ -105,11 +105,6 @@ public class GameScreen extends BaseScreen implements Menu {
 
     public GameScreen(MainGame game, boolean isMultiPlayer, boolean isJoinedMultiplayer) {
         super(game);
-        try {
-            throw new Exception("wtf");
-        } catch (Exception e) {
-            e.printStackTrace();
-        }
         this.game = game;
         this.isMultiPlayer = isMultiPlayer;
         this.isJoinedMultiplayer = isJoinedMultiplayer;
@@ -127,6 +122,7 @@ public class GameScreen extends BaseScreen implements Menu {
                     if (player.getString("id").equals(message.getString("player_id"))) {
                         JSONObject data = message.getJSONObject("data");
                         player.put("score", data.getString("score"));
+                        break;
                     }
                 } catch (JSONException e) {
                     e.printStackTrace();
@@ -235,8 +231,9 @@ public class GameScreen extends BaseScreen implements Menu {
 
             if (Mappers.STATE.get(player).get() == StateComponent.STATE_HIT) {
                 //game.setScreen(new GameOverScreen(game));
-                goTo(GameOverMenu.class);
                 server.endGame(getScore());
+                goTo(GameOverMenu.class);
+
             }
             if (Mappers.BODY.get(player).body.getPosition().x > ground1end) {
 
@@ -262,10 +259,6 @@ public class GameScreen extends BaseScreen implements Menu {
         world.dispose();
         spriteBatch.dispose();
 
-    }
-
-    public void removeEndGameListener() {
-        server.removeListener("end_game", endGameListener);
     }
 
     public void startMusic() {

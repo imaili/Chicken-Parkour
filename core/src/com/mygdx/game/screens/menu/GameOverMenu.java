@@ -106,8 +106,6 @@ public class GameOverMenu extends PauseMenu {
             } else {
                 this.server = Server.getInstance();
 
-                game.removeEndGameListener();
-
                 this.server.listenForEndGame(new Emitter.Listener() {
                     @Override
                     public void call(Object... args) {
@@ -149,7 +147,7 @@ public class GameOverMenu extends PauseMenu {
             try {
                 for (Label score :
                         scores.values()) {
-                    if (score.getText().equals("playing...")) {
+                    if (score.textEquals("playing...")) {
                         return false;
                     }
                 }

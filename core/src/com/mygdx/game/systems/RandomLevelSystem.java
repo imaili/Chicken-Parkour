@@ -77,7 +77,7 @@ public class RandomLevelSystem extends IteratingSystem {
         super.update(deltaTime);
         accumulatedTime += deltaTime;
         int generatedObstacle = 0;
-        float playerPosition = Mappers.BODY.get(player).body.getPosition().x;
+        int playerPosition = (int) Mappers.BODY.get(player).body.getPosition().x;
 
         if (!joined && accumulatedTime > 3) {
             accumulatedTime = 0;
@@ -91,7 +91,7 @@ public class RandomLevelSystem extends IteratingSystem {
                 ArrayList<QueuedEntity> deleted = null;
                 for (QueuedEntity qe :
                         renderQueue) {
-                    if ((float)qe.offset <= playerPosition) {
+                    if (qe.offset <= playerPosition) {
                         if (deleted == null) {
                             deleted = new ArrayList<>();
                         }
