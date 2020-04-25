@@ -136,8 +136,6 @@ public class MultiPlayerHostMenu extends MenuScreen {
         gameScreen.startMusic();
         gameScreen.setPreviousMenu(this);
         goTo(gameScreen);
-
-
     }
 
     @Override

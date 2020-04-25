@@ -57,7 +57,6 @@ public class RandomLevelSystem extends IteratingSystem {
                         int entity = data.getInt("entity");
 
                         renderQueue.add(new QueuedEntity(offset, entity));
-                        System.out.println(renderQueue.size());
                     }
 
                 } catch (Exception e) {
@@ -128,7 +127,6 @@ public class RandomLevelSystem extends IteratingSystem {
         }
 
         private static void create(int obstacle, RandomLevelSystem system) {
-            System.out.println(obstacle);
             switch (obstacle) {
                 case Obstacles.SINGLE_PLATFORM:
                     system.obstaclesFactory.createPlatform(Mappers.TRANSFORM.get(system.player).position.x + 60, 4.3f);

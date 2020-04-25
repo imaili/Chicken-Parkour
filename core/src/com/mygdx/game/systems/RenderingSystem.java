@@ -72,7 +72,6 @@ public class RenderingSystem extends IteratingSystem {
             }
 
             TransformComponent t = transformM.get(entity);
-            PowerUpComponent p = Mappers.POWERUP.get(entity);
 
             float width = tex.region.getRegionWidth()*t.scale.x*Constants.PIXELS_TO_METRES;
             float height = tex.region.getRegionHeight()*t.scale.y*Constants.PIXELS_TO_METRES;

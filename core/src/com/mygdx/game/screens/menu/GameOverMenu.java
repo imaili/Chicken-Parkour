@@ -109,6 +109,8 @@ public class GameOverMenu extends PauseMenu {
             } else {
                 this.server = Server.getInstance();
 
+                game.removeEndGameListener();
+
                 this.server.listenForEndGame(args -> {
                     JSONObject message = (JSONObject) args[0];
                     String player_id = null;
