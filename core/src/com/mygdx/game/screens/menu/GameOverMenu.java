@@ -31,6 +31,7 @@ import java.util.LinkedList;
 import java.util.List;
 
 import io.socket.emitter.Emitter;
+import sun.applet.Main;
 
 public class GameOverMenu extends PauseMenu {
     private HashMap<String, Label> scores;
@@ -65,6 +66,8 @@ public class GameOverMenu extends PauseMenu {
         //Skin skin = MainGame.getSingleton().getAssetManager().get(Constants.TABLE_SKIN);
 
         GameScreen game = ((GameScreen) previousMenu);
+
+        System.out.println(game.isMultiPlayer());
 
         if (game.isMultiPlayer()) {
             Table t = TableFactory.create();
@@ -183,12 +186,8 @@ public class GameOverMenu extends PauseMenu {
     public void goToGameScreen() {
         if (!((GameScreen) previousMenu).isMultiPlayer()) {
             stopMusic();
-            MainGame main = MainGame.getSingleton();
-            GameScreen gameScreen = new GameScreen(main);
-            main.setGame(gameScreen);
+            GameScreen gameScreen = new GameScreen(MainGame.getSingleton(),false, false);
             gameScreen.startMusic();
-            gameScreen.setMultiPlayer(false);
-            gameScreen.setJoinedMultiplayer(false);
             gameScreen.setPreviousMenu(((GameScreen) previousMenu).getPreviousMenu());
             goTo(gameScreen);
         } else {

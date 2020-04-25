@@ -127,10 +127,7 @@ public class MultiPlayerHostMenu extends MenuScreen {
     public void goToGameScreen(JSONArray players) {
         stopMusic();
         MainGame main = MainGame.getSingleton();
-        GameScreen gameScreen = new GameScreen(main);
-        main.setGame(gameScreen);
-        gameScreen.setMultiPlayer(true);
-        gameScreen.setJoinedMultiplayer(false);
+        GameScreen gameScreen = new GameScreen(main, true, false);
         gameScreen.setPlayers(players);
         gameScreen.setGameData(gameData[0], gameData[1]);
         gameScreen.startMusic();
@@ -142,18 +139,21 @@ public class MultiPlayerHostMenu extends MenuScreen {
     public void goTo(Class<? extends Menu> menu) {
         if (menu.equals(GameScreen.class)) {
             goToGameScreen.updateText("Waiting...");
-            gameData = this.server.startGame(this.nameText.getText(), args -> {
-                Gdx.app.postRunnable(() -> {
-                    try {
-                        JSONObject data = ((JSONObject) args[0]).getJSONObject("data");
+            gameData = this.server.startGame(this.nameText.getText(), new Emitter.Listener() {
+                @Override
+                public void call(Object... args) {
+                    Gdx.app.postRunnable(() -> {
+                        try {
+                            JSONObject data = ((JSONObject) args[0]).getJSONObject("data");
 
-                        JSONArray players = data.getJSONArray("players");
-                        goToGameScreen(players);
-                    } catch (JSONException e) {
-                        e.printStackTrace();
-                    }
-                });
-
+                            JSONArray players = data.getJSONArray("players");
+                            MultiPlayerHostMenu.this.goToGameScreen(players);
+                        } catch (JSONException e) {
+                            e.printStackTrace();
+                        }
+                    });
+                    server.removeListener("start_game", this);
+                }
             });
         }
     }

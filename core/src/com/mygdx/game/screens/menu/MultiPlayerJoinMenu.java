@@ -80,10 +80,7 @@ public class MultiPlayerJoinMenu extends MenuScreen {
     public void goToGameScreen(JSONArray players) {
         stopMusic();
         MainGame main = MainGame.getSingleton();
-        GameScreen gameScreen = new GameScreen(main);
-        main.setGame(gameScreen);
-        gameScreen.setMultiPlayer(true);
-        gameScreen.setJoinedMultiplayer(true);
+        GameScreen gameScreen = new GameScreen(main, true, true);
         gameScreen.setPlayers(players);
         gameScreen.startMusic();
 

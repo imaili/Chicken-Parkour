@@ -77,8 +77,8 @@ public class GameScreen extends BaseScreen implements Menu {
     //private Entity background;
     private MainGame game;
 
-    private boolean isMultiPlayer = true;
-    private boolean isJoinedMultiplayer = true;
+    private boolean isMultiPlayer;
+    private boolean isJoinedMultiplayer;
     private long startTime = 0;
 
     private PauseMenu pauseMenu;
@@ -103,9 +103,16 @@ public class GameScreen extends BaseScreen implements Menu {
     protected final Music MUSIC = MainGame.getSingleton().getAssetManager().get(MUSIC_PATH, Music.class);
     private JSONArray players;
 
-    public GameScreen(MainGame game) {
+    public GameScreen(MainGame game, boolean isMultiPlayer, boolean isJoinedMultiplayer) {
         super(game);
+        try {
+            throw new Exception("wtf");
+        } catch (Exception e) {
+            e.printStackTrace();
+        }
         this.game = game;
+        this.isMultiPlayer = isMultiPlayer;
+        this.isJoinedMultiplayer = isJoinedMultiplayer;
         this.paused = false;
         this.server = Server.getInstance();
         this.startTime = new Date().getTime();
@@ -407,16 +414,8 @@ public class GameScreen extends BaseScreen implements Menu {
         return isMultiPlayer;
     }
 
-    public void setMultiPlayer(boolean isMultiPlayer) {
-        this.isMultiPlayer = isMultiPlayer;
-    }
-
     public boolean isJoinedMultiplayer() {
         return isJoinedMultiplayer;
-    }
-
-    public void setJoinedMultiplayer(boolean isJoinedMultiPlayer) {
-        this.isJoinedMultiplayer = isJoinedMultiPlayer;
     }
 
     public long getStartTime() {
