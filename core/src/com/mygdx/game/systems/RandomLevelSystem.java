@@ -77,6 +77,7 @@ public class RandomLevelSystem extends IteratingSystem {
         super.update(deltaTime);
         accumulatedTime += deltaTime;
         int generatedObstacle = 0;
+        float playerPosition = Mappers.BODY.get(player).body.getPosition().x;
 
         if (!joined && accumulatedTime > 3) {
             accumulatedTime = 0;
@@ -86,23 +87,32 @@ public class RandomLevelSystem extends IteratingSystem {
         }
 
         if (multiplayer) {
-            long offset = new Date().getTime() - startTime;
             if (joined) {
-                Iterator<QueuedEntity> i = renderQueue.iterator();
-                while (i.hasNext()) {
-                    QueuedEntity qe = i.next(); // must be called before you can call i.remove()
-                    if (qe.offset <= offset) {
+                ArrayList<QueuedEntity> deleted = null;
+                for (QueuedEntity qe :
+                        renderQueue) {
+                    if ((float)qe.offset <= playerPosition) {
+                        if (deleted == null) {
+                            deleted = new ArrayList<>();
+                        }
 
                         ObstaclesGenerator.create(qe.entity, this);
 
-                        renderQueue.remove(qe);
+                        deleted.add(qe);
                     } else {
                         break;
                     }
                 }
+
+                if (deleted != null) {
+                    for (QueuedEntity qe :
+                            deleted) {
+                        renderQueue.remove(qe);
+                    }
+                }
             } else {
                 if (generatedObstacle != 0) {
-                    server.addObstacle(offset, generatedObstacle);
+                    server.addObstacle(playerPosition, generatedObstacle);
                 }
             }
         }

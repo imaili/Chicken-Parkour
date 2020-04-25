@@ -24,7 +24,7 @@ public class Server {
 
     private Server() {
         try {
-            socket = IO.socket("http://localhost:8300");
+            socket = IO.socket("http://192.168.43.227:8300");
             socket.on(Socket.EVENT_CONNECT, new Emitter.Listener() {
 
                 @Override
@@ -207,7 +207,7 @@ public class Server {
         this.send(this.createJSONObject("update_location", dataObj));
     }
 
-    public void addObstacle(long offset, int type) {
+    public void addObstacle(float offset, int type) {
         JSONObject dataObj = new JSONObject();
         try {
             dataObj.put("offset", offset);
