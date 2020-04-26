@@ -96,7 +96,7 @@ public class GameOverMenu extends PauseMenu {
             }
 
             if (!allPlayersDone()) {
-
+                this.server = Server.getInstance();
                 this.server.listenForEndGame(new Emitter.Listener() {
                     @Override
                     public void call(Object... args) {
