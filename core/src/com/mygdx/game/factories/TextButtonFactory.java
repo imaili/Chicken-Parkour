@@ -11,6 +11,7 @@ import com.badlogic.gdx.scenes.scene2d.ui.Skin;
 import com.badlogic.gdx.scenes.scene2d.ui.TextButton;
 import com.badlogic.gdx.scenes.scene2d.utils.Drawable;
 import com.badlogic.gdx.scenes.scene2d.utils.TextureRegionDrawable;
+import com.mygdx.game.MainGame;
 import com.mygdx.game.screens.Menu;
 import com.mygdx.game.screens.menu.button.ExitButton;
 import com.mygdx.game.screens.menu.button.GoBackButton;
@@ -96,11 +97,8 @@ public class TextButtonFactory implements ButtonFactory {
     private static final float FONT_SCALE = 0.75f;
 
     public static Skin createBasicSkin(int width, int height) {
-        // Create a font
-        BitmapFont font = new BitmapFont(Gdx.files.internal(Constants.MY_FONT_PATH));
-        font.getData().setScale(FONT_SCALE * LETTER_SIZE / height);
         Skin skin = new Skin();
-        skin.add("default", font);
+        skin.add("default", ((Skin)MainGame.getSingleton().getAssetManager().get(Constants.TABLE_SKIN)).getFont("default-font"));
 
         // Create a texture
         Pixmap pixmap = new Pixmap(width, height, Pixmap.Format.RGB888);
