@@ -31,11 +31,12 @@ public class ChickenSystem extends IteratingSystem {
         BodyComponent bodyComponent = Mappers.BODY.get(entity);
         StateComponent stateComponent = Mappers.STATE.get(entity);
         PowerUpComponent powerUp = Mappers.POWERUP.get(entity);
+        ChickenComponent chicken = Mappers.CHICKEN.get(entity);
 
         if((Gdx.input.isTouched() || Gdx.input.justTouched()) && stateComponent.get() == StateComponent.STATE_WALKING){
            Body body = bodyComponent.body;
            stateComponent.set(StateComponent.STATE_JUMPING);
-           body.applyLinearImpulse(0,6300, body.getPosition().x, body.getPosition().y, true);
+           body.applyLinearImpulse(0,chicken.jumpImpulse, body.getPosition().x, body.getPosition().y, true);
         }
 
         if(bodyComponent.body.getLinearVelocity().y == 0)

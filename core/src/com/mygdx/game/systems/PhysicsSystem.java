@@ -37,6 +37,7 @@ PhysicsSystem extends IteratingSystem {
     public void update(float deltaTime) {
         super.update(deltaTime);
         float frameTime = Math.min(deltaTime, 0.25f);
+        System.out.println(frameTime);
         accumulator += frameTime;
         if(accumulator >= MAX_STEP_TIME) {
             world.step(MAX_STEP_TIME, 6, 2);

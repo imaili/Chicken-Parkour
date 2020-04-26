@@ -56,7 +56,6 @@ import com.mygdx.game.utils.Mappers;
 import java.util.Date;
 
 public class GameScreen extends BaseScreen implements Menu {
-    private static final String MUSIC_TYPE = "game";
     private World world;
     private SpriteBatch spriteBatch;
     private OrthographicCamera camera;
@@ -66,9 +65,7 @@ public class GameScreen extends BaseScreen implements Menu {
     private Entity ground2;
     private int ground1end = 50;
     private int ground2end = 150;
-    //private Entity background;
     private MainGame game;
-
     private boolean isMultiPlayer = true;
     private boolean isJoinedMultiplayer = true;
     private long startTime = 0;
@@ -125,7 +122,7 @@ public class GameScreen extends BaseScreen implements Menu {
         engine.addSystem(new PhysicsDebugSystem(world, camera));
         engine.addSystem(new ChickenSystem());
         engine.addSystem(new CollisionSystem());
-        engine.addSystem(new RandomLevelSystem(player,obstaclesFactory, powerUpFactory, isMultiPlayer, isJoinedMultiplayer, startTime));
+        engine.addSystem(new RandomLevelSystem(player, obstaclesFactory, powerUpFactory, isMultiPlayer, isJoinedMultiplayer, startTime));
         engine.addSystem(new CleanUpSystem(world, camera));
         engine.addSystem(new AnimationSystem());
         engine.addSystem(renderingSystem);
@@ -176,11 +173,11 @@ public class GameScreen extends BaseScreen implements Menu {
             }
             if (Mappers.BODY.get(player).body.getPosition().x > ground1end) {
 
-                Mappers.BODY.get(ground1).body = bodyFactory.createRectangle(ground2end+50,1,100,1,false);
+                Mappers.BODY.get(ground1).body = bodyFactory.createRectangle(ground2end + 50, 1, 100, 1, false);
                 ground1end += 200;
             } else if (Mappers.BODY.get(player).body.getPosition().x > ground2end) {
 
-                Mappers.BODY.get(ground2).body = bodyFactory.createRectangle(ground1end+50,1,100,1,false);
+                Mappers.BODY.get(ground2).body = bodyFactory.createRectangle(ground1end + 50, 1, 100, 1, false);
                 ground2end += 200;
             }
 
@@ -215,7 +212,7 @@ public class GameScreen extends BaseScreen implements Menu {
     }
 
 
-    private void createPlayer(){
+    private void createPlayer() {
         //create an empty entity
         player = engine.createEntity();
 
@@ -229,25 +226,25 @@ public class GameScreen extends BaseScreen implements Menu {
         PowerUpComponent powerUp = engine.createComponent(PowerUpComponent.class);
 
         // set the components data
-        texture.region = new TextureRegion((Texture)game.getAssetManager().get(Constants.WALK_1_PATH));
+        texture.region = new TextureRegion((Texture) game.getAssetManager().get(Constants.WALK_1_PATH));
 
         TextureAtlas atlas = new TextureAtlas(Constants.WALK_ATLAS_PATH);
         Animation ani = new Animation<TextureRegion>(0.1f, atlas.getRegions(), Animation.PlayMode.LOOP);
-        animation.animationsMap.put(StateComponent.STATE_WALKING, ani );
+        animation.animationsMap.put(StateComponent.STATE_WALKING, ani);
 
         atlas = new TextureAtlas(Constants.JUMP_ATLAS_PATH);
         ani = new Animation<TextureRegion>(0.1f, atlas.getRegions());
-        animation.animationsMap.put(StateComponent.STATE_JUMPING, ani );
+        animation.animationsMap.put(StateComponent.STATE_JUMPING, ani);
 
         atlas = new TextureAtlas(Constants.DEAD_ATLAS_PATH);
         ani = new Animation<TextureRegion>(0.1f, atlas.getRegions());
-        animation.animationsMap.put(StateComponent.STATE_HIT, ani );
+        animation.animationsMap.put(StateComponent.STATE_HIT, ani);
 
-        body.body = bodyFactory.createRectangle(2,3,1.3f,3, true);
-        body.body.setLinearVelocity(15,0);
+        body.body = bodyFactory.createRectangle(2, 3, 1.3f, 3, true);
+        body.body.setLinearVelocity(15, 0);
         // set object position (x,y,z) z used to define draw order 0 first drawn
-        position.position.set(2,1,0);
-        position.scale.set(0.7f,0.7f);
+        position.position.set(2, 1, 0);
+        position.scale.set(0.7f, 0.7f);
 
         state.set(StateComponent.STATE_WALKING);
 
@@ -266,14 +263,14 @@ public class GameScreen extends BaseScreen implements Menu {
     }
 
 
-    private Entity createGround(int x){
+    private Entity createGround(int x) {
         Entity entity = engine.createEntity();
         BodyComponent body = engine.createComponent(BodyComponent.class);
         TextureComponent texture = engine.createComponent(TextureComponent.class);
         TransformComponent transform = engine.createComponent(TransformComponent.class);
 
         texture.region = new TextureRegion((Texture) game.getAssetManager().get(Constants.FLOOR_PATH));
-        body.body = bodyFactory.createRectangle(x,1,100,1,false);
+        body.body = bodyFactory.createRectangle(x, 1, 100, 1, false);
         body.body.setUserData(entity);
         transform.position.set(x, 1, 0);
         transform.scale.set(30, 4.3f);
@@ -319,7 +316,7 @@ public class GameScreen extends BaseScreen implements Menu {
         pauseMenu = new PauseMenu(this);
         pauseMenu.setInputProcessor();
         if (!isMultiPlayer) {
-            renderingSystem.setProcessing(false);
+            engine.getSystems().forEach(s -> s.setProcessing(false));
 
         }
     }
@@ -329,7 +326,7 @@ public class GameScreen extends BaseScreen implements Menu {
         paused = false;
         pauseMenu.removeInputProcessor();
         if (!isMultiPlayer)
-            renderingSystem.setProcessing(true);
+            engine.getSystems().forEach(s -> s.setProcessing(true));
     }
 
     public float getScore() {
@@ -354,7 +351,7 @@ public class GameScreen extends BaseScreen implements Menu {
     }
 
     public long getStartTime() {
-        return  startTime;
+        return startTime;
     }
 
     private Menu previousMenu;

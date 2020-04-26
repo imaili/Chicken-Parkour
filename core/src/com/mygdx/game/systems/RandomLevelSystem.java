@@ -162,7 +162,7 @@ public class RandomLevelSystem extends IteratingSystem {
         }
 
         private static void createStairs(int stairs, RandomLevelSystem system) {
-            
+
             for (int i = 1; i <= stairs; i++) {
                 TransformComponent playerPosition = Mappers.TRANSFORM.get(system.player);
                 system.obstaclesFactory.createPlatform(playerPosition.position.x + 60 + i * 11, 4.3f, 1, i);
