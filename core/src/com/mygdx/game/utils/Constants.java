@@ -5,7 +5,7 @@ import com.badlogic.gdx.graphics.Texture;
 import com.badlogic.gdx.math.Vector2;
 
 public class Constants {
-    public static final String SERVER_HOST = "http://192.168.43.227:8300";
+    public static final String SERVER_HOST = "http://10.0.2.2:8300";
 
     public static final float PIXELS_PER_METER = 32.0f;
     public static final float WORLD_WIDTH = Gdx.graphics.getWidth()/PIXELS_PER_METER;

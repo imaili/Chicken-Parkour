@@ -404,7 +404,7 @@ public class GameScreen extends BaseScreen implements Menu {
     }
 
     public int getScore() {
-        return (int) Mappers.BODY.get(player).body.getPosition().x + Mappers.CHICKEN.get(player).leaves * 100;
+        return (int) Mappers.BODY.get(player).body.getPosition().x + Mappers.CHICKEN.get(player).leaves * 1000;
     }
 
     public boolean isMultiPlayer() {
