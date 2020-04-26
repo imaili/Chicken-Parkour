@@ -75,14 +75,12 @@ public class MainGame extends Game {
 		manager.load(Constants.PLATFORM_PATH, Texture.class);
 		manager.load(Constants.FLOOR_PATH, Texture.class);
 		manager.load(Constants.SPIKE_PATH, Texture.class);
+		manager.load(Constants.BACK_BUTTON, Texture.class);
 
 		manager.load(Constants.WALK_ATLAS_PATH, TextureAtlas.class);
 		manager.load(Constants.SKIN_PATH, Skin.class, new SkinLoader.SkinParameter(Constants.SKIN_ATLAS));
 		manager.load(Constants.DEAD_ATLAS_PATH, TextureAtlas.class);
-		manager.load(Constants.IDLE_ATLAS_PATH, TextureAtlas.class);
 		manager.load(Constants.JUMP_ATLAS_PATH, TextureAtlas.class);
-		manager.load(Constants.RUN_ATLAS_PATH, TextureAtlas.class);
-		manager.load(Constants.SLIDE_ATLAS_PATH, TextureAtlas.class);
 
 		manager.load(Constants.EXIT_MENU_BACKGROUND_PATH, Texture.class);
 		manager.load(Constants.PAUSE_MENU_BACKGROUND_PATH, Texture.class);

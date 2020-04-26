@@ -13,7 +13,7 @@ import com.mygdx.game.utils.Constants;
 
 public class GoBackButton extends MenuButton {
 
-    public static final String GO_BACK_FILE_NAME = Constants.EXIT_MENU_EMPTY_PATH;
+    public static final String GO_BACK_FILE_NAME = Constants.BACK_BUTTON;
 
     private static Button createButton() {
         return new ImageButton(new TextureRegionDrawable(new TextureRegion(new Texture(GO_BACK_FILE_NAME))));

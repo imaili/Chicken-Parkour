@@ -14,7 +14,7 @@ import java.util.List;
 
 public class ExitMenu extends MenuScreen {
 
-    protected static final Texture DEFAULT_EXIT_TEXTURE = new Texture(Constants.EXIT_MENU_TEXT_PATH);
+    protected static final Texture DEFAULT_EXIT_TEXTURE = new Texture(Constants.EXIT_MENU_BACKGROUND_PATH);
     protected static final int X = Gdx.graphics.getWidth() / 4;
     protected static final int Y = Gdx.graphics.getHeight() / 4;
     protected static final int WIDTH = Gdx.graphics.getWidth() / 2;

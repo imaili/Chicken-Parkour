@@ -105,7 +105,7 @@ public class GameScreen extends BaseScreen implements Menu {
         this.paused = false;
         this.server = Server.getInstance();
         this.startTime = new Date().getTime();
-        pauseTexture = game.getAssetManager().get(Constants.EXIT_MENU_BACKGROUND_PATH);
+        pauseTexture = game.getAssetManager().get(Constants.BACK_BUTTON);
         pauseTextureX = Gdx.graphics.getWidth() - pauseTexture.getWidth();
         pauseTextureY = Gdx.graphics.getHeight() - pauseTexture.getHeight();
 
