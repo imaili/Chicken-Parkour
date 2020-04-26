@@ -2,16 +2,11 @@ package com.mygdx.game.factories;
 
 import com.badlogic.ashley.core.Entity;
 import com.badlogic.ashley.core.PooledEngine;
-import com.badlogic.gdx.Gdx;
-import com.badlogic.gdx.assets.AssetManager;
-import com.badlogic.gdx.graphics.Color;
-import com.badlogic.gdx.graphics.Pixmap;
 import com.badlogic.gdx.graphics.Texture;
 import com.badlogic.gdx.graphics.g2d.TextureRegion;
 import com.mygdx.game.MainGame;
 import com.mygdx.game.components.AnimationComponent;
 import com.mygdx.game.components.BodyComponent;
-import com.mygdx.game.components.ChickenComponent;
 import com.mygdx.game.components.CleanUpComponent;
 import com.mygdx.game.components.CollisionComponent;
 import com.mygdx.game.components.LeafComponent;

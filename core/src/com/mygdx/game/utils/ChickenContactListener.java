@@ -9,7 +9,6 @@ import com.badlogic.gdx.physics.box2d.Manifold;
 import com.mygdx.game.components.ChickenComponent;
 import com.mygdx.game.components.CollisionComponent;
 
-//test
 
 public class ChickenContactListener implements ContactListener {
 
@@ -27,7 +26,7 @@ public class ChickenContactListener implements ContactListener {
             entityCollision(ent,fb);
             return;
 
-        //if fb is the chicken fixtre
+        //if fb is the chicken fixture
         }else if(fb.getBody().getUserData() instanceof Entity &&
                 ((Entity) fb.getBody().getUserData()).getComponent(ChickenComponent.class) != null){
 

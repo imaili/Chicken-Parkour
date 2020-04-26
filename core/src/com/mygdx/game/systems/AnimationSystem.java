@@ -4,21 +4,18 @@ import com.badlogic.ashley.core.ComponentMapper;
 import com.badlogic.ashley.core.Entity;
 import com.badlogic.ashley.core.Family;
 import com.badlogic.ashley.systems.IteratingSystem;
-import com.badlogic.gdx.graphics.g2d.Animation;
 import com.badlogic.gdx.graphics.g2d.TextureRegion;
 import com.mygdx.game.components.AnimationComponent;
 import com.mygdx.game.components.StateComponent;
 import com.mygdx.game.components.TextureComponent;
 import com.mygdx.game.utils.Mappers;
 
-import java.util.Map;
 
 public class AnimationSystem extends IteratingSystem {
 
     ComponentMapper<TextureComponent> textureMapper = Mappers.TEXTURE;
     ComponentMapper<AnimationComponent> animationMapper = Mappers.ANIMATION;
     ComponentMapper<StateComponent> stateMapper = Mappers.STATE;
-    StateComponent state;
     public AnimationSystem() {
         super(Family.all(AnimationComponent.class,
                          TextureComponent.class,

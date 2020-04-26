@@ -88,9 +88,6 @@ public class TextButtonFactory implements ButtonFactory {
         return createBasicSkin(Gdx.graphics.getWidth() / 4, Gdx.graphics.getHeight() / 8);
     }
 
-    private static final int LETTER_SIZE = 64;
-
-    private static final float FONT_SCALE = 0.75f;
 
     public static Skin createBasicSkin(int width, int height) {
         Skin skin = new Skin();
