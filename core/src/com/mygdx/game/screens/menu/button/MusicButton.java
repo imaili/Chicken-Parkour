@@ -7,8 +7,8 @@ import com.badlogic.gdx.scenes.scene2d.ui.TextButton;
 import com.mygdx.game.MainGame;
 
 public class MusicButton extends MenuButton {
-    private static final String START_MUSIC_BUTTON_NAME = "Music ON";
-    private static final String STOP_MUSIC_BUTTON_NAME = "Music OFF";
+    private static final String START_MUSIC_BUTTON_NAME = "Turn Music on";
+    private static final String STOP_MUSIC_BUTTON_NAME = "Turn Music off";
 
     private Action action;
 

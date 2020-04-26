@@ -37,7 +37,7 @@ public class MainGame extends Game {
 		setMenu(menu);
 		Gdx.input.setInputProcessor(new InputMultiplexer());
 		menu.setInputProcessor();
-		music = false;
+		music = true;
 		menu.startMusic();
 		//setScreen(new GameScreen(this));
 

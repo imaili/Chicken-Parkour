@@ -35,8 +35,8 @@ public class MultiPlayerTypeMenu extends MenuScreen {
         int buttonOffset = (Gdx.graphics.getHeight() - buttonHeight * nButtons) / (nButtons + 1);
         List<MenuButton> list = new LinkedList<>();
         MenuButton goBack = IMAGE_BUTTON_FACTORY.createGoBackButton();
-        GoToButton goToHostScreen = DEFAULT_TEXT_BUTTON_FACTORY.createGoToButton("HOST", new Vector2(buttonX, buttonOffset + 2 * (buttonHeight + buttonOffset)), MultiPlayerHostMenu.class);
-        GoToButton goToJoinScreen = DEFAULT_TEXT_BUTTON_FACTORY.createGoToButton("JOIN", new Vector2(buttonX, buttonOffset +  (buttonHeight + buttonOffset)), MultiPlayerJoinMenu.class);
+        GoToButton goToHostScreen = DEFAULT_TEXT_BUTTON_FACTORY.createGoToButton("Host game", new Vector2(buttonX, buttonOffset + 2 * (buttonHeight + buttonOffset)), MultiPlayerHostMenu.class);
+        GoToButton goToJoinScreen = DEFAULT_TEXT_BUTTON_FACTORY.createGoToButton("Join game", new Vector2(buttonX, buttonOffset +  (buttonHeight + buttonOffset)), MultiPlayerJoinMenu.class);
         Collections.addAll(list, goBack, goToHostScreen, goToJoinScreen);
         return list;
     }

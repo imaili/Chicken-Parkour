@@ -172,7 +172,7 @@ public class GameOverMenu extends PauseMenu {
     public void goTo(Class<? extends Menu> menu) {
         super.goTo(menu);
         if (menu.equals(GameScreen.class)) {
-            server.leaveGame();
+            if (server != null){ server.leaveGame();}
             goToGameScreen();
         }
 
