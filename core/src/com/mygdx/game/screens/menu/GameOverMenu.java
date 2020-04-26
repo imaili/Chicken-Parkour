@@ -191,9 +191,11 @@ public class GameOverMenu extends PauseMenu {
                 int position = (int) (Mappers.BODY.get(((GameScreen)previousMenu).getPlayer()).body.getPosition().x + simulationStep * 30);
                 int obstacle = (int) (Math.random() * Obstacles.OBSTACLE_NUMBER);
                 //generate the to be added entities here...
-                server.addObstacle(
-                        position,
-                        obstacle);
+                if(server != null) {
+                    server.addObstacle(
+                            position,
+                            obstacle);
+                }
             }
         }
     }
