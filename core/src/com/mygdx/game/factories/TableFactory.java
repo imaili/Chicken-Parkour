@@ -6,7 +6,7 @@ import com.mygdx.game.MainGame;
 import com.mygdx.game.utils.Constants;
 
 public class TableFactory {
-    private static Skin skin = MainGame.getSingleton().getAssetManager().get(Constants.SKIN);
+    private static Skin skin = MainGame.getSingleton().getAssetManager().get(Constants.SKIN_PATH);
 
     public static Table create() {
         return new Table(skin);

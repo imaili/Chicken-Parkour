@@ -4,13 +4,9 @@ import com.badlogic.gdx.Gdx;
 import com.badlogic.gdx.graphics.Color;
 import com.badlogic.gdx.graphics.Pixmap;
 import com.badlogic.gdx.graphics.Texture;
-import com.badlogic.gdx.graphics.g2d.BitmapFont;
-import com.badlogic.gdx.graphics.g2d.TextureRegion;
 import com.badlogic.gdx.math.Vector2;
 import com.badlogic.gdx.scenes.scene2d.ui.Skin;
 import com.badlogic.gdx.scenes.scene2d.ui.TextButton;
-import com.badlogic.gdx.scenes.scene2d.utils.Drawable;
-import com.badlogic.gdx.scenes.scene2d.utils.TextureRegionDrawable;
 import com.mygdx.game.MainGame;
 import com.mygdx.game.screens.Menu;
 import com.mygdx.game.screens.menu.button.ExitButton;
@@ -98,7 +94,7 @@ public class TextButtonFactory implements ButtonFactory {
 
     public static Skin createBasicSkin(int width, int height) {
         Skin skin = new Skin();
-        skin.add("default", ((Skin)MainGame.getSingleton().getAssetManager().get(Constants.SKIN)).getFont("default-font"));
+        skin.add("default", ((Skin)MainGame.getSingleton().getAssetManager().get(Constants.SKIN_PATH)).getFont("default-font"));
 
         // Create a texture
         Pixmap pixmap = new Pixmap(width, height, Pixmap.Format.RGB888);
@@ -116,27 +112,4 @@ public class TextButtonFactory implements ButtonFactory {
         skin.add("default", textButtonStyle);
         return skin;
     }
-
-    public static Skin createSkin(int width, int height, Texture up, Texture down) {
-        // Create a font
-        BitmapFont font = new BitmapFont(Gdx.files.internal(Constants.MY_FONT_PATH));
-        font.getData().setScale(FONT_SCALE * LETTER_SIZE / height);
-        Skin skin = new Skin();
-        skin.add("default", font);
-
-        // Change Textures to drawables
-        Drawable buttonUp = new TextureRegionDrawable(new TextureRegion(up, width, height));
-        Drawable buttonDown = new TextureRegionDrawable(new TextureRegion(down, width, height));
-
-        // Create a button style
-        TextButton.TextButtonStyle textButtonStyle = new TextButton.TextButtonStyle();
-        textButtonStyle.up = buttonUp;
-        textButtonStyle.down = buttonDown;
-        textButtonStyle.checked = buttonUp;
-        textButtonStyle.over = buttonUp;
-        textButtonStyle.font = skin.getFont("default");
-        skin.add("default", textButtonStyle);
-        return skin;
-    }
-
 }

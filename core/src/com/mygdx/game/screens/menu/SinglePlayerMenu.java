@@ -46,7 +46,7 @@ public class SinglePlayerMenu extends MenuScreen {
 
     public List<Actor> getActors() {
         List<Actor> list = new LinkedList<>();
-        Skin skin = MainGame.getSingleton().getAssetManager().get(Constants.SKIN);
+        Skin skin = MainGame.getSingleton().getAssetManager().get(Constants.SKIN_PATH);
         nameText = TextFieldFactory.create("");
         table = TableFactory.create();
         list.add(table);

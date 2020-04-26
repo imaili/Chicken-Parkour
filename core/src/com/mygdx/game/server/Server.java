@@ -1,5 +1,7 @@
 package com.mygdx.game.server;
 
+import com.mygdx.game.utils.Constants;
+
 import org.json.JSONObject;
 
 import java.util.ArrayList;
@@ -24,12 +26,19 @@ public class Server {
 
     private Server() {
         try {
-            socket = IO.socket("http://192.168.43.227:8300");
-            socket.on(Socket.EVENT_CONNECT, new Emitter.Listener() {
+            socket = IO.socket(Constants.SERVER_HOST);
+            socket.on(Socket.EVENT_CONNECTING, new Emitter.Listener() {
 
                 @Override
                 public void call(Object... args) {
-                    System.out.println("Connected!");
+                    System.out.println("Connecting to " + Constants.SERVER_HOST + "...");
+                }
+
+            }).on(Socket.EVENT_CONNECT, new Emitter.Listener() {
+
+                @Override
+                public void call(Object... args) {
+                    System.out.println("Connected to!");
                 }
 
             }).on(Socket.EVENT_MESSAGE, new Emitter.Listener() {

@@ -1,14 +1,10 @@
 package com.mygdx.game.screens.menu;
 
-import com.badlogic.gdx.Game;
 import com.badlogic.gdx.Gdx;
-import com.badlogic.gdx.graphics.Color;
 import com.badlogic.gdx.graphics.Texture;
-import com.badlogic.gdx.graphics.g2d.BitmapFont;
 import com.badlogic.gdx.math.Vector2;
 import com.badlogic.gdx.scenes.scene2d.Actor;
 import com.badlogic.gdx.scenes.scene2d.ui.Label;
-import com.badlogic.gdx.scenes.scene2d.ui.Skin;
 import com.badlogic.gdx.scenes.scene2d.ui.Table;
 import com.mygdx.game.MainGame;
 import com.mygdx.game.factories.LabelFactory;
@@ -18,9 +14,7 @@ import com.mygdx.game.screens.Menu;
 import com.mygdx.game.screens.menu.button.GoToButton;
 import com.mygdx.game.screens.menu.button.MenuButton;
 import com.mygdx.game.server.Server;
-import com.mygdx.game.systems.RandomLevelSystem;
 import com.mygdx.game.utils.Constants;
-import com.mygdx.game.utils.Font;
 import com.mygdx.game.utils.Mappers;
 import com.mygdx.game.utils.Obstacles;
 
