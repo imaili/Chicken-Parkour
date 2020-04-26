@@ -10,17 +10,13 @@ import java.util.Collections;
 import java.util.LinkedList;
 import java.util.List;
 
-import static com.mygdx.game.utils.Constants.BACKGROUND_MENU_EMPTY_PATH;
 
 public class PlayerMenu extends MenuScreen {
 
     @Override
     protected List<MenuButton> createButtons() {
 
-      //  int buttonX = Gdx.graphics.getWidth() /2 + Gdx.graphics.getWidth() / 10;
-        //  int nButtons = 2;
-       // int buttonHeight = Gdx.graphics.getHeight() / 10;
-       // int buttonOffset = (Gdx.graphics.getHeight() - buttonHeight * nButtons) / (nButtons + 1);
+
         int buttonX = Gdx.graphics.getWidth() / 2 - Gdx.graphics.getWidth() / 8;
         int buttonHeight = Gdx.graphics.getHeight() / 10;
         List<MenuButton> list = new LinkedList<>();

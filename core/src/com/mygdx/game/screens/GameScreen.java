@@ -4,10 +4,8 @@ import com.badlogic.ashley.core.Entity;
 import com.badlogic.ashley.core.PooledEngine;
 import com.badlogic.gdx.Gdx;
 import com.badlogic.gdx.audio.Music;
-import com.badlogic.gdx.graphics.Color;
 import com.badlogic.gdx.graphics.GL20;
 import com.badlogic.gdx.graphics.OrthographicCamera;
-import com.badlogic.gdx.graphics.Pixmap;
 import com.badlogic.gdx.graphics.Texture;
 import com.badlogic.gdx.graphics.g2d.Animation;
 import com.badlogic.gdx.graphics.g2d.SpriteBatch;
@@ -15,10 +13,6 @@ import com.badlogic.gdx.graphics.g2d.TextureAtlas;
 import com.badlogic.gdx.graphics.g2d.TextureRegion;
 import com.badlogic.gdx.math.Rectangle;
 import com.badlogic.gdx.math.Vector2;
-import com.badlogic.gdx.physics.box2d.Body;
-import com.badlogic.gdx.physics.box2d.BodyDef;
-import com.badlogic.gdx.physics.box2d.FixtureDef;
-import com.badlogic.gdx.physics.box2d.PolygonShape;
 import com.badlogic.gdx.physics.box2d.World;
 import com.badlogic.gdx.scenes.scene2d.ui.Label;
 import com.mygdx.game.MainGame;
@@ -111,7 +105,7 @@ public class GameScreen extends BaseScreen implements Menu {
         this.paused = false;
         this.server = Server.getInstance();
         this.startTime = new Date().getTime();
-        pauseTexture = game.getAssetManager().get(Constants.EXIT_MENU_PATH);
+        pauseTexture = game.getAssetManager().get(Constants.EXIT_MENU_EMPTY_PATH);
         pauseTextureX = Gdx.graphics.getWidth() - pauseTexture.getWidth();
         pauseTextureY = Gdx.graphics.getHeight() - pauseTexture.getHeight();
 
@@ -242,10 +236,7 @@ public class GameScreen extends BaseScreen implements Menu {
             drawButton();
             drawScore();
 
-            //server.updatePlayerLocation(Mappers.BODY.get(player).body.getPosition().x, Mappers.BODY.get(player).body.getPosition().y);
-
             if (Mappers.STATE.get(player).get() == StateComponent.STATE_HIT) {
-                //game.setScreen(new GameOverScreen(game));
                 server.endGame(getScore());
                 goTo(GameOverMenu.class);
 
@@ -305,17 +296,17 @@ public class GameScreen extends BaseScreen implements Menu {
         PowerUpComponent powerUp = engine.createComponent(PowerUpComponent.class);
 
         // set the components data
-        texture.region = new TextureRegion((Texture) game.getAssetManager().get(Constants.WALK_1_PATH));
+        texture.region = new TextureRegion((Texture) game.getAssetManager().get(Constants.DINOSAUR_TEXTURE_PATH));
 
-        TextureAtlas atlas = new TextureAtlas(Constants.WALK_ATLAS_PATH);
+        TextureAtlas atlas = game.getAssetManager().get(Constants.WALK_ATLAS_PATH);
         Animation ani = new Animation<TextureRegion>(0.1f, atlas.getRegions(), Animation.PlayMode.LOOP);
         animation.animationsMap.put(StateComponent.STATE_WALKING, ani);
 
-        atlas = new TextureAtlas(Constants.JUMP_ATLAS_PATH);
+        atlas = game.getAssetManager().get(Constants.JUMP_ATLAS_PATH);
         ani = new Animation<TextureRegion>(0.1f, atlas.getRegions());
         animation.animationsMap.put(StateComponent.STATE_JUMPING, ani);
 
-        atlas = new TextureAtlas(Constants.DEAD_ATLAS_PATH);
+        atlas = game.getAssetManager().get(Constants.DEAD_ATLAS_PATH);
         ani = new Animation<TextureRegion>(0.1f, atlas.getRegions());
         animation.animationsMap.put(StateComponent.STATE_HIT, ani);
 

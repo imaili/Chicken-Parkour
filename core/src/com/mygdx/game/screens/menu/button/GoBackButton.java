@@ -9,11 +9,11 @@ import com.badlogic.gdx.scenes.scene2d.ui.ImageButton;
 import com.badlogic.gdx.scenes.scene2d.ui.Skin;
 import com.badlogic.gdx.scenes.scene2d.ui.TextButton;
 import com.badlogic.gdx.scenes.scene2d.utils.TextureRegionDrawable;
-import com.mygdx.game.screens.Menu;
+import com.mygdx.game.utils.Constants;
 
 public class GoBackButton extends MenuButton {
 
-    public static final String GO_BACK_FILE_NAME = "exit1.png";
+    public static final String GO_BACK_FILE_NAME = Constants.EXIT_MENU_EMPTY_PATH;
 
     private static Button createButton() {
         return new ImageButton(new TextureRegionDrawable(new TextureRegion(new Texture(GO_BACK_FILE_NAME))));

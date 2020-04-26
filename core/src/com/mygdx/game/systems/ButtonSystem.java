@@ -43,7 +43,6 @@ public class ButtonSystem extends IteratingSystem {
     public void update(float deltaTime) {
         super.update(deltaTime);
 
-        //stage.clear();
 
         for (Entity entity : renderQueue) {
             ButtonComponent b = buttonM.get(entity);

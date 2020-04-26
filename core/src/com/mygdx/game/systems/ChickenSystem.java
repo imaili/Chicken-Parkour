@@ -5,15 +5,10 @@ import com.badlogic.ashley.core.Family;
 import com.badlogic.ashley.systems.IteratingSystem;
 import com.badlogic.gdx.Gdx;
 import com.badlogic.gdx.physics.box2d.Body;
-import com.mygdx.game.components.AnimationComponent;
 import com.mygdx.game.components.BodyComponent;
 import com.mygdx.game.components.ChickenComponent;
-import com.mygdx.game.components.CollisionComponent;
-import com.mygdx.game.components.PowerUp;
 import com.mygdx.game.components.PowerUpComponent;
 import com.mygdx.game.components.StateComponent;
-import com.mygdx.game.components.TextureComponent;
-import com.mygdx.game.components.TransformComponent;
 import com.mygdx.game.utils.Mappers;
 
 public class ChickenSystem extends IteratingSystem {
