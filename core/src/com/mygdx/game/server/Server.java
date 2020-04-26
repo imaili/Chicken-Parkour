@@ -122,7 +122,7 @@ public class Server {
 
     private void addListener(String type, Emitter.Listener listener) {
         if (!listeners.containsKey(type)) {
-            listeners.put(type, new ArrayList<>());
+            listeners.put(type, new ArrayList<Emitter.Listener>());
         }
 
         listeners.get(type).add(listener);
