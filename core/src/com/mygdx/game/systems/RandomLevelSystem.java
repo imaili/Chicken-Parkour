@@ -120,6 +120,7 @@ public class RandomLevelSystem extends IteratingSystem {
 
     public void disabledJoined() {
         joined = false;
+        multiplayer = true;
     }
 
 
