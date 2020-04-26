@@ -24,7 +24,7 @@ public class Server {
 
     private Server() {
         try {
-            socket = IO.socket("http://localhost:8300");
+            socket = IO.socket("http://192.168.43.227:8300");
             socket.on(Socket.EVENT_CONNECT, new Emitter.Listener() {
 
                 @Override
@@ -92,6 +92,11 @@ public class Server {
         listeners.get(type).remove(listener);
     }
 
+    public void clearListeners() {
+        this.listeners.clear();
+        System.out.println("cleared");
+    }
+
     public void listenForStartGame(Emitter.Listener listener) {
         this.addListener("start_game", listener);
     }
@@ -100,9 +105,13 @@ public class Server {
         this.addListener("add_obstacle", listener);
     }
 
+    public void listenForLeaveGame(Emitter.Listener listener) {
+        this.addListener("leave_game", listener);
+    }
+
     private void addListener(String type, Emitter.Listener listener) {
         if (!listeners.containsKey(type)) {
-            listeners.put(type, new ArrayList<Emitter.Listener>());
+            listeners.put(type, new ArrayList<>());
         }
 
         listeners.get(type).add(listener);
@@ -129,17 +138,11 @@ public class Server {
         this.send(this.createJSONObject("new_game", null));
 
         this.addListener("join_game", listener);
-        this.addListener("leave_game", listener);
 
         return new String[]{
                 this.player_id,
                 this.game_id
         };
-    }
-
-    public void leaveGame() {
-        System.out.println("leave!");
-        this.send(this.createJSONObject("leave_game", null));
     }
 
     public String[] joinGame(String game_id, String player_name, Emitter.Listener listener) {
@@ -164,13 +167,18 @@ public class Server {
         };
     }
 
-    public String[] startGame(String player_name) {
+    public String[] startGame(String player_name, Emitter.Listener listener) {
         JSONObject data = new JSONObject();
         try {
             data.put("player_name", player_name);
         } catch (Exception e) {
             System.out.println(e.getMessage());
         }
+
+        if (listener != null) {
+            this.addListener("start_game", listener);
+        }
+
         this.send(this.createJSONObject("start_game", data));
         return new String[]{
                 this.player_id,
@@ -193,6 +201,10 @@ public class Server {
         this.send(this.createJSONObject("get_highscores", null));
     }
 
+    public void leaveGame() {
+        this.send(this.createJSONObject("leave_game", null));
+    }
+
     public void updatePlayerLocation(float x, float y) {
         JSONObject dataObj = new JSONObject();
         try {
@@ -208,7 +220,7 @@ public class Server {
         this.send(this.createJSONObject("update_location", dataObj));
     }
 
-    public void addObstacle(long offset, String type) {
+    public void addObstacle(int offset, int type) {
         JSONObject dataObj = new JSONObject();
         try {
             dataObj.put("offset", offset);
@@ -228,6 +240,7 @@ public class Server {
             System.out.println(e.getMessage());
         }
         this.send(this.createJSONObject("end_game", dataObj));
+        this.listeners.clear();
     }
 
     private void send(JSONObject message) {
@@ -239,5 +252,9 @@ public class Server {
             System.out.println(e.getMessage());
         }
 
+    }
+
+    public void listenForEndGame(Emitter.Listener endGameListener) {
+        this.addListener("end_game", endGameListener);
     }
 }

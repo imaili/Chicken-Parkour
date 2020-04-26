@@ -28,7 +28,6 @@ public abstract class ObstaclesFactory {
     }
 
     public void createPlatform(float x, float y, int width, int height){
-        List<Entity> list = new LinkedList<>();
 
         for(int i = 0; i<height; i++)
             for(int j = 0; j < width; j++)

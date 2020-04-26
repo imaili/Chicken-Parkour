@@ -16,8 +16,6 @@ import com.mygdx.game.components.TextureComponent;
 import com.mygdx.game.components.TransformComponent;
 import com.mygdx.game.utils.Constants;
 
-import sun.applet.Main;
-
 public class BasicObstaclesFactory extends ObstaclesFactory {
 
 

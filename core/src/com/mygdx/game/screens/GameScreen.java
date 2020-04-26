@@ -20,6 +20,7 @@ import com.badlogic.gdx.physics.box2d.BodyDef;
 import com.badlogic.gdx.physics.box2d.FixtureDef;
 import com.badlogic.gdx.physics.box2d.PolygonShape;
 import com.badlogic.gdx.physics.box2d.World;
+import com.badlogic.gdx.scenes.scene2d.ui.Label;
 import com.mygdx.game.MainGame;
 import com.mygdx.game.components.AnimationComponent;
 import com.mygdx.game.components.BodyComponent;
@@ -34,6 +35,7 @@ import com.mygdx.game.factories.BasicBodyFactory;
 import com.mygdx.game.factories.BasicObstaclesFactory;
 import com.mygdx.game.factories.BasicPowerUpFactory;
 import com.mygdx.game.factories.BodyFactory;
+import com.mygdx.game.factories.LabelFactory;
 import com.mygdx.game.factories.ObstaclesFactory;
 import com.mygdx.game.factories.PowerUpFactory;
 import com.mygdx.game.systems.CameraSystem;
@@ -53,7 +55,13 @@ import com.mygdx.game.utils.ChickenContactListener;
 import com.mygdx.game.utils.Constants;
 import com.mygdx.game.utils.Mappers;
 
+import org.json.JSONArray;
+import org.json.JSONException;
+import org.json.JSONObject;
+
 import java.util.Date;
+
+import io.socket.emitter.Emitter;
 
 public class GameScreen extends BaseScreen implements Menu {
     private World world;
@@ -68,6 +76,9 @@ public class GameScreen extends BaseScreen implements Menu {
     private MainGame game;
     private boolean isMultiPlayer = true;
     private boolean isJoinedMultiplayer = true;
+
+
+
     private long startTime = 0;
 
     private PauseMenu pauseMenu;
@@ -79,25 +90,59 @@ public class GameScreen extends BaseScreen implements Menu {
     private BodyFactory bodyFactory;
     private ObstaclesFactory obstaclesFactory;
     private PowerUpFactory powerUpFactory;
+    private RandomLevelSystem randomLevelSystem;
     private Server server;
     private String game_id;
     private String player_id;
+    Emitter.Listener endGameListener;
+    Label score;
 
 
     private Background background;
 
     protected static final String MUSIC_PATH = Constants.MUSIC_GAME_PATH;
     protected final Music MUSIC = MainGame.getSingleton().getAssetManager().get(MUSIC_PATH, Music.class);
+    private JSONArray players;
 
-    public GameScreen(MainGame game) {
+    public GameScreen(MainGame game, boolean isMultiPlayer, boolean isJoinedMultiplayer) {
         super(game);
         this.game = game;
+        this.isMultiPlayer = isMultiPlayer;
+        this.isJoinedMultiplayer = isJoinedMultiplayer;
         this.paused = false;
         this.server = Server.getInstance();
         this.startTime = new Date().getTime();
         pauseTexture = game.getAssetManager().get(Constants.EXIT_MENU_PATH);
         pauseTextureX = Gdx.graphics.getWidth() - pauseTexture.getWidth();
         pauseTextureY = Gdx.graphics.getHeight() - pauseTexture.getHeight();
+
+        this.server.listenForEndGame(new Emitter.Listener() {
+            @Override
+            public void call(Object... args) {
+                JSONObject message = (JSONObject) args[0];
+                for (int i = 0; i < players.length(); i++) {
+                    try {
+                        JSONObject player = players.getJSONObject(i);
+                        if (player.getString("id").equals(message.getString("player_id"))) {
+                            JSONObject data = message.getJSONObject("data");
+                            player.put("score", data.getString("score"));
+                            break;
+                        }
+                    } catch (JSONException e) {
+                        e.printStackTrace();
+                    }
+
+                }
+            }
+        });
+
+        this.server.listenForLeaveGame(new Emitter.Listener() {
+            @Override
+            public void call(Object... args) {
+                //host left, migrate to own game
+                randomLevelSystem.disabledJoined();
+            }
+        });
     }
 
     @Override
@@ -123,6 +168,7 @@ public class GameScreen extends BaseScreen implements Menu {
         engine.addSystem(new ChickenSystem());
         engine.addSystem(new CollisionSystem());
         engine.addSystem(new RandomLevelSystem(player, obstaclesFactory, powerUpFactory, isMultiPlayer, isJoinedMultiplayer, startTime));
+
         engine.addSystem(new CleanUpSystem(world, camera));
         engine.addSystem(new AnimationSystem());
         engine.addSystem(renderingSystem);
@@ -133,8 +179,12 @@ public class GameScreen extends BaseScreen implements Menu {
         engine.addEntity(ground2);
 
         createCameraEntity();
+        createScoreLabel();
+    }
 
-
+    private void createScoreLabel() {
+        score = LabelFactory.create("Score: 0");
+        score.setPosition(0, Gdx.graphics.getHeight() - score.getHeight());
     }
 
     private boolean buttonPressed() {
@@ -147,11 +197,40 @@ public class GameScreen extends BaseScreen implements Menu {
     }
 
     private final SpriteBatch buttonBatch = new SpriteBatch();
+    private final SpriteBatch scoreBatch = new SpriteBatch();
 
     private void drawButton() {
         buttonBatch.begin();
         buttonBatch.draw(pauseTexture, pauseTextureX, pauseTextureY);
         buttonBatch.end();
+    }
+
+    public Entity getPlayer() {
+        return player;
+    }
+
+    private void drawScore() {
+        scoreBatch.begin();
+        score.setText("Score: " + this.getScore());
+        score.draw(scoreBatch, 1);
+        scoreBatch.end();
+    }
+
+    public String getPlayerId() {
+        return player_id;
+    }
+
+    public void setGameData(String player_id, String game_id) {
+        this.player_id = player_id;
+        this.game_id = game_id;
+    }
+
+    public void setPlayers(JSONArray players) {
+        this.players = players;
+    }
+
+    public JSONArray getPlayers() {
+        return this.players;
     }
 
     @Override
@@ -162,14 +241,15 @@ public class GameScreen extends BaseScreen implements Menu {
             background.render();
             engine.update(delta);
             drawButton();
+            drawScore();
 
             //server.updatePlayerLocation(Mappers.BODY.get(player).body.getPosition().x, Mappers.BODY.get(player).body.getPosition().y);
 
             if (Mappers.STATE.get(player).get() == StateComponent.STATE_HIT) {
                 //game.setScreen(new GameOverScreen(game));
+                server.endGame(getScore());
                 goTo(GameOverMenu.class);
-                int score = 50000000;
-                server.endGame(score);
+
             }
             if (Mappers.BODY.get(player).body.getPosition().x > ground1end) {
 
@@ -312,11 +392,13 @@ public class GameScreen extends BaseScreen implements Menu {
 
     @Override
     public void pause() {
+
         paused = true;
         pauseMenu = new PauseMenu(this);
         pauseMenu.setInputProcessor();
         if (!isMultiPlayer) {
             engine.getSystems().forEach(s -> s.setProcessing(false));
+
 
         }
     }
@@ -324,30 +406,22 @@ public class GameScreen extends BaseScreen implements Menu {
     @Override
     public void resume() {
         paused = false;
+
         pauseMenu.removeInputProcessor();
         if (!isMultiPlayer)
             engine.getSystems().forEach(s -> s.setProcessing(true));
     }
 
-    public float getScore() {
-        int coinCount = 0;
-        return Mappers.BODY.get(player).body.getPosition().x + coinCount * 1000;
+    public int getScore() {
+        return (int) Mappers.BODY.get(player).body.getPosition().x + Mappers.CHICKEN.get(player).leaves * 1000;
     }
 
     public boolean isMultiPlayer() {
         return isMultiPlayer;
     }
 
-    public void setMultiPlayer(boolean isMultiPlayer) {
-        this.isMultiPlayer = isMultiPlayer;
-    }
-
     public boolean isJoinedMultiplayer() {
         return isJoinedMultiplayer;
-    }
-
-    public void setJoinedMultiplayer(boolean isJoinedMultiPlayer) {
-        this.isJoinedMultiplayer = isJoinedMultiPlayer;
     }
 
     public long getStartTime() {

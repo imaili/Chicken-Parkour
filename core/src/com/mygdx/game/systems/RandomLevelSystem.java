@@ -5,13 +5,10 @@ import com.badlogic.ashley.core.Entity;
 import com.badlogic.ashley.core.Family;
 import com.badlogic.ashley.core.PooledEngine;
 import com.badlogic.ashley.systems.IteratingSystem;
-import com.mygdx.game.MainGame;
 import com.mygdx.game.components.TransformComponent;
 import com.mygdx.game.factories.ObstaclesFactory;
 import com.mygdx.game.factories.PowerUpFactory;
-import com.mygdx.game.screens.GameScreen;
 import com.mygdx.game.server.Server;
-import com.mygdx.game.utils.Constants;
 import com.mygdx.game.utils.Mappers;
 import com.mygdx.game.utils.Obstacles;
 import com.mygdx.game.utils.QueuedEntity;
@@ -21,23 +18,23 @@ import org.json.JSONObject;
 import java.util.ArrayList;
 import java.util.Date;
 import java.util.Iterator;
-import java.util.Random;
-
 
 import io.socket.emitter.Emitter;
 
 public class RandomLevelSystem extends IteratingSystem {
 
     PooledEngine engine;
+    boolean multiplayer;
+    boolean joined;
+    long startTime;
     private float accumulatedTime = 0;
     private Server server;
     private Entity player;
     private ArrayList<QueuedEntity> renderQueue = new ArrayList<>();
     private ObstaclesFactory obstaclesFactory;
     private PowerUpFactory powerUpFactory;
-    boolean multiplayer;
-    boolean joined;
-    long startTime;
+
+    private final Emitter.Listener obstacleListener;
 
     public RandomLevelSystem(Entity player, ObstaclesFactory obstaclesFactory, PowerUpFactory powerUpFactory,
                              boolean multiplayer, boolean joined, long startTime) {
@@ -50,7 +47,8 @@ public class RandomLevelSystem extends IteratingSystem {
         this.startTime = startTime;
         server = Server.getInstance();
         this.player = player;
-        server.listenForObstacles(new Emitter.Listener() {
+
+        obstacleListener = new Emitter.Listener() {
             @Override
             public void call(Object... args) {
                 try {
@@ -59,10 +57,9 @@ public class RandomLevelSystem extends IteratingSystem {
                     if (type.equals("add_obstacle")) {
                         JSONObject data = server_message.getJSONObject("data");
                         long offset = data.getLong("offset");
-                        String entity = data.getString("entity");
+                        int entity = data.getInt("entity");
 
                         renderQueue.add(new QueuedEntity(offset, entity));
-                        System.out.println(renderQueue.size());
                     }
 
                 } catch (Exception e) {
@@ -70,15 +67,17 @@ public class RandomLevelSystem extends IteratingSystem {
                 }
 
             }
-        });
+        };
 
+        server.listenForObstacles(obstacleListener);
     }
 
     @Override
     public void update(float deltaTime) {
         super.update(deltaTime);
         accumulatedTime += deltaTime;
-        String generatedObstacle = "";
+        int generatedObstacle = 0;
+        int playerPosition = (int) Mappers.BODY.get(player).body.getPosition().x;
 
         if (!joined && accumulatedTime > 3) {
             accumulatedTime = 0;
@@ -88,26 +87,41 @@ public class RandomLevelSystem extends IteratingSystem {
         }
 
         if (multiplayer) {
-            long offset = new Date().getTime() - startTime;
             if (joined) {
-                Iterator<QueuedEntity> i = renderQueue.iterator();
-                while (i.hasNext()) {
-                    QueuedEntity qe = i.next(); // must be called before you can call i.remove()
-                    if (qe.offset <= offset) {
+                ArrayList<QueuedEntity> deleted = null;
+                for (QueuedEntity qe :
+                        renderQueue) {
+                    if (qe.offset <= playerPosition) {
+                        if (deleted == null) {
+                            deleted = new ArrayList<>();
+                        }
 
-                        ObstaclesGenerator.create(Integer.parseInt(qe.entity), this);
+                        ObstaclesGenerator.create(qe.entity, this);
 
-                        i.remove();
-                    }
-                    else {
+                        deleted.add(qe);
+                    } else {
                         break;
                     }
                 }
+
+                if (deleted != null) {
+                    for (QueuedEntity qe :
+                            deleted) {
+                        renderQueue.remove(qe);
+                    }
+                }
             } else {
-                server.addObstacle(offset, generatedObstacle);
-            }
+                if (generatedObstacle != 0) {
+                    server.addObstacle(playerPosition, generatedObstacle);
+                }
             }
         }
+    }
+
+    public void disabledJoined() {
+        joined = false;
+        multiplayer = true;
+    }
 
 
     @Override
@@ -122,20 +136,16 @@ public class RandomLevelSystem extends IteratingSystem {
     }
 
 
-
-
-
     private static class ObstaclesGenerator {
 
 
-        private static String createRandom(RandomLevelSystem system) {
+        private static int createRandom(RandomLevelSystem system) {
             int obstacle = (int) (Math.random() * Obstacles.OBSTACLE_NUMBER);
             create(obstacle, system);
-            return Integer.toString(obstacle);
+            return obstacle;
         }
 
         private static void create(int obstacle, RandomLevelSystem system) {
-            System.out.println(obstacle);
             switch (obstacle) {
                 case Obstacles.SINGLE_PLATFORM:
                     system.obstaclesFactory.createPlatform(Mappers.TRANSFORM.get(system.player).position.x + 60, 4.3f);
@@ -170,7 +180,6 @@ public class RandomLevelSystem extends IteratingSystem {
 
 
         }
-
 
 
     }

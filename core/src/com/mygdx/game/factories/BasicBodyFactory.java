@@ -37,7 +37,6 @@ public class BasicBodyFactory extends BodyFactory{
         fixtureDef.density = 10f;
         if(!dynamic){
             fixtureDef.density = 1000000f;
-            System.out.println(fixtureDef.density);
         }
         fixtureDef.friction = 0f;
         fixtureDef.restitution = 0f;

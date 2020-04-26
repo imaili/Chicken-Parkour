@@ -58,15 +58,6 @@ public class MainGame extends Game {
 		setScreen(menu);
 	}
 
-	public void setGame(GameScreen game) {
-		this.game = game;
-	}
-
-
-	public GameScreen getGame() {
-		return this.game;
-	}
-
 	public void setMusic(boolean value) {
 		music = value;
 	}
