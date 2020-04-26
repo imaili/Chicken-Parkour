@@ -15,18 +15,18 @@ import com.mygdx.game.utils.Constants;
 
 import java.util.List;
 
-import static com.mygdx.game.utils.Constants.BACKGROUND_MENU_EMPTY_PATH;
-import static com.mygdx.game.utils.Constants.BACKGROUND_MENU_PATH;
-import static com.mygdx.game.utils.Constants.BACKGROUND_TUTORIAL_PATH;
+import static com.mygdx.game.utils.Constants.OTHER_MENU_BACKGROUND_PATH;
+import static com.mygdx.game.utils.Constants.MAIN_MENU_BACKGROUND_PATH;
+import static com.mygdx.game.utils.Constants.TUTORIAL_BACKGROUND_PATH;
 
 public abstract class MenuScreen extends BaseScreen implements Menu {
     protected final Menu previousMenu;
     private final Stage stage;
     private final List<MenuButton> buttons;
     private final List<Actor> actors;
-    protected static final Texture DEFAULT_BACK_GROUND_TEXTURE = MainGame.getSingleton().getAssetManager().get(BACKGROUND_MENU_PATH, Texture.class);
-    protected static final Texture BACK_GROUND_TEXTURE_EMPTY = MainGame.getSingleton().getAssetManager().get(BACKGROUND_MENU_EMPTY_PATH, Texture.class);
-    protected static final Texture BACK_GROUND_TUTORIAL  = MainGame.getSingleton().getAssetManager().get(BACKGROUND_TUTORIAL_PATH, Texture.class);
+    protected static final Texture DEFAULT_BACK_GROUND_TEXTURE = MainGame.getSingleton().getAssetManager().get(MAIN_MENU_BACKGROUND_PATH, Texture.class);
+    protected static final Texture BACK_GROUND_TEXTURE_EMPTY = MainGame.getSingleton().getAssetManager().get(OTHER_MENU_BACKGROUND_PATH, Texture.class);
+    protected static final Texture BACK_GROUND_TUTORIAL  = MainGame.getSingleton().getAssetManager().get(TUTORIAL_BACKGROUND_PATH, Texture.class);
 
     protected static final String MUSIC_PATH = Constants.MUSIC_MENU_PATH;
     protected final Music MUSIC = MainGame.getSingleton().getAssetManager().get(MUSIC_PATH, Music.class);

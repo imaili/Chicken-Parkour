@@ -29,7 +29,7 @@ import io.socket.emitter.Emitter;
 
 public class GameOverMenu extends PauseMenu {
     private HashMap<String, Label> scores;
-    protected static final Texture GAME_OVER_BACK_GROUND_TEXTURE = MainGame.getSingleton().getAssetManager().get(Constants.BACKGROUND_GAME_OVER_PATH, Texture.class);
+    protected static final Texture GAME_OVER_BACK_GROUND_TEXTURE = MainGame.getSingleton().getAssetManager().get(Constants.GAME_OVER_BACKGROUND_PATH, Texture.class);
     private Server server = Server.getInstance();
     GoToButton exit;
     private float accumulatedTime = 0;

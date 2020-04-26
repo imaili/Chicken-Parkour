@@ -4,10 +4,8 @@ import com.badlogic.ashley.core.Entity;
 import com.badlogic.ashley.core.PooledEngine;
 import com.badlogic.gdx.Gdx;
 import com.badlogic.gdx.audio.Music;
-import com.badlogic.gdx.graphics.Color;
 import com.badlogic.gdx.graphics.GL20;
 import com.badlogic.gdx.graphics.OrthographicCamera;
-import com.badlogic.gdx.graphics.Pixmap;
 import com.badlogic.gdx.graphics.Texture;
 import com.badlogic.gdx.graphics.g2d.Animation;
 import com.badlogic.gdx.graphics.g2d.SpriteBatch;
@@ -15,10 +13,6 @@ import com.badlogic.gdx.graphics.g2d.TextureAtlas;
 import com.badlogic.gdx.graphics.g2d.TextureRegion;
 import com.badlogic.gdx.math.Rectangle;
 import com.badlogic.gdx.math.Vector2;
-import com.badlogic.gdx.physics.box2d.Body;
-import com.badlogic.gdx.physics.box2d.BodyDef;
-import com.badlogic.gdx.physics.box2d.FixtureDef;
-import com.badlogic.gdx.physics.box2d.PolygonShape;
 import com.badlogic.gdx.physics.box2d.World;
 import com.badlogic.gdx.scenes.scene2d.ui.Label;
 import com.mygdx.game.MainGame;
@@ -111,7 +105,7 @@ public class GameScreen extends BaseScreen implements Menu {
         this.paused = false;
         this.server = Server.getInstance();
         this.startTime = new Date().getTime();
-        pauseTexture = game.getAssetManager().get(Constants.EXIT_MENU_PATH);
+        pauseTexture = game.getAssetManager().get(Constants.EXIT_MENU_BACKGROUND_PATH);
         pauseTextureX = Gdx.graphics.getWidth() - pauseTexture.getWidth();
         pauseTextureY = Gdx.graphics.getHeight() - pauseTexture.getHeight();
 
@@ -304,10 +298,8 @@ public class GameScreen extends BaseScreen implements Menu {
         AnimationComponent animation = engine.createComponent(AnimationComponent.class);
         PowerUpComponent powerUp = engine.createComponent(PowerUpComponent.class);
 
-        // set the components data
-        texture.region = new TextureRegion((Texture) game.getAssetManager().get(Constants.WALK_1_PATH));
-
         TextureAtlas atlas = new TextureAtlas(Constants.WALK_ATLAS_PATH);
+        texture.region = new TextureRegion(atlas.getRegions().first().getTexture());
         Animation ani = new Animation<TextureRegion>(0.1f, atlas.getRegions(), Animation.PlayMode.LOOP);
         animation.animationsMap.put(StateComponent.STATE_WALKING, ani);
 

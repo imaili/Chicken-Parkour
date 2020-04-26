@@ -10,8 +10,6 @@ import java.util.Collections;
 import java.util.LinkedList;
 import java.util.List;
 
-import static com.mygdx.game.utils.Constants.BACKGROUND_MENU_EMPTY_PATH;
-
 public class PlayerMenu extends MenuScreen {
 
     @Override

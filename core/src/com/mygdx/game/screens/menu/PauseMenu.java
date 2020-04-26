@@ -24,7 +24,7 @@ public class PauseMenu extends MenuScreen {
 
     protected static final TextButtonFactory PAUSE_TEXT_BUTTON_FACTORY = new TextButtonFactory(TextButtonFactory.createBasicSkin(Gdx.graphics.getWidth() / 6, Gdx.graphics.getHeight() / 8));
 
-    protected static final Texture DEFAULT_PAUSE_TEXTURE = MainGame.getSingleton().getAssetManager().get(Constants.PAUSE_MENU_PATH, Texture.class);
+    protected static final Texture DEFAULT_PAUSE_TEXTURE = MainGame.getSingleton().getAssetManager().get(Constants.PAUSE_MENU_BACKGROUND_PATH, Texture.class);
     protected static final int X = Gdx.graphics.getWidth() / 4;
     protected static final int Y = Gdx.graphics.getHeight() / 4;
     protected static final int WIDTH = Gdx.graphics.getWidth() / 2;

@@ -72,9 +72,6 @@ public class MainGame extends Game {
 
 
 	private void loadAssetManager(){
-
-		manager.load(Constants.RUN_2_PATH, Texture.class);
-
 		manager.load(Constants.PLATFORM_PATH, Texture.class);
 		manager.load(Constants.FLOOR_PATH, Texture.class);
 		manager.load(Constants.SPIKE_PATH, Texture.class);
@@ -87,20 +84,17 @@ public class MainGame extends Game {
 		manager.load(Constants.RUN_ATLAS_PATH, TextureAtlas.class);
 		manager.load(Constants.SLIDE_ATLAS_PATH, TextureAtlas.class);
 
-		manager.load(Constants.EXIT_MENU_PATH, Texture.class);
-		manager.load(Constants.PAUSE_MENU_PATH, Texture.class);
-		manager.load(Constants.BACKGROUND_MENU_PATH, Texture.class);
-		manager.load(Constants.BACKGROUND_MENU_EMPTY_PATH, Texture.class);
-		manager.load(Constants.BACKGROUND_TUTORIAL_PATH, Texture.class);
-		manager.load(Constants.BACKGROUND_GAME_OVER_PATH, Texture.class);
+		manager.load(Constants.EXIT_MENU_BACKGROUND_PATH, Texture.class);
+		manager.load(Constants.PAUSE_MENU_BACKGROUND_PATH, Texture.class);
+		manager.load(Constants.MAIN_MENU_BACKGROUND_PATH, Texture.class);
+		manager.load(Constants.OTHER_MENU_BACKGROUND_PATH, Texture.class);
+		manager.load(Constants.TUTORIAL_BACKGROUND_PATH, Texture.class);
+		manager.load(Constants.GAME_OVER_BACKGROUND_PATH, Texture.class);
 		manager.load(Constants.GAME_BACKGROUND_1_PATH, Texture.class);
 		manager.load(Constants.GAME_BACKGROUND_2_PATH, Texture.class);
 		manager.load(Constants.GAME_BACKGROUND_3_PATH, Texture.class);
 		manager.load(Constants.GAME_BACKGROUND_4_PATH, Texture.class);
 		manager.load(Constants.GAME_BACKGROUND_5_PATH, Texture.class);
-		manager.load(Constants.MULTIPLAYER_BUTTON_PATH, Texture.class);
-		manager.load(Constants.SINGLEPLAYER_BUTTON_PATH, Texture.class);
-		manager.load(Constants.WALK_1_PATH, Texture.class);
 		manager.load(Constants.MUSIC_GAME_PATH, Music.class);
 		manager.load(Constants.MUSIC_MENU_PATH, Music.class);
 

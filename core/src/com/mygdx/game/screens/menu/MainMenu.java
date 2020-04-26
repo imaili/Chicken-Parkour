@@ -18,13 +18,10 @@ public class MainMenu extends MenuScreen {
         int buttonHeight = Gdx.graphics.getHeight() / 10;
         int buttonOffset = (Gdx.graphics.getHeight() - buttonHeight * nButtons) / (nButtons + 1);
         List<MenuButton> list = new LinkedList<>();
-      //  MenuButton goToSinglePlayerMenu = DEFAULT_TEXT_BUTTON_FACTORY.createGoToButton("Single Player", new Vector2(buttonX, buttonOffset + 4*(buttonHeight+buttonOffset)), SinglePlayerMenu.class);
-     //   MenuButton goToMultiPlayerMenu = DEFAULT_TEXT_BUTTON_FACTORY.createGoToButton("MultiPlayer", new Vector2(buttonX, buttonOffset + 3*(buttonHeight+buttonOffset)), MultiPlayerMenu.class);
         MenuButton goToHighscores = DEFAULT_TEXT_BUTTON_FACTORY.createGoToButton("Highscores", new Vector2(buttonX, buttonOffset + 2* (buttonHeight+buttonOffset)), HighscoresMenu.class);
         MenuButton goToPlayerMenu = DEFAULT_TEXT_BUTTON_FACTORY.createGoToButton("Play", new Vector2(buttonX, buttonOffset + 3*(buttonHeight+buttonOffset)), PlayerMenu.class);
         MenuButton goToSettings = DEFAULT_TEXT_BUTTON_FACTORY.createGoToButton("Settings", new Vector2(buttonX, buttonOffset + (buttonHeight+buttonOffset)), Settings.class);
         MenuButton exitGame = DEFAULT_TEXT_BUTTON_FACTORY.createGoToButton("Exit", new Vector2(buttonX, buttonOffset), ExitMenu.class);
-      //  Collections.addAll(list, goToSinglePlayerMenu, goToMultiPlayerMenu, goToSettings, goToHighscores, exitGame);
         Collections.addAll(list,goToPlayerMenu , goToSettings, goToHighscores, exitGame);
         return list;
     }
