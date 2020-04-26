@@ -37,7 +37,7 @@ public class MainGame extends Game {
 		setMenu(menu);
 		Gdx.input.setInputProcessor(new InputMultiplexer());
 		menu.setInputProcessor();
-		music = false;
+		music = true;
 		menu.startMusic();
 		//setScreen(new GameScreen(this));
 
@@ -80,8 +80,7 @@ public class MainGame extends Game {
 		manager.load(Constants.SPIKE_PATH, Texture.class);
 
 		manager.load(Constants.WALK_ATLAS_PATH, TextureAtlas.class);
-		manager.load(Constants.TABLE_SKIN_ATLAS, TextureAtlas.class);
-		manager.load(Constants.TABLE_SKIN, Skin.class, new SkinLoader.SkinParameter(Constants.TABLE_SKIN_ATLAS));
+		manager.load(Constants.SKIN_PATH, Skin.class, new SkinLoader.SkinParameter(Constants.SKIN_ATLAS));
 		manager.load(Constants.DEAD_ATLAS_PATH, TextureAtlas.class);
 		manager.load(Constants.IDLE_ATLAS_PATH, TextureAtlas.class);
 		manager.load(Constants.JUMP_ATLAS_PATH, TextureAtlas.class);

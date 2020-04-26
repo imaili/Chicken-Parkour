@@ -6,7 +6,7 @@ import com.badlogic.gdx.math.Vector2;
 
 public class Constants {
 
-
+    public static final String SERVER_HOST = "http://192.168.43.227:8300";
     public static final float PIXELS_PER_METER = 32.0f;
 
     public static final float WORLD_WIDTH = Gdx.graphics.getWidth()/PIXELS_PER_METER;
@@ -192,13 +192,11 @@ public class Constants {
     public static final String GAME_BACKGROUND_5_ID = "game_background_5";
     public static final String GAME_BACKGROUND_5_PATH = "background/plx-5.png";
 
-    public static final String TABLE_SKIN_ATLAS = "table-skin/uiskin.atlas";
-    public static final String TABLE_SKIN = "table-skin/uiskin.json";
+    public static final String SKIN_ATLAS = "skin/uiskin.atlas";
+    public static final String SKIN_PATH = "skin/uiskin.json";
 
-    public static final String SPEED_UP_BONE_PATH = "PowerUps/PowerUp_Bone.png";
-    public static final String SPEED_UP_LEAF_PATH = "PowerUps/PowerUp_Leaf.png";
-
-    public static final String MY_FONT_PATH = "data/myfont.fnt";
+    public static final String SPEED_UP_BONE_PATH = "powerups/bone.png";
+    public static final String SPEED_UP_LEAF_PATH = "powerups/leaf.png";
 
 
     //public static final String = "key" running (1)

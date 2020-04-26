@@ -97,7 +97,7 @@ public class MultiPlayerHostMenu extends MenuScreen {
         table.row();
         table.add("Player name").colspan(2).padTop(50);
         table.row();
-        table.add(nameText).colspan(2);
+        table.add(nameText).colspan(2).width(Gdx.graphics.getWidth() / 5).fill();
         table.row();
         table.add("Other players").colspan(2).padTop(20);
         table.row();

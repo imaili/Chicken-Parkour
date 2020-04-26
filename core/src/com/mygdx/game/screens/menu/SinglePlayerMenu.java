@@ -3,7 +3,6 @@ package com.mygdx.game.screens.menu;
 import com.badlogic.gdx.Gdx;
 import com.badlogic.gdx.math.Vector2;
 import com.badlogic.gdx.scenes.scene2d.Actor;
-import com.badlogic.gdx.scenes.scene2d.ui.Label;
 import com.badlogic.gdx.scenes.scene2d.ui.Skin;
 import com.badlogic.gdx.scenes.scene2d.ui.Table;
 import com.badlogic.gdx.scenes.scene2d.ui.TextField;
@@ -18,9 +17,6 @@ import com.mygdx.game.screens.menu.button.MenuButton;
 import com.mygdx.game.server.Server;
 import com.mygdx.game.utils.Constants;
 
-import org.json.JSONObject;
-
-import java.util.ArrayList;
 import java.util.Collections;
 import java.util.LinkedList;
 import java.util.List;
@@ -50,15 +46,15 @@ public class SinglePlayerMenu extends MenuScreen {
 
     public List<Actor> getActors() {
         List<Actor> list = new LinkedList<>();
-        Skin skin = MainGame.getSingleton().getAssetManager().get(Constants.TABLE_SKIN);
+        Skin skin = MainGame.getSingleton().getAssetManager().get(Constants.SKIN_PATH);
         nameText = TextFieldFactory.create("");
         table = TableFactory.create();
         table.moveBy(0, 120);
         list.add(table);
 
-        table.add("Player name").colspan(2).padTop(50);
+        table.add("Player name");
         table.row();
-        table.add(nameText).colspan(2);
+        table.add(nameText).width(Gdx.graphics.getWidth() / 5).fill();
 
         table.setFillParent(true);
         table.center();

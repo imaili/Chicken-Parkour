@@ -1,6 +1,6 @@
 {
 BitmapFont: { default-font: { file: default.fnt,
-	scaledSize: 30
+	scaledSize: 52
 } },
 Color: {
 	green: { a: 1, b: 0, g: 1, r: 0 },

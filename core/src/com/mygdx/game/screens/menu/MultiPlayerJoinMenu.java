@@ -65,11 +65,11 @@ public class MultiPlayerJoinMenu extends MenuScreen {
 
         table.add("Player name");
         table.row();
-        table.add(playerName);
+        table.add(playerName).width(Gdx.graphics.getWidth() / 5).fill();
         table.row();
         table.add("GameID");
         table.row();
-        table.add(gameId);
+        table.add(gameId).width(Gdx.graphics.getWidth() / 5).fill();
         table.row();
         table.setFillParent(true);
         table.center();
