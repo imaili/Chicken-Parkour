@@ -163,10 +163,10 @@ public class RandomLevelSystem extends IteratingSystem {
                     system.obstaclesFactory.createSpikes(Mappers.TRANSFORM.get(system.player).position.x + 60, 3.5f, 2);
                     break;
                 case Obstacles.SPEED_UP:
-                    system.powerUpFactory.createSpeedUp(Mappers.TRANSFORM.get(system.player).position.x + 60, 9);
+                    system.powerUpFactory.createSpeedUp(Mappers.TRANSFORM.get(system.player).position.x + 60, 15);
                     break;
                 case Obstacles.LEAF:
-                    system.powerUpFactory.createLeaf(Mappers.TRANSFORM.get(system.player).position.x + 60, 9f);
+                    system.powerUpFactory.createLeaf(Mappers.TRANSFORM.get(system.player).position.x + 60, 15);
                 default:
             }
         }

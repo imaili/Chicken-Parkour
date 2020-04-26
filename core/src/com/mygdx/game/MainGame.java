@@ -12,7 +12,6 @@ import com.badlogic.gdx.scenes.scene2d.ui.Skin;
 import com.mygdx.game.screens.GameScreen;
 import com.mygdx.game.screens.menu.MainMenu;
 import com.mygdx.game.screens.Menu;
-import com.mygdx.game.utils.AssetsManager;
 import com.mygdx.game.utils.Constants;
 
 public class MainGame extends Game {
@@ -82,7 +81,7 @@ public class MainGame extends Game {
 
 		manager.load(Constants.WALK_ATLAS_PATH, TextureAtlas.class);
 		manager.load(Constants.TABLE_SKIN_ATLAS, TextureAtlas.class);
-		manager.load(Constants.TABLE_SKIN, Skin.class, new SkinLoader.SkinParameter(Constants.TABLE_SKIN_ATLAS));
+		manager.load(Constants.SKIN, Skin.class, new SkinLoader.SkinParameter(Constants.TABLE_SKIN_ATLAS));
 		manager.load(Constants.DEAD_ATLAS_PATH, TextureAtlas.class);
 		manager.load(Constants.IDLE_ATLAS_PATH, TextureAtlas.class);
 		manager.load(Constants.JUMP_ATLAS_PATH, TextureAtlas.class);

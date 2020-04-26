@@ -193,7 +193,7 @@ public class Constants {
     public static final String GAME_BACKGROUND_5_PATH = "background/plx-5.png";
 
     public static final String TABLE_SKIN_ATLAS = "table-skin/uiskin.atlas";
-    public static final String TABLE_SKIN = "table-skin/uiskin.json";
+    public static final String SKIN = "table-skin/uiskin.json";
 
     public static final String SPEED_UP_BONE_PATH = "PowerUps/PowerUp_Bone.png";
     public static final String SPEED_UP_LEAF_PATH = "PowerUps/PowerUp_Leaf.png";

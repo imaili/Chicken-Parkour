@@ -46,7 +46,7 @@ public class HighscoresMenu extends MenuScreen {
     @Override
     public List<Actor> getActors() {
         List<Actor> list = new LinkedList<>();
-        Skin skin = MainGame.getSingleton().getAssetManager().get(Constants.TABLE_SKIN);
+        Skin skin = MainGame.getSingleton().getAssetManager().get(Constants.SKIN);
         table = new Table(skin);
         list.add(table);
         Label title = this.createLabel(skin);

@@ -24,6 +24,9 @@ public class Server {
 
     private Server() {
         try {
+            IO.Options opts = new IO.Options();
+            opts.reconnection = true;
+            opts.reconnectionAttempts = 3;
             socket = IO.socket("http://192.168.43.227:8300");
             socket.on(Socket.EVENT_CONNECT, new Emitter.Listener() {
 

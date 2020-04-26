@@ -98,7 +98,7 @@ public class TextButtonFactory implements ButtonFactory {
 
     public static Skin createBasicSkin(int width, int height) {
         Skin skin = new Skin();
-        skin.add("default", ((Skin)MainGame.getSingleton().getAssetManager().get(Constants.TABLE_SKIN)).getFont("default-font"));
+        skin.add("default", ((Skin)MainGame.getSingleton().getAssetManager().get(Constants.SKIN)).getFont("default-font"));
 
         // Create a texture
         Pixmap pixmap = new Pixmap(width, height, Pixmap.Format.RGB888);
