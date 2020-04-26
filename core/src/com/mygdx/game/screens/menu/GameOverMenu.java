@@ -36,7 +36,7 @@ import io.socket.emitter.Emitter;
 public class GameOverMenu extends PauseMenu {
     private HashMap<String, Label> scores;
     protected static final Texture GAME_OVER_BACK_GROUND_TEXTURE = MainGame.getSingleton().getAssetManager().get(Constants.BACKGROUND_GAME_OVER_PATH, Texture.class);
-    private Server server;
+    private Server server = Server.getInstance();
     GoToButton exit;
     private float accumulatedTime = 0;
     private int simulationStep = 0;
@@ -102,7 +102,6 @@ public class GameOverMenu extends PauseMenu {
             }
 
             if (!allPlayersDone()) {
-                this.server = Server.getInstance();
 
                 this.server.listenForEndGame(new Emitter.Listener() {
                     @Override

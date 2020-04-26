@@ -12,7 +12,6 @@ import com.badlogic.gdx.scenes.scene2d.ui.Skin;
 import com.mygdx.game.screens.GameScreen;
 import com.mygdx.game.screens.menu.MainMenu;
 import com.mygdx.game.screens.Menu;
-import com.mygdx.game.utils.AssetsManager;
 import com.mygdx.game.utils.Constants;
 
 public class MainGame extends Game {

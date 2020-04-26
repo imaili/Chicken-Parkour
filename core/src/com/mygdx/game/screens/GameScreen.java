@@ -100,8 +100,7 @@ public class GameScreen extends BaseScreen implements Menu {
 
     private Background background;
 
-    protected static final String MUSIC_PATH = Constants.MUSIC_GAME_PATH;
-    protected final Music MUSIC = MainGame.getSingleton().getAssetManager().get(MUSIC_PATH, Music.class);
+    protected final Music MUSIC = MainGame.getSingleton().getAssetManager().get(Constants.MUSIC_GAME_PATH, Music.class);
     private JSONArray players;
 
     public GameScreen(MainGame game, boolean isMultiPlayer, boolean isJoinedMultiplayer) {
@@ -413,7 +412,7 @@ public class GameScreen extends BaseScreen implements Menu {
     }
 
     public int getScore() {
-        return (int) Mappers.BODY.get(player).body.getPosition().x + Mappers.CHICKEN.get(player).leaves * 1000;
+        return (int) Mappers.BODY.get(player).body.getPosition().x + Mappers.CHICKEN.get(player).leaves * 100;
     }
 
     public boolean isMultiPlayer() {

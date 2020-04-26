@@ -32,9 +32,9 @@ public class MusicButton extends MenuButton {
 
     private static String getName(Action action) {
         if (action.equals(Action.START_MUSIC))
-            return START_MUSIC_BUTTON_NAME;
-        else
             return STOP_MUSIC_BUTTON_NAME;
+        else
+            return START_MUSIC_BUTTON_NAME;
     }
 
     private static Action getAction() {
