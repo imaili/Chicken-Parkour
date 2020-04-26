@@ -53,6 +53,7 @@ public class SinglePlayerMenu extends MenuScreen {
         Skin skin = MainGame.getSingleton().getAssetManager().get(Constants.TABLE_SKIN);
         nameText = TextFieldFactory.create("");
         table = TableFactory.create();
+        table.moveBy(0, 120);
         list.add(table);
 
         table.add("Player name").colspan(2).padTop(50);

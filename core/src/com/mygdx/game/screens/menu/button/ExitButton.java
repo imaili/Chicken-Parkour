@@ -24,5 +24,6 @@ public class ExitButton extends MenuButton {
     @Override
     public void action() {
         Gdx.app.exit();
+        System.exit(0);
     }
 }

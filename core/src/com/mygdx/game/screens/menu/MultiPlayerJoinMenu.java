@@ -60,6 +60,7 @@ public class MultiPlayerJoinMenu extends MenuScreen {
         playerName = TextFieldFactory.create("");
         gameId = TextFieldFactory.create("");
         table = TableFactory.create();
+        table.moveBy(0, 150);
         list.add(table);
 
         table.add("Player name");

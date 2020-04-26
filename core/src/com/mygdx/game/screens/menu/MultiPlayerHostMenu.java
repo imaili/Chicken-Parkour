@@ -89,6 +89,7 @@ public class MultiPlayerHostMenu extends MenuScreen {
         List<Actor> list = new LinkedList<>();
         nameText = TextFieldFactory.create("");
         table = TableFactory.create();
+        table.moveBy(0, 80);
         gameId = LabelFactory.create("Game ID");
         list.add(table);
 
